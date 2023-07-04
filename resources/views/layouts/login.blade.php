@@ -56,11 +56,8 @@
                 <div class="w-lg-500px bg-body rounded shadow-sm p-10 p-lg-15 mx-auto">
                     <!--begin::Form-->
                         <!--begin::Heading-->
-                        <div id="app">
                             @yield('content')
-                        </div>
                     </div>
-            </div>
 					<!--end::Wrapper-->
 				</div>
                 
@@ -74,7 +71,6 @@
 						<a href="https://1.envato.market/EA4JP" class="text-muted text-hover-primary px-2">Contact Us</a>
 					</div>
 					<!--end::Links--> --}}
-				</div>
                 <div class="d-flex flex-center flex-column-auto p-10">
 					<!--begin::Links-->
 					<div class="d-flex align-items-center fw-bold fs-6">
@@ -84,6 +80,9 @@
 					</div>
 					<!--end::Links-->
 				</div>   
+            </div>
+        </div>
+
 				<!--end::Footer-->
 			</div>
 			<!--end::Authentication - Sign-in-->
