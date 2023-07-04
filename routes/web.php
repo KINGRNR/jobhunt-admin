@@ -4,8 +4,9 @@ use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\ExampleController;
 use App\Http\Middleware\loginCheck;
-
+use App\Models\Example;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,7 @@ use App\Http\Middleware\loginCheck;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
 Route::get('/', function () {
 
     if (Auth::user()) {
@@ -27,13 +29,17 @@ Route::get('/', function () {
 });
 Auth::routes();
 Route::middleware([loginCheck::class])->group(function () {
-        // Route::get('/dashboard', [MainController::class, 'index'])->name('dashboard');
+    // Route::get('/dashboard', [MainController::class, 'index'])->name('dashboard');
 
-Route::post('/main/getPage', [MainController::class, 'getPage']);
-
+    Route::post('/main/getPage', [MainController::class, 'getPage']);
+    Route::get('examples', [ExampleController::class,'index'])->name('example.index');
 
     // Route::get('/dashboard', [MainController::class, 'index'])->name('dashboard');
     // Route::get('/home', [HomeController::class, 'index'])->name('home');
-
-Route::get('/{menu}', [MainController::class, 'index'])->where('menu', '([A-Za-z0-9\-\/]+)');
+    // Route::controller(ExampleController::class)->group(function () {
+    //     foreach (['index', 'show', 'create', 'update', 'delete', 'getData'] as $key => $value) {
+    //         Route::get(($value == 'index') ? '/example'  : '/example/' . $value, $value);
+    //     }
+    // });
+    Route::get('/{menu}', [MainController::class, 'index'])->where('menu', '([A-Za-z0-9\-\/]+)');
 });
