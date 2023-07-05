@@ -1,6 +1,6 @@
 <div class="row mb-7">
     <div class="col-12 col-md-4 col-lg-4 col-xl-4">
-        <div class="bg-white rounded-3 p-7 shadow-sm m-3">
+        <div class="bg-white rounded-1 p-7 shadow-sm m-3">
 
             <div class="d-flex">
                 <div class="">
@@ -12,7 +12,7 @@
         </div>
     </div>
     <div class="col-12 col-md-4 col-lg-4 col-xl-4">
-        <div class="bg-white rounded-3 p-7 shadow-sm m-3">
+        <div class="bg-white rounded-1 p-7 shadow-sm m-3">
 
             <div class="d-flex">
                 <div class="">
@@ -24,7 +24,7 @@
         </div>
     </div>
     <div class="col-12 col-md-4 col-lg-4 col-xl-4">
-        <div class="bg-white rounded-3 p-7 shadow-sm m-3">
+        <div class="bg-white rounded-1 p-7 shadow-sm m-3">
 
             <div class="d-flex">
                 <div class="">
@@ -144,7 +144,7 @@
 </div>
 
     <div class="col-12 col-xl-8">
-        <div class="bg-white rounded-3 p-7 shadow-sm m-3">
+        <div class="bg-white rounded-1 p-7 shadow-sm m-3">
 
             <div class="d-flex justify-content-between">
                 <div class="">
