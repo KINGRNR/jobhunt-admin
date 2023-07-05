@@ -14,20 +14,15 @@ class ExampleController extends \App\Core\BaseController
     public function index(Request $request)
     {
         // return DataTables::of(Example::all())->toJson();
-            $data = Example::select('*');
-            return Datatables::of($data)
-                ->addIndexColumn()
-                ->addColumn('action', function($row){
-                    $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-success btn-sm">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
-                    return $actionBtn;
-                })
-                ->rawColumns(['action'])
-                ->toJson();
-     }
+        $data = Example::select('*');
+        return Datatables::of($data)
+            ->toJson();
+    }
 
     public function show(Request $request)
     {
         $data = $request->post();
+        // print_r($data); exit;
         $operation = Example::find($data['example_id']);
         return $this->response($operation);
     }
@@ -35,10 +30,15 @@ class ExampleController extends \App\Core\BaseController
     public function create(Request $request)
     {
         try {
-            $data = $request->all();
-            $data['example_id'] = Example::generateExampleid();
-            $data['example_active'] = $request->example_active ?? 0;
+            $dataArray = $request->all(); // Mendapatkan seluruh data dari request
 
+            // Memisahkan elemen "data" dari array
+            $data = $dataArray['data'];
+            // print_r($data);
+            // exit;
+            $data['example_id'] = Example::generateExampleid();
+            // $data['example_active'] = $request->example_active ?? 0;
+            // print_r($data); exit;
             $operation = Example::create($data);
 
             return $this->respondCreated([
@@ -57,7 +57,10 @@ class ExampleController extends \App\Core\BaseController
     public function update(Request $request, Example $example)
     {
         try {
-            $data = $request->all();
+            $dataArray = $request->all(); // Mendapatkan seluruh data dari request
+
+            // Memisahkan elemen "data" dari array
+            $data = $dataArray['data'];
             $example = Example::find(request()->example_id);
 
             $data['example_active'] = $request->example_active ?? 0;

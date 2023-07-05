@@ -36,10 +36,10 @@ Route::middleware([loginCheck::class])->group(function () {
 
     // Route::get('/dashboard', [MainController::class, 'index'])->name('dashboard');
     // Route::get('/home', [HomeController::class, 'index'])->name('home');
-    // Route::controller(ExampleController::class)->group(function () {
-    //     foreach (['index', 'show', 'create', 'update', 'delete', 'getData'] as $key => $value) {
-    //         Route::get(($value == 'index') ? '/example'  : '/example/' . $value, $value);
-    //     }
-    // });
+    Route::controller(ExampleController::class)->group(function () {
+        foreach (['show', 'create', 'update', 'delete', 'getData'] as $key => $value) {
+            Route::post('/example/' . $value, $value);
+        }
+    });
     Route::get('/{menu}', [MainController::class, 'index'])->where('menu', '([A-Za-z0-9\-\/]+)');
 });

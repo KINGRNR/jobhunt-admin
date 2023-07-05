@@ -171,9 +171,10 @@ License: For each use you must have a valid license purchased only from above li
                 transform: rotate(360deg);
             }
         }
+
         .active {
-            color: #FF0000 !important;;
-         }
+            /* color: #FF0000 !important;; */
+        }
     </style>
 </head>
 <!--end::Head-->
@@ -608,39 +609,38 @@ License: For each use you must have a valid license purchased only from above li
                     $(() => {
 
                         let currentURL = window.location.href;
-                        console.log(currentURL);
-                        // Jalankan kode untuk mengklik elemen $('[data-con="ozqopvu1arkmk3gv"]')
-                        $('[data-con="ozqopvu1arkmk3gv"]').trigger('click');
+                        let lastMenuId = localStorage.getItem('menuId');
 
-                        // Jalankan fungsi init()
+                        // Jalankan kode untuk mengklik elemen $('[data-con="ozqopvu1arkmk3gv"]')
+                      if(getLastUrl() === 'dashboard'){
+                        $('[data-con="ozqopvu1arkmk3gv"]').trigger('click');
+                    } else { 
+                        $(`[data-con="${lastMenuId}"]`).trigger('click');                  
+                      }
                         init();
 
 
                     })
 
 
-                    var stateData = null;
-
+                    let stateData = null;
+                    function getLastUrl() {
+                        let url = $(location).attr('href');
+                        return url.split('/').reverse()[0];
+                    }
                     function loadPage(element) {
-                        // Extract the menu_id from the clicked element's data attribute
-                        var menuId = $(element).data('con');
-                        var CSRF_NAME = 'csrf_cookie_name';
-
-                        // Trigger the getPage request using the extracted menuId
+                        let menuId = $(element).data('con');
+                        let CSRF_NAME = 'csrf_cookie_name';
                         $.ajax({
                             url: APP_URL + "main/getPage",
                             data: {
-                                token_csrf: Cookies.get(CSRF_NAME),
+                                _token: '{{ csrf_token() }}',
                                 menu_id: menuId
                             },
                             type: "POST",
                             success: function(pages) {
-                                console.log(pages);
                                 $(".menu-link").removeClass("active");
-
-                                // Tambahkan kelas "active" ke menu yang cocok dengan data-con
                                 $(`.menu-link[data-con="${menuId}"]`).addClass("active");
-                                //   var responseObject = JSON.parse(pages.responseText);
                                 $('#page_breadcrumb').html(atob(pages.breadcrumb));
                                 $('#titleContent').html('').html(`
                 <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1 parentTitle">${pages.menu_title}</h1>
@@ -648,7 +648,8 @@ License: For each use you must have a valid license purchased only from above li
               `)
                                 window.history.pushState(stateData, "", pages.url_path);
                                 $("#pagecontainer").html(atob(pages.view));
-                                blockPage()
+                                blockPage();
+                                localStorage.setItem('menuId', menuId);
                             }
                         });
                     }
@@ -665,7 +666,7 @@ License: For each use you must have a valid license purchased only from above li
 
 
                 <script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
+
 </body>
-<!--end::Body-->
 
 </html>
