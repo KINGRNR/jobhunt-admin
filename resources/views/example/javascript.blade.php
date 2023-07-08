@@ -1,70 +1,27 @@
+<script src="assets/js/custom/apps/customers/list/export.js"></script>
+<script src="assets/js/custom/apps/customers/list/list.js"></script>
+<script src="assets/js/custom/apps/customers/add.js"></script>
+<script src="{!! asset('assets/js/custom/js.cookie.js') !!}"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"
+    integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous">
+</script>
 <script type="text/javascript">
     $(() => {
         init()
 
     })
     init = async () => {
-        initializeDataTables();
-        unblockPage();
+        await initializeDataTables();
+        await unblockPage(500);
     }
-
-    // function initializeDataTables() {
-    //     $('#table-example').DataTable({
-    //         processing: true,
-    //         serverSide: true,
-    //         clickAble: true,
-    //         searchAble: true,
-    //         destroyAble: true,
-    //         ajax: {
-    //             url: "{{ route('example.index') }}",
-    //             type: "GET",
-    //             dataType: "json",
-
-    //         },
-    //         // ajax: APP_URL + 'example/index',
-
-    //         columns: [{
-    //                 data: 'example_code',
-    //                 name: 'example_code'
-    //             },
-    //             {
-    //                 data: 'example_name',
-    //                 name: 'example_name'
-    //             },
-    //             {
-    //                 data: 'example_active',
-    //                 name: 'example_active',
-    //                 render: function(data, type, row) {
-    //                     var badgeClass = data ? 'badge-success' : 'badge-danger';
-    //                     var badgeText = data ? 'AKTIF' : 'TIDAK AKTIF';
-    //                     return '<span class="badge ' + badgeClass + '">' + badgeText + '</span>';
-    //                 }
-    //             }, {
-
-    //                 data: 'action',
-    //                 name: 'action',
-    //                 orderable: false,
-    //                 searchable: false
-    //             },
-
-    //             // Add more columns if needed
-    //         ]
-
-    //     });
-    //     // Event delegation for row click
-    //     $('#table-example tbody').on('click', 'tr', function() {
-    //         var rowData = table.row(this).data();
-    //         if (rowData) {
-    //             var exampleId = rowData.id; // Assuming the ID is stored in the 'id' property
-    //             // Perform actions with the clicked row data
-    //             console.log("Clicked Example ID: " + exampleId);
-    //             // Redirect to detail page or display detail in a dialog, etc.
-    //         }
-    //     });
-
-    // }
+    
     function initializeDataTables() {
-        var table = $('#table-example').DataTable({
+        let table = $('#table-example').DataTable({
             processing: true,
             serverSide: true,
             clickable: true,
@@ -166,24 +123,25 @@
         $('.actCreate').removeClass('d-none');
     }
     onReset = () => {
-        let form = ".form_example";
-        $(form).find('input[type="radio"]').prop('checked', false);
-        $(form).find('input[type="checkbox"]').prop('checked', false);
-        $(form).find('textarea, input:not([type="checkbox"]), select').val("");
+        console.log("halo reset");
+        let form = $('#formExample');
 
-        if (typeof editor !== 'undefined') {
-            Object.keys(editor).forEach(function(key) {
-                editor[key].value = '';
-            });
-        }
+        // Menghapus nilai input
+        form.find('input[type="text"], input[type="email"], input[type="number"], input[type="hidden"]').val('');
+
+        // Menghapus nilai textarea
+        form.find('textarea').val('');
+
+        // Menghapus nilai select
+        form.find('select').prop('selectedIndex', 0);
     }
 
     onSave = () => {
         // Get the form data
         let formData = $('#formExample').serialize();
         let data = {};
-        let lastMenuId = localStorage.getItem('lastMenuId');
-
+        let lastMenuId = localStorage.getItem('menuId');
+        console.log(lastMenuId);
         let pairs = formData.split('&');
         for (let i = 0; i < pairs.length; i++) {
             let pair = pairs[i].split('=');
@@ -226,9 +184,13 @@
                             customClass: {
                                 confirmButton: 'btn btn-primary'
                             },
+                        }).then((result) => {
+                            if (result.isConfirmed === true) {
+                                // table.ajax.reload();
+                                $(`[data-con="${lastMenuId}"]`).trigger('click');
+                                $('.modal-backdrop').remove();
+                            }
                         })
-                        $(`[data-con="${lastMenuId}"]`).trigger('click');
-                        $('.modal-backdrop').remove();
                     },
                     error: function(xhr, status, error) {
                         Swal.fire({
@@ -246,77 +208,53 @@
         });
     };
     onDelete = (id) => {
-            Swal.fire({
-                title: 'Konfirmasi',
-                text: 'Apakah kamu ingin menghapus data ini?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Ya',
-                cancelButtonText: 'Tidak',
-                customClass: {
-                    confirmButton: 'btn btn-danger',
-                    cancelButton: 'btn btn-secondary'
-                },
-                buttonsStyling: false
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: APP_URL + 'example/delete',
-                        method: 'POST',
-                        data: {
-                            id: id,
-                            _token: '{{ csrf_token() }}'
-                        },
-                        success: function(response) {
-                            Swal.fire({
-                                text: 'Data berhasil dihapus!',
-                                icon: 'success',
-                                buttonsStyling: false,
-                                confirmButtonText: 'OK',
-                                customClass: {
-                                    confirmButton: 'btn btn-primary'
-                                }
-                            })
-                            $(`[data-con="${lastMenuId}"]`).trigger('click');
-                            $('.modal-backdrop').remove();
-                        },
-                        error: function(xhr, status, error) {
-                            Swal.fire({
-                                text: 'Error menghapus data!',
-                                icon: 'error',
-                                buttonsStyling: false,
-                                confirmButtonText: 'OK',
-                                customClass: {
-                                    confirmButton: 'btn btn-primary'
-                                }
-                            });
-                        }
-                    });
-                }
-            });
-        }
-
-    
-</script>
-
-
-
-
-
-
-
-
-
-
-<script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
-<script src="assets/js/custom/apps/customers/list/export.js"></script>
-<script src="assets/js/custom/apps/customers/list/list.js"></script>
-<script src="assets/js/custom/apps/customers/add.js"></script>
-<script src="{!! asset('assets/js/custom/js.cookie.js') !!}"></script>
-<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
-</script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"
-    integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous">
+        Swal.fire({
+            title: 'Konfirmasi',
+            text: 'Apakah kamu ingin menghapus data ini?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Tidak',
+            customClass: {
+                confirmButton: 'btn btn-danger',
+                cancelButton: 'btn btn-secondary'
+            },
+            buttonsStyling: false
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: APP_URL + 'example/delete',
+                    method: 'POST',
+                    data: {
+                        id: id,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        Swal.fire({
+                            text: 'Data berhasil dihapus!',
+                            icon: 'success',
+                            buttonsStyling: false,
+                            confirmButtonText: 'OK',
+                            customClass: {
+                                confirmButton: 'btn btn-primary'
+                            }
+                        })
+                        $(`[data-con="${lastMenuId}"]`).trigger('click');
+                        $('.modal-backdrop').remove();
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            text: 'Error menghapus data!',
+                            icon: 'error',
+                            buttonsStyling: false,
+                            confirmButtonText: 'OK',
+                            customClass: {
+                                confirmButton: 'btn btn-primary'
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    }
 </script>

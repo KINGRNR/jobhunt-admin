@@ -1,16 +1,5 @@
 <!DOCTYPE html>
-<!--
-Author: Keenthemes
-Product Name: Metronic - Bootstrap 5 HTML, VueJS, React, Angular & Laravel Admin Dashboard Theme
-Purchase: https://1.envato.market/EA4JP
 
-Website: http://www.keenthemes.com
-Contact: support@keenthemes.com
-Follow: www.twitter.com/keenthemes
-Dribbble: www.dribbble.com/keenthemes
-Like: www.facebook.com/keenthemes
-License: For each use you must have a valid license purchased only from above link in order to legally use the theme for your project.
--->
 <html lang="en">
 <!--begin::Head-->
 
@@ -172,8 +161,24 @@ License: For each use you must have a valid license purchased only from above li
             }
         }
 
-        .active {
-            /* color: #FF0000 !important;; */
+        ::-webkit-scrollbar {
+            width: 10px;
+            /* Ubah lebar scrollbar */
+        }
+
+        ::-webkit-scrollbar-track {
+            background-color: #f1f1f1;
+            /* Ubah warna latar belakang track */
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #888;
+            /* Ubah warna thumb scrollbar */
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #555;
+            /* Ubah warna thumb saat dihover */
         }
     </style>
 </head>
@@ -376,7 +381,7 @@ License: For each use you must have a valid license purchased only from above li
                                         </span>
                                         <!--end::Svg Icon-->
                                         <span
-                                            class="bullet bullet-dot bg-primary h-6px w-6px position-absolute translate-middle top-0 start-50 animation-blink"></span>
+                                            class="bullet bullet-dot bg-white h-6px w-6px position-absolute translate-middle top-0 start-50 animation-blink"></span>
                                     </div>
                                     <!--begin::Menu-->
                                     <div class="menu menu-sub menu-sub-dropdown menu-column w-350px w-lg-375px"
@@ -498,7 +503,7 @@ License: For each use you must have a valid license purchased only from above li
                                         <div
                                             class="d-none d-md-flex flex-column align-items-end justify-content-center me-2 me-md-4">
                                             <span
-                                                class="text-white  ms-4 opacity-75 fs-8 fw-semibold lh-1 mb-1">{{ auth()->user()->username }}</span>
+                                                class="text-white  ms-4 opacity-75 fs-8 fw-semibold lh-1 mb-1">{{ auth()->user()->name }}</span>
                                         </div>
                                         <!--end::User info-->
                                         <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px"
@@ -514,12 +519,12 @@ License: For each use you must have a valid license purchased only from above li
                                                     <!--begin::Username-->
                                                     <div class="d-flex flex-column">
                                                         <div class="fw-bold d-flex align-items-center fs-5">
-                                                            {{ Str::upper(auth()->user()->username) }}
+                                                            {{ auth()->user()->name }}
                                                         </div>
 
                                                         <a href=""
                                                             class="fw-semibold text-muted text-hover-primary fs-7">
-                                                            {{ Str::upper(auth()->user()->email) }} </a>
+                                                            {{ auth()->user()->email }} </a>
                                                     </div>
                                                     <!--end::Username-->
                                                 </div>
@@ -564,7 +569,7 @@ License: For each use you must have a valid license purchased only from above li
                 <!--end::Main-->
                 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
                     <!--begin::Container-->
-                    <div class="container-xxl" id="kt_content_container">
+                    <div class="container-fluid" id="kt_content_container">
                         @include('layouts.content')
                     </div>
                     <!--end::Container-->
@@ -593,6 +598,9 @@ License: For each use you must have a valid license purchased only from above li
                 <script src="//cdn.amcharts.com/lib/5/index.js"></script>
                 <script src="//cdn.amcharts.com/lib/5/xy.js"></script>
                 <script src="//cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+                <script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
+                <script src="https://cdn.datatables.net/1.11.1/js/jquery.dataTables.min.js"></script>
+
 
                 <script type="text/javascript">
                     $.ajaxSetup({
@@ -612,22 +620,23 @@ License: For each use you must have a valid license purchased only from above li
                         let lastMenuId = localStorage.getItem('menuId');
 
                         // Jalankan kode untuk mengklik elemen $('[data-con="ozqopvu1arkmk3gv"]')
-                      if(getLastUrl() === 'dashboard'){
-                        $('[data-con="ozqopvu1arkmk3gv"]').trigger('click');
-                    } else { 
-                        $(`[data-con="${lastMenuId}"]`).trigger('click');                  
-                      }
-                        init();
+                        if (getLastUrl() === 'dashboard') {
+                            $('[data-con="ozqopvu1arkmk3gv"]').trigger('click');
+                        } else {
+                            $(`[data-con="${lastMenuId}"]`).trigger('click');
+                        }
 
 
                     })
 
 
                     let stateData = null;
+
                     function getLastUrl() {
                         let url = $(location).attr('href');
                         return url.split('/').reverse()[0];
                     }
+
                     function loadPage(element) {
                         let menuId = $(element).data('con');
                         let CSRF_NAME = 'csrf_cookie_name';
@@ -665,7 +674,6 @@ License: For each use you must have a valid license purchased only from above li
                 </script>
 
 
-                <script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
 
 </body>
 
