@@ -54,18 +54,46 @@ class ExampleController extends \App\Core\BaseController
         }
     }
 
+    // public function update(Request $request, Example $example)
+    // {
+    //     try {
+    //         $dataArray = $request->all(); // Mendapatkan seluruh data dari request
+
+
+    //         $data = $dataArray['data'];
+    //         $exampleId  = $data['example_id'];
+    //         // print_r($example); exit;
+
+    //         $data['example_active'] = $request->example_active ?? 0;
+    //         $operation = $example->update($data);
+
+    //         return $this->respondUpdated([
+    //             'success' => true,
+    //             'message' => 'Successfully updated data.',
+    //         ]);
+    //     } catch (\Throwable $th) {
+    //         return $this->respondUpdated([
+    //             'success' => false,
+    //             'message' => $th->getMessage()
+    //         ]);
+    //     }
+    // }
     public function update(Request $request, Example $example)
     {
         try {
-            $dataArray = $request->all(); // Mendapatkan seluruh data dari request
-
-            // Memisahkan elemen "data" dari array
-            $data = $dataArray['data'];
-            $example = Example::find(request()->example_id);
-
-            $data['example_active'] = $request->example_active ?? 0;
-            $operation = $example->update($data);
-
+            $exampleId = $request->input('data.example_id');
+            $exampleCode = $request->input('data.example_code');
+            $exampleName = $request->input('data.example_name');
+            $exampleActive = $request->input('data.example_active') ?? 0;
+    
+            $data = [
+                'example_code' => $exampleCode,
+                'example_name' => $exampleName,
+                'example_active' => $exampleActive,
+            ];
+    
+            $operation = $example->where('example_id', $exampleId)->update($data);
+    
             return $this->respondUpdated([
                 'success' => true,
                 'message' => 'Successfully updated data.',
@@ -77,7 +105,7 @@ class ExampleController extends \App\Core\BaseController
             ]);
         }
     }
-
+    
     public function delete(Example $example)
     {
         try {

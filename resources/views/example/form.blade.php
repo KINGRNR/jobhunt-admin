@@ -22,8 +22,8 @@
                         <label for="" class="form-label">Status</label>
                         <div class="form-check form-check-custom form-check-solid">
                             <input name="example_active" class="form-check-input" type="checkbox" value="1"
-                                id="example_active" />
-                            <label class="form-check-label" for="example_active">
+                                id="checkedStatus" />
+                            <label class="form-check-label" for="checkedStatus">
                                 Active
                             </label>
                         </div>

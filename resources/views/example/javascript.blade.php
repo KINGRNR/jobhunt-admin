@@ -19,7 +19,7 @@
         await initializeDataTables();
         await unblockPage(500);
     }
-    
+
     function initializeDataTables() {
         let table = $('#table-example').DataTable({
             processing: true,
@@ -34,6 +34,11 @@
                 dataType: "json",
             },
             columns: [{
+                    "targets": 0,
+                    "render": function(data, type, row, meta) {
+                        return meta.row + 1;
+                    }
+                }, {
                     data: 'example_code',
                     name: 'example_code'
                 },
@@ -88,9 +93,14 @@
                 // console.log(response);
                 if (response.status == 'Success') {
                     $('#kt_modal_add_example').modal('show');
-
                     let data = response.data;
+                    console.log(data.example_active);
 
+                    if (data.example_active === 1) {
+                        $('#checkedStatus').prop('checked', true).attr('value', '1');
+                    } else {
+                        $('#checkedStatus').prop('checked', false).attr('value', '1');
+                    }
                     $('[name]').each(function() {
                         let fieldName = $(this).attr('name');
                         if (fieldName in data) {

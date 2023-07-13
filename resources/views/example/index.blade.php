@@ -35,6 +35,7 @@
             <thead>
                 <!--begin::Table row-->
                 <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                    <th class="ps-4" width="20">No</th>
                     <th class="min-w-125px">Code</th>
                     <th class="min-w-125px">Name</th>
                     <th class="min-w-125px">Active</th>
