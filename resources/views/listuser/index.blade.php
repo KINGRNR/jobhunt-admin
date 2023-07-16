@@ -1,3 +1,4 @@
+<h1 class="bg-warning text-center text-white">ON DEVELOPMENT!</h1>
 <div class="row mb-5 w-75 mx-auto">
         <div class="bg-white rounded-3 p-7 shadow-sm m-3">
             <div class="d-flex"> 
@@ -30,15 +31,16 @@
     <div class="card-body pt-0">
        
         <!--begin::Table-->
-        <table class="table align-middle table-row-dashed fs-6 gy-5" id="table-example">
+        <table class="table align-middle table-row-dashed fs-6 gy-5" id="table-user">
             <!--begin::Table head-->
             <thead>
                 <!--begin::Table row-->
                 <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
                     <th class="ps-4" width="20">No</th>
-                    <th class="min-w-125px">Code</th>
-                    <th class="min-w-125px">Name</th>
-                    <th class="min-w-125px">Active</th>
+                    <th class="min-w-125px">Username</th>
+                    <th class="min-w-125px">Joining Date</th>
+                    <th class="min-w-125px">Email</th>
+                    <th class="min-w-125px">Role</th>
                 </tr>
                 <!--end::Table row-->
             </thead>
@@ -49,7 +51,7 @@
 </div>
 
 <div class="modal fade" id="kt_modal_add_example" tabindex="-1" aria-hidden="true"> 
-    @include('example.form')
+    @include('listuser.form')
 </div>
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
@@ -60,4 +62,4 @@
 
     
 
-@include('example.javascript')
+@include('listuser.javascript')

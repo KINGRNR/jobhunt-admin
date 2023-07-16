@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>Job-Hunt</title>
     {{-- <title>Metronic - the world's #1 selling Bootstrap Admin Theme Ecosystem for HTML, Vue, React, Angular &amp; Laravel by Keenthemes</title> --}}
     <meta name="description"
         content="The most advanced Bootstrap Admin Theme on Themeforest trusted by 94,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue &amp; Laravel versions. Grab your copy now and get life-time updates for free." />
@@ -39,66 +39,54 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 
-<body id="kt_body" class="bg-body">
-    <!--begin::Main-->
-    <div class="d-flex flex-column flex-root">
-        <!--begin::Authentication - Sign-in -->
-        <div class="d-flex flex-column flex-column-fluid bgi-position-y-bottom position-x-center bgi-no-repeat bgi-size-contain bgi-attachment-fixed"
-            style="background-image: url(assets/media/illustrations/sigma-1/14.png">
-            <!--begin::Content-->
-            <div class="d-flex flex-center flex-column flex-column-fluid p-10 pb-lg-20">
-                <!--begin::Logo-->
-                <a href="#" class="mb-12">
-                    <img alt="Logo" src="assets/media/logos/logo-1.svg" class="h-40px" />
-                </a>
-                <!--end::Logo-->
-                <!--begin::Wrapper-->
-                <div class="w-lg-500px bg-body rounded shadow-sm p-10 p-lg-15 mx-auto">
-                    <!--begin::Form-->
-                        <!--begin::Heading-->
-                            @yield('content')
-                    </div>
-					<!--end::Wrapper-->
-				</div>
-                
-				<!--end::Content-->
-				<!--begin::Footer-->
-				{{-- <div class="d-flex flex-center flex-column-auto p-10">
-					<!--begin::Links-->
-					<div class="d-flex align-items-center fw-bold fs-6">
-						<a href="https://keenthemes.com" class="text-muted text-hover-primary px-2">About</a>
-						<a href="mailto:support@keenthemes.com" class="text-muted text-hover-primary px-2">Contact</a>
-						<a href="https://1.envato.market/EA4JP" class="text-muted text-hover-primary px-2">Contact Us</a>
-					</div>
-					<!--end::Links--> --}}
-                <div class="d-flex flex-center flex-column-auto p-10">
-					<!--begin::Links-->
-					<div class="d-flex align-items-center fw-bold fs-6">
-						<a href="https://keenthemes.com" class="text-muted text-hover-primary px-2">About</a>
-						<a href="mailto:support@keenthemes.com" class="text-muted text-hover-primary px-2">Contact</a>
-						<a href="https://1.envato.market/EA4JP" class="text-muted text-hover-primary px-2">Contact Us</a>
-					</div>
-					<!--end::Links-->
-				</div>   
+<body id="kt_body" class="app-blank">
+    <div class="d-flex flex-column flex-root" id="kt_app_root">
+
+        <div class="d-flex flex-column flex-lg-row flex-column-fluid">
+            <div class="d-flex flex-lg-row-fluid order-d-none order-lg-1 "
+            id="backgroundLogin" style="background-image: url(assets/media/jobhunt/meeting-scene.png); background-size: 784px 671px; background-repeat: no-repeat; background-position: right; flex-shrink: 0; background-color: white;">
+            <div class="d-flex flex-column flex-center py-7 py-lg-15 px-5 px-md-15 justify-content-end">
+                    {{-- <img alt="" src="assets/media/jobhunt/meeting-scene.png" class="d-lg-block d-none w-100" /> --}}
+
+                    <h1 class="d-none d-lg-block text-white fs-2qx fw-bolder text-center mb-7"></h1>
+                    <div class="d-none d-lg-block text-white fs-base text-center"></div>
+                </div>
             </div>
+
+            <div class="d-flex flex-column flex-lg-row-xl w-lg-50 p-10 order-1 order-lg-2"
+                style="background-color: white;">
+                <div class="d-flex flex-center flex-column flex-lg-row-fluid">
+
+                    <div class="w-lg-500px p-10">
+                        @yield('content')
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
         </div>
 
-				<!--end::Footer-->
-			</div>
-			<!--end::Authentication - Sign-in-->
-		</div>
-		<!--end::Main-->
-		<script>var hostUrl = "assets/";</script>
-		<!--begin::Javascript-->
-		<!--begin::Global Javascript Bundle(used by all pages)-->
-		<script src="assets/plugins/global/plugins.bundle.js"></script>
-		<script src="assets/js/scripts.bundle.js"></script>
-		<!--end::Global Javascript Bundle-->
-		<!--begin::Page Custom Javascript(used by this page)-->
-		<script src="assets/js/custom/authentication/sign-in/general.js"></script>
-		<!--end::Page Custom Javascript-->
-		<!--end::Javascript-->
-	</body>
-	<!--end::Body-->
+    </div>
+
+</body>
+
+<!--end::Main-->
+<script>
+    var hostUrl = "assets/";
+</script>
+<!--begin::Javascript-->
+<!--begin::Global Javascript Bundle(used by all pages)-->
+<script src="assets/plugins/global/plugins.bundle.js"></script>
+<script src="assets/js/scripts.bundle.js"></script>
+<!--end::Global Javascript Bundle-->
+<!--begin::Page Custom Javascript(used by this page)-->
+<script src="assets/js/custom/authentication/sign-in/general.js"></script>
+<!--end::Page Custom Javascript-->
+<!--end::Javascript-->
+</body>
+<!--end::Body-->
 
 </html>

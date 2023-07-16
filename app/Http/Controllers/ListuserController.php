@@ -5,54 +5,60 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Collection;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\DB;
 
-use App\Models\Example;
+use App\Models\ManageUser;
+use App\Models\Role;
 
-class ExampleController extends \App\Core\BaseController
+class ListUserController extends \App\Core\BaseController
 {
 
     public function index(Request $request)
     {
+        // $data = ManageUser::select('*');
         // return DataTables::of(Example::all())->toJson();
-        $data = Example::select('*');
-        return Datatables::of($data)
-            ->toJson();
+        // $data = DB::table('users')
+        //     ->join('roles', 'users.role_id', '=', 'role.id')
+        //     ->select('users.*', 'role.name AS role_name')
+        //     ->get();
+            $data = ManageUser::join('roles', 'users.role_id', '=', 'roles.role_id')->get(['users.*', 'roles.*']);
+            return DataTables::of($data)->toJson();
     }
 
-    public function show(Request $request)
-    {
-        $data = $request->post();
-        // print_r($data); exit;
-        $operation = Example::find($data['example_id']);
-        return $this->response($operation);
-    }
+    // public function show(Request $request)
+    // {
+    //     $data = $request->post();
+    //     // print_r($data); exit;
+    //     $operation = Example::find($data['example_id']);
+    //     return $this->response($operation);
+    // }
 
-    public function create(Request $request)
-    {
-        try {
-            $dataArray = $request->all(); // Mendapatkan seluruh data dari request
+    // public function create(Request $request)
+    // {
+    //     try {
+    //         $dataArray = $request->all(); // Mendapatkan seluruh data dari request
 
-            // Memisahkan elemen "data" dari array
-            $data = $dataArray['data'];
-         
-            $data['example_id'] = Example::generateExampleid();
-            $data['example_active'] = $dataArray['example_active'];
-            // print_r($data);
-            // exit;
-            $operation = Example::create($data);
+    //         // Memisahkan elemen "data" dari array
+    //         $data = $dataArray['data'];
 
-            return $this->respondCreated([
-                'success' => true,
-                'message' => 'Successfully saved data.',
-            ]);;
-        } catch (\Throwable $th) {
-            return $this->respondCreated([
-                'success' => false,
-                'message' => $th->getMessage()
-                // 'message' => 'Failed to update data, There was an error on the server.'
-            ]);
-        }
-    }
+    //         $data['example_id'] = Example::generateExampleid();
+    //         $data['example_active'] = $dataArray['example_active'];
+    //         // print_r($data);
+    //         // exit;
+    //         $operation = Example::create($data);
+
+    //         return $this->respondCreated([
+    //             'success' => true,
+    //             'message' => 'Successfully saved data.',
+    //         ]);;
+    //     } catch (\Throwable $th) {
+    //         return $this->respondCreated([
+    //             'success' => false,
+    //             'message' => $th->getMessage()
+    //             // 'message' => 'Failed to update data, There was an error on the server.'
+    //         ]);
+    //     }
+    // }
 
     // public function update(Request $request, Example $example)
     // {
@@ -87,15 +93,15 @@ class ExampleController extends \App\Core\BaseController
             $exampleCode = $data['example_code'];
             $exampleName = $data['example_name'];
             $exampleActive = $dataArray['example_active'] ?? 0;
-    
+
             $data = [
                 'example_code' => $exampleCode,
                 'example_name' => $exampleName,
                 'example_active' => $exampleActive,
             ];
-    
+
             $operation = $example->where('example_id', $exampleId)->update($data);
-    
+
             return $this->respondUpdated([
                 'success' => true,
                 'message' => 'Successfully updated data.',
@@ -107,7 +113,7 @@ class ExampleController extends \App\Core\BaseController
             ]);
         }
     }
-    
+
     public function delete(Example $example)
     {
         try {
