@@ -2,7 +2,7 @@
 <script src="assets/js/custom/apps/customers/list/list.js"></script>
 <script src="assets/js/custom/apps/customers/add.js"></script>
 <script src="{!! asset('assets/js/custom/js.cookie.js') !!}"></script>
-<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+{{-- <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script> --}}
 <script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
     integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
@@ -11,6 +11,7 @@
     integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous">
 </script>
 <script type="text/javascript">
+    var form = 'formExample';
     $(() => {
         init()
 
@@ -19,6 +20,10 @@
         await initializeDataTables();
         await unblockPage(500);
     }
+    $('#modal_form').on('hidden.bs.modal', function() {
+        $(`input, select`).removeAttr('disabled');
+    });
+
 
     function initializeDataTables() {
         let table = $('#table-example').DataTable({
@@ -70,10 +75,10 @@
                 onEdit(id);
                 $('.actCreate').addClass('d-none');
                 $('.actEdit').removeClass('d-none');
-                $(`input, select`).attr('disabled', 'disabled');
+                $('#formExample').find(`input, select`).attr('disabled', 'disabled');
             } else {
                 onReset();
-                $(`input, select`).attr('enable', 'enable');
+                $('#formExample').find('input, select').removeAttr('disabled');
                 $('.actCreate').removeClass('d-none');
                 $('.actEdit').addClass('d-none');
             }
@@ -128,30 +133,29 @@
         });
     }
     onDisplayEdit = () => {
-        $(`input, select`).removeAttr('disabled', 'disabled');
+        $('#formExample').find('input, select').removeAttr('disabled');
+        $('.actEdit').addClass('d-none');
+        $('.actCreate').removeClass('d-none');
+    }
+    onForm = () => {
+        onReset();
         $('.actEdit').addClass('d-none');
         $('.actCreate').removeClass('d-none');
     }
     onReset = () => {
-        console.log("halo reset");
+        $('#formExample').find('input, select').removeAttr('disabled');
         let form = $('#formExample');
-
-        // Menghapus nilai input
         form.find('input[type="text"], input[type="email"], input[type="number"], input[type="hidden"]').val('');
-
-        // Menghapus nilai textarea
         form.find('textarea').val('');
-
-        // Menghapus nilai select
         form.find('select').prop('selectedIndex', 0);
+        form.find('input[type="checkbox"]').prop('checked', false);
     }
 
+
     onSave = () => {
-        // Get the form data
         let formData = $('#formExample').serialize();
         let data = {};
         let lastMenuId = localStorage.getItem('menuId');
-        console.log(lastMenuId);
         let pairs = formData.split('&');
         for (let i = 0; i < pairs.length; i++) {
             let pair = pairs[i].split('=');
@@ -183,7 +187,9 @@
                     method: 'POST',
                     data: {
                         _token: '{{ csrf_token() }}',
-                        data
+                        data,
+                        example_active: $('#checkedStatus').is(':checked') ? 1 : 0,
+
                     },
                     success: function(response) {
                         Swal.fire({
@@ -196,9 +202,8 @@
                             },
                         }).then((result) => {
                             if (result.isConfirmed === true) {
-                                // table.ajax.reload();
                                 $(`[data-con="${lastMenuId}"]`).trigger('click');
-                                $('.modal-backdrop').remove();
+                                $('[data-bs-dismiss="modal"]').trigger('click');
                             }
                         })
                     },
@@ -217,7 +222,9 @@
             }
         });
     };
-    onDelete = (id) => {
+    onDelete = (id = '') => {
+        let lastMenuId = localStorage.getItem('menuId');
+
         Swal.fire({
             title: 'Konfirmasi',
             text: 'Apakah kamu ingin menghapus data ini?',
@@ -236,7 +243,7 @@
                     url: APP_URL + 'example/delete',
                     method: 'POST',
                     data: {
-                        id: id,
+                        example_id: $('[name="example_id"]').val(),
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(response) {
@@ -248,9 +255,9 @@
                             customClass: {
                                 confirmButton: 'btn btn-primary'
                             }
-                        })
+                        });
                         $(`[data-con="${lastMenuId}"]`).trigger('click');
-                        $('.modal-backdrop').remove();
+                        $('[data-bs-dismiss="modal"]').trigger('click');
                     },
                     error: function(xhr, status, error) {
                         Swal.fire({
@@ -266,5 +273,5 @@
                 });
             }
         });
-    }
+    };
 </script>

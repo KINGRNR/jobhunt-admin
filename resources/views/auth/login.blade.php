@@ -31,7 +31,7 @@
                 {{-- <a href="{{ route('password.request') }}" class="link-primary fs-14 fw-bolder">Forgot Password ?</a> --}}
             </div>
             <input class="form-control @error('password') is-invalid @enderror form-control-lg fs-14 form-control-solid border border-gray-200 text-gray-900"
-                id="password" type="password" name="password" placeholder="Enter your password" required autocomplete="current-password">
+                id="password" type="password" name="password" value="KaliBolu" placeholder="Enter your password" required autocomplete="current-password">
 
             @error('password')
                 <span class="invalid-feedback" role="alert">
