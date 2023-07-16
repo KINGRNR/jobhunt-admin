@@ -4,9 +4,13 @@ use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\ListUserController;
 use App\Http\Controllers\ExampleController;
 use App\Http\Middleware\loginCheck;
+use App\Http\Controllers\NotificationController;
+
 use App\Models\Example;
+use Illuminate\Notifications\Notification;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,13 +37,15 @@ Route::middleware([loginCheck::class])->group(function () {
 
     Route::post('/main/getPage', [MainController::class, 'getPage']);
     Route::get('examples', [ExampleController::class,'index'])->name('example.index');
-
+    Route::get('users', [ListUserController::class,'index'])->name('listuser.index');
+    Route::post('/save-token', [NotificationController::class, 'saveToken'])->name('save-token');
+    Route::post('/send-notification', [NotificationController::class, 'sendNotification'])->name('send.notification');
     // Route::get('/dashboard', [MainController::class, 'index'])->name('dashboard');
     // Route::get('/home', [HomeController::class, 'index'])->name('home');
-    // Route::controller(ExampleController::class)->group(function () {
-    //     foreach (['index', 'show', 'create', 'update', 'delete', 'getData'] as $key => $value) {
-    //         Route::get(($value == 'index') ? '/example'  : '/example/' . $value, $value);
-    //     }
-    // });
+    Route::controller(ExampleController::class)->group(function () {
+        foreach (['show', 'create', 'update', 'delete', 'getData'] as $key => $value) {
+            Route::post('/example/' . $value, $value);
+        }
+    });
     Route::get('/{menu}', [MainController::class, 'index'])->where('menu', '([A-Za-z0-9\-\/]+)');
 });

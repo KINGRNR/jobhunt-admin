@@ -132,8 +132,8 @@ class MainController extends Controller
 
 
 								<ul class="breadcrumb breadcrumb-line fw-bold fs-7 my-1">
-									<li class="breadcrumb-item text-gray-600">' . $parent['menu_title'] . '</li>
-									<li class="breadcrumb-item text-gray-400">' . $value['menu_title'] . '</li>
+									<li class="breadcrumb-item text-gray-400">' . $parent['menu_title'] . '</li>
+									<li class="breadcrumb-item text-light">' . $value['menu_title'] . '</li>
 								</ul>';
         }
     }

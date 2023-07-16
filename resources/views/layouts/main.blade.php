@@ -1,16 +1,5 @@
 <!DOCTYPE html>
-<!--
-Author: Keenthemes
-Product Name: Metronic - Bootstrap 5 HTML, VueJS, React, Angular & Laravel Admin Dashboard Theme
-Purchase: https://1.envato.market/EA4JP
 
-Website: http://www.keenthemes.com
-Contact: support@keenthemes.com
-Follow: www.twitter.com/keenthemes
-Dribbble: www.dribbble.com/keenthemes
-Like: www.facebook.com/keenthemes
-License: For each use you must have a valid license purchased only from above link in order to legally use the theme for your project.
--->
 <html lang="en">
 <!--begin::Head-->
 
@@ -171,9 +160,26 @@ License: For each use you must have a valid license purchased only from above li
                 transform: rotate(360deg);
             }
         }
-        .active {
-            color: #FF0000 !important;;
-         }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+            /* Ubah lebar scrollbar */
+        }
+
+        ::-webkit-scrollbar-track {
+            background-color: #f1f1f1;
+            /* Ubah warna latar belakang track */
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #888;
+            /* Ubah warna thumb scrollbar */
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #555;
+            /* Ubah warna thumb saat dihover */
+        }
     </style>
 </head>
 <!--end::Head-->
@@ -193,7 +199,19 @@ License: For each use you must have a valid license purchased only from above li
                 <!--begin::Logo-->
                 <div class="aside-logo flex-column-auto pt-10 pt-lg-20" id="kt_aside_logo">
                     <a href="../../demo9/dist/index.html">
-                        <img alt="Logo" src="assets/media/logos/logo-demo9.svg" class="h-40px" />
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="41" viewBox="0 0 40 41"
+                            fill="none">
+                            <g clip-path="url(#clip0_869_1150)">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M13.7146 0.516113C11.4582 0.516113 9.2943 1.41245 7.69881 3.00794L0 10.7067V14.2307C0 16.7204 1.06944 18.9603 2.77401 20.5161C1.06944 22.0719 0 24.3118 0 26.8015V30.3255L7.69881 38.0243C9.2943 39.6198 11.4582 40.5161 13.7146 40.5161C16.2043 40.5161 18.4442 39.4467 20 37.7421C21.5558 39.4467 23.7957 40.5161 26.2854 40.5161C28.5418 40.5161 30.7057 39.6198 32.3012 38.0243L40 30.3255V26.8015C40 24.3118 38.9306 22.0719 37.226 20.5161C38.9306 18.9603 40 16.7204 40 14.2307V10.7067L32.3012 3.00794C30.7057 1.41245 28.5418 0.516113 26.2854 0.516113C23.7957 0.516113 21.5558 1.58555 20 3.29012C18.4442 1.58555 16.2043 0.516113 13.7146 0.516113ZM25.7588 20.5161C25.6629 20.4286 25.5688 20.3387 25.4766 20.2465L20 14.7699L14.5234 20.2465C14.4312 20.3387 14.3371 20.4286 14.2412 20.5161C14.3371 20.6036 14.4312 20.6935 14.5234 20.7857L20 26.2623L25.4766 20.7857C25.5688 20.6935 25.6629 20.6036 25.7588 20.5161ZM22.2222 30.3255V32.0085C22.2222 34.2525 24.0414 36.0717 26.2854 36.0717C27.363 36.0717 28.3965 35.6436 29.1585 34.8816L35.5556 28.4845V26.8015C35.5556 24.5575 33.7364 22.7383 31.4924 22.7383C30.4148 22.7383 29.3813 23.1664 28.6193 23.9284L22.2222 30.3255ZM17.7778 30.3255L11.3807 23.9284C10.6187 23.1664 9.58524 22.7383 8.50762 22.7383C6.26359 22.7383 4.44444 24.5575 4.44444 26.8015V28.4845L10.8415 34.8816C11.6035 35.6436 12.637 36.0717 13.7146 36.0717C15.9586 36.0717 17.7778 34.2525 17.7778 32.0085V30.3255ZM17.7778 9.02373V10.7067L11.3807 17.1038C10.6187 17.8658 9.58524 18.2939 8.50762 18.2939C6.26359 18.2939 4.44444 16.4747 4.44444 14.2307V12.5477L10.8415 6.15063C11.6035 5.38864 12.637 4.96056 13.7146 4.96056C15.9586 4.96056 17.7778 6.7797 17.7778 9.02373ZM28.6193 17.1038L22.2222 10.7067V9.02373C22.2222 6.7797 24.0414 4.96056 26.2854 4.96056C27.363 4.96056 28.3965 5.38864 29.1585 6.15063L35.5556 12.5477V14.2307C35.5556 16.4747 33.7364 18.2939 31.4924 18.2939C30.4148 18.2939 29.3813 17.8658 28.6193 17.1038Z"
+                                    fill="#1B61AD" />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_869_1150">
+                                    <rect width="40" height="41" fill="white" />
+                                </clipPath>
+                            </defs>
+                        </svg>
                     </a>
                 </div>
                 <!--end::Logo-->
@@ -346,9 +364,9 @@ License: For each use you must have a valid license purchased only from above li
                 <!--end::Header tablet and mobile-->
                 <!--begin::Header-->
                 <div id="kt_header" class="header py-6 py-lg-0" data-kt-sticky="true" data-kt-sticky-name="header"
-                    data-kt-sticky-offset="{lg: '300px'}" style="animation-duration: 0.3s; background-color:#DC0000;">
+                    data-kt-sticky-offset="{lg: '300px'}" style="animation-duration: 0.3s; background-color:#117CB2;">
                     <!--begin::Container-->
-                    <div class="header-container container-xxl">
+                    <div class="header-container container-fluid">
                         <!--begin::Page title-->
                         <div class="page-title d-flex flex-column align-items-start justify-content-center flex-wrap me-lg-20 py-3 py-lg-0 me-3"
                             id="page_breadcrumb">
@@ -375,7 +393,7 @@ License: For each use you must have a valid license purchased only from above li
                                         </span>
                                         <!--end::Svg Icon-->
                                         <span
-                                            class="bullet bullet-dot bg-primary h-6px w-6px position-absolute translate-middle top-0 start-50 animation-blink"></span>
+                                            class="bullet bullet-dot bg-white h-6px w-6px position-absolute translate-middle top-0 start-50 animation-blink"></span>
                                     </div>
                                     <!--begin::Menu-->
                                     <div class="menu menu-sub menu-sub-dropdown menu-column w-350px w-lg-375px"
@@ -497,7 +515,7 @@ License: For each use you must have a valid license purchased only from above li
                                         <div
                                             class="d-none d-md-flex flex-column align-items-end justify-content-center me-2 me-md-4">
                                             <span
-                                                class="text-white  ms-4 opacity-75 fs-8 fw-semibold lh-1 mb-1">{{ auth()->user()->username }}</span>
+                                                class="text-white  ms-4 fs-8 fw-bold lh-1 mb-1">{{ auth()->user()->name }}</span>
                                         </div>
                                         <!--end::User info-->
                                         <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px"
@@ -513,12 +531,12 @@ License: For each use you must have a valid license purchased only from above li
                                                     <!--begin::Username-->
                                                     <div class="d-flex flex-column">
                                                         <div class="fw-bold d-flex align-items-center fs-5">
-                                                            {{ Str::upper(auth()->user()->username) }}
+                                                            {{ auth()->user()->name }}
                                                         </div>
 
                                                         <a href=""
                                                             class="fw-semibold text-muted text-hover-primary fs-7">
-                                                            {{ Str::upper(auth()->user()->email) }} </a>
+                                                            {{ auth()->user()->email }} </a>
                                                     </div>
                                                     <!--end::Username-->
                                                 </div>
@@ -563,7 +581,7 @@ License: For each use you must have a valid license purchased only from above li
                 <!--end::Main-->
                 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
                     <!--begin::Container-->
-                    <div class="container-xxl" id="kt_content_container">
+                    <div class="container-fluid" id="kt_content_container">
                         @include('layouts.content')
                     </div>
                     <!--end::Container-->
@@ -573,6 +591,7 @@ License: For each use you must have a valid license purchased only from above li
                 </script>
                 <!--begin::Javascript-->
                 <!--begin::Global Javascript Bundle(used by all pages)-->
+                <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase.js"></script>
                 <script src="assets/plugins/global/plugins.bundle.js"></script>
                 <script src="assets/js/scripts.bundle.js"></script>
                 <!--end::Global Javascript Bundle-->
@@ -592,6 +611,9 @@ License: For each use you must have a valid license purchased only from above li
                 <script src="//cdn.amcharts.com/lib/5/index.js"></script>
                 <script src="//cdn.amcharts.com/lib/5/xy.js"></script>
                 <script src="//cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+                <script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
+                <script src="https://cdn.datatables.net/1.11.1/js/jquery.dataTables.min.js"></script>
+
 
                 <script type="text/javascript">
                     $.ajaxSetup({
@@ -608,39 +630,39 @@ License: For each use you must have a valid license purchased only from above li
                     $(() => {
 
                         let currentURL = window.location.href;
-                        console.log(currentURL);
-                        // Jalankan kode untuk mengklik elemen $('[data-con="ozqopvu1arkmk3gv"]')
-                        $('[data-con="ozqopvu1arkmk3gv"]').trigger('click');
+                        let lastMenuId = localStorage.getItem('menuId');
 
-                        // Jalankan fungsi init()
-                        init();
+                        // Jalankan kode untuk mengklik elemen $('[data-con="ozqopvu1arkmk3gv"]')
+                        if (getLastUrl() === 'dashboard') {
+                            $('[data-con="ozqopvu1arkmk3gv"]').trigger('click');
+                        } else {
+                            $(`[data-con="${lastMenuId}"]`).trigger('click');
+                        }
 
 
                     })
 
 
-                    var stateData = null;
+                    let stateData = null;
+
+                    function getLastUrl() {
+                        let url = $(location).attr('href');
+                        return url.split('/').reverse()[0];
+                    }
 
                     function loadPage(element) {
-                        // Extract the menu_id from the clicked element's data attribute
-                        var menuId = $(element).data('con');
-                        var CSRF_NAME = 'csrf_cookie_name';
-
-                        // Trigger the getPage request using the extracted menuId
+                        let menuId = $(element).data('con');
+                        let CSRF_NAME = 'csrf_cookie_name';
                         $.ajax({
                             url: APP_URL + "main/getPage",
                             data: {
-                                token_csrf: Cookies.get(CSRF_NAME),
+                                _token: '{{ csrf_token() }}',
                                 menu_id: menuId
                             },
                             type: "POST",
                             success: function(pages) {
-                                console.log(pages);
                                 $(".menu-link").removeClass("active");
-
-                                // Tambahkan kelas "active" ke menu yang cocok dengan data-con
                                 $(`.menu-link[data-con="${menuId}"]`).addClass("active");
-                                //   var responseObject = JSON.parse(pages.responseText);
                                 $('#page_breadcrumb').html(atob(pages.breadcrumb));
                                 $('#titleContent').html('').html(`
                 <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1 parentTitle">${pages.menu_title}</h1>
@@ -648,7 +670,8 @@ License: For each use you must have a valid license purchased only from above li
               `)
                                 window.history.pushState(stateData, "", pages.url_path);
                                 $("#pagecontainer").html(atob(pages.view));
-                                blockPage()
+                                blockPage();
+                                localStorage.setItem('menuId', menuId);
                             }
                         });
                     }
@@ -664,8 +687,7 @@ License: For each use you must have a valid license purchased only from above li
                 </script>
 
 
-                <script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
+
 </body>
-<!--end::Body-->
 
 </html>
