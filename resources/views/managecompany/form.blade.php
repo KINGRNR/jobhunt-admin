@@ -9,19 +9,19 @@
                     <div class="fv-row mb-5">
                         <label for="" class="required form-label">Code</label>
                         <input type="text" name="example_code" id="example_code"
-                            class="form-control form-control-sm form-control-solid input-required"/>
+                            class="form-control form-control-sm form-control-solid" required />
                     </div>
 
                     <div class="fv-row mb-5">
                         <label for="" class="required form-label">Name</label>
                         <input type="text" name="example_name" id="example_name"
-                            class="form-control form-control-sm form-control-solid input-required"/>
+                            class="form-control form-control-sm form-control-solid" required />
                     </div>
 
                     <div class="fv-row mb-5">
                         <label for="" class="form-label">Status</label>
                         <div class="form-check form-check-custom form-check-solid">
-                            <input name="example_active" class="form-check-input input-required" type="checkbox" value="1"
+                            <input name="example_active" class="form-check-input" type="checkbox" value="1"
                                 id="checkedStatus" />
                             <label class="form-check-label" for="checkedStatus">
                                 Active

@@ -34,14 +34,14 @@
         <div class="card-body pt-0">
 
             <!--begin::Table-->
-            <table class="table align-middle table-row-dashed fs-6 gy-5 text-center" id="table-user">
+            <table class="table align-middle table-row-dashed fs-6 gy-5 text-center" id="table-company">
                 <!--begin::Table head-->
                 <thead>
                     <!--begin::Table row-->
                     <tr class="text-center align-middle text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
                         <th class="ps-4" width="20">No</th>
                         <th class="min-w-20px">Photo</th>
-                        <th class="min-w-125px">Username</th>
+                        <th class="min-w-125px">Company Name</th>
                         <th class="min-w-125px">Email</th>
                         <th class="min-w-125px">Joining Date</th>
                         <th class="min-w-125px">Full Name</th>
@@ -56,10 +56,10 @@
     </div>
 </div>
 <div class="col-12">
-    @include('listuser.detail')
+    @include('managecompany.detail')
 </div>
 <div class="modal fade" id="kt_modal_add_example" tabindex="-1" aria-hidden="true">
-    @include('listuser.form')
+    @include('managecompany.form')
 </div>
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
@@ -70,4 +70,4 @@
 
 
 
-@include('listuser.javascript')
+@include('managecompany.javascript')

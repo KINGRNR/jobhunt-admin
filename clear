@@ -1,0 +1,134 @@
+[33mcommit 84b40f697150aa254fe4c43bdf256e44069b6e1a[m[33m ([m[1;36mHEAD -> [m[1;32mrafif_dev_nextgen[m[33m, [m[1;31morigin/push_notif[m[33m)[m
+Author: Rafif <rafifnr06@gmail.com>
+Date:   Sun Jul 16 19:33:25 2023 +0700
+
+    update code backend and push notif firebase
+
+[33mcommit 9bc4b2921bba9cd739be02a576773b864bd4ea94[m[33m ([m[1;31morigin/rafif_dev_blue[m[33m, [m[1;32mrafif_dev_blue[m[33m)[m
+Author: Rafif <rafifnr06@gmail.com>
+Date:   Thu Jul 13 11:20:25 2023 +0700
+
+    update style and be
+
+[33mcommit 7d38ad28b6b2b393ec5095c72f3f0b149bcf14f0[m[33m ([m[1;32mrafif_dev[m[33m)[m
+Author: Rafif <rafifnr06@gmail.com>
+Date:   Sat Jul 8 21:53:43 2023 +0700
+
+    update datatable & ajax example
+
+[33mcommit d5d13241a1f00562104cc28878e9270e43228fba[m[33m ([m[1;31morigin/rafif_dev[m[33m)[m
+Author: Rafif <rafifnr06@gmail.com>
+Date:   Wed Jul 5 23:01:07 2023 +0700
+
+    major-update
+
+[33mcommit 51423abfb8e3b5de96fab19a6555a60ba8af6ba0[m
+Merge: 4cb20fd 119bd35
+Author: Rafif <80452573+KINGRNR@users.noreply.github.com>
+Date:   Wed Jul 5 14:28:49 2023 +0700
+
+    Merge pull request #7 from KINGRNR/dev
+    
+    Dev
+
+[33mcommit 119bd35b26c904243370bc903ea92f70b1d34c7d[m
+Merge: 47f2378 f429e21
+Author: Rafif <80452573+KINGRNR@users.noreply.github.com>
+Date:   Wed Jul 5 14:25:49 2023 +0700
+
+    Merge pull request #6 from dwicahyo1512/cahyo
+    
+    Cahyo
+
+[33mcommit f429e212845d9c409d12e0e090572bca9a061616[m
+Author: dwicahyo <dwicahyo.1512@gmail.com>
+Date:   Wed Jul 5 14:19:26 2023 +0700
+
+    ini nih
+
+[33mcommit 47f2378cddfa3e93a7c51320a77a27ca6dc51b73[m
+Author: Rafif <rafifnr06@gmail.com>
+Date:   Tue Jul 4 15:27:15 2023 +0700
+
+    add datatables etc
+
+[33mcommit 4cb20fd763a4bdcb647c535c364d88188cb85b72[m
+Merge: a414a4c 5800f0a
+Author: Rafif <80452573+KINGRNR@users.noreply.github.com>
+Date:   Tue Jul 4 15:22:37 2023 +0700
+
+    Merge pull request #5 from KINGRNR/dev
+    
+    change layout parent
+
+[33mcommit 5800f0ad675e949a84dbdafd8e7c1f2ce3c5b7cc[m
+Author: Rafif <rafifnr06@gmail.com>
+Date:   Tue Jul 4 15:22:03 2023 +0700
+
+    change layout parent
+
+[33mcommit a414a4c4c8250f97a09fb942cb1a7566333b690e[m
+Merge: 34e5438 807fd23
+Author: Rafif <80452573+KINGRNR@users.noreply.github.com>
+Date:   Tue Jul 4 15:21:20 2023 +0700
+
+    Merge pull request #4 from KINGRNR/dev
+    
+    fixing div auth login regis
+
+[33mcommit 807fd2396c6457d3ef48443f809c0e57b1028061[m
+Author: Rafif <rafifnr06@gmail.com>
+Date:   Tue Jul 4 15:20:57 2023 +0700
+
+    fixing div auth login regis
+
+[33mcommit 34e5438eb4364710f0bfd64c9a385a82d22447cc[m[33m ([m[1;31morigin/megumin[m[33m)[m
+Merge: 43c8867 7461eb7
+Author: Rafif <80452573+KINGRNR@users.noreply.github.com>
+Date:   Sun Jul 2 19:33:20 2023 +0700
+
+    Merge pull request #3 from KINGRNR/dev
+    
+    init admin template & backend
+
+[33mcommit 7461eb739a92322e0060ed37179ab275d98b717e[m
+Author: Rafif <rafifnr06@gmail.com>
+Date:   Sun Jul 2 19:31:21 2023 +0700
+
+    init admin template & backend
+
+[33mcommit 43c8867faf8fea0dbd2e9c1237c0e1bb161f273a[m[33m ([m[1;31morigin/dapid[m[33m)[m
+Merge: 344353c 683146e
+Author: Rafif <80452573+KINGRNR@users.noreply.github.com>
+Date:   Thu Jun 15 15:11:08 2023 +0700
+
+    Merge pull request #2 from KINGRNR/dev
+    
+    integrate metronic -> laravel
+
+[33mcommit 683146e3c0c7f8a2456db86f4fd9dc77eaab90fe[m
+Author: Rafif <rafifnr06@gmail.com>
+Date:   Thu Jun 15 15:04:28 2023 +0700
+
+    integrate metronic -> laravel
+
+[33mcommit 344353c14cb5806a87d75dfc1608ad5a64208c90[m
+Merge: 3ae5519 7befe0f
+Author: Rafif <80452573+KINGRNR@users.noreply.github.com>
+Date:   Thu Jun 15 14:01:53 2023 +0700
+
+    Merge pull request #1 from KINGRNR/dev
+    
+    init laravel
+
+[33mcommit 7befe0fb76fdf6dc0919c41e2301661f0e20256f[m
+Author: Rafif <rafifnr06@gmail.com>
+Date:   Thu Jun 15 14:00:24 2023 +0700
+
+    init laravel
+
+[33mcommit 3ae551999be066166c1559e01f271eea05c36ff7[m
+Author: Rafif <80452573+KINGRNR@users.noreply.github.com>
+Date:   Thu Jun 15 13:57:34 2023 +0700
+
+    Create Readme.md

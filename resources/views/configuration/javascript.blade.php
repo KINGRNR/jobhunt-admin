@@ -18,105 +18,11 @@
 
     })
     init = async () => {
-        await initializeDataTables();
         await unblockPage(500);
     }
     $('#modal_form').on('hidden.bs.modal', function() {
         $(`input, select`).removeAttr('disabled');
     });
-
-
-    function initializeDataTables() {
-        let table = $('#table-user').DataTable({
-            processing: true,
-            serverSide: true,
-            clickable: true,
-            searchAble: true,
-            searching: true,
-            destroyAble: true,
-            ajax: {
-                url: "{{ route('listuser.index') }}",
-                type: "GET",
-                dataType: "json",
-            },
-            columns: [{
-                    "targets": 0,
-                    "render": function(data, type, row, meta) {
-                        return meta.row + 1;
-                    }
-                },
-                {
-                    data: 'photo_url',
-                    render: function(data, type, row) {
-                        if (data) {
-                            return '<img src="' + data +
-                                '" alt="User Photo" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 5px;">';
-                        } else {
-                            return '<img src="' + APP_URL +
-                                'storage/profile/dummy.jpg" alt="Default Photo" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 5px;">';
-                        }
-                    }
-                },
-                {
-                    data: 'name',
-                    name: 'name'
-                },
-                {
-                    data: 'email',
-                    name: 'email'
-                },
-                {
-                    data: 'created_at',
-                    name: 'created_at',
-                    render: function(data, type, row) {
-                        var date = new Date(data);
-
-                        var formattedDate = date.toLocaleString('en-US', {
-                            day: '2-digit',
-                            month: '2-digit',
-                            year: 'numeric',
-                        });
-
-                        return formattedDate;
-                    }
-                },
-                {
-                    data: 'name',
-                    name: 'name'
-                },
-                {
-                    render: function(data, type, row) {
-                        let userId = row.id;
-
-                        let editButton = '<button onclick="editUser(' + userId +
-                            ')" class="btn btn-warning btn-sm">Edit</button>';
-                        let deleteButton = '<button onclick="deleteUser(' + userId +
-                            ')" class="btn btn-danger btn-sm">Delete</button>';
-
-                        return editButton + ' ' + deleteButton;
-                    }
-                },
-            ]
-
-        });
-        $('#search_example').on('input', function() {
-            var searchValue = $(this).val();
-            table.search(searchValue).draw();
-        });
-
-        $('#table-user tbody').on('click', 'tr', function() {
-            let rowData = table.row(this).data();
-            if (rowData) {
-                let id = rowData.id;
-                onDetail(id);
-            } else {
-                onReset();
-                $('#formExample').find('input, select').removeAttr('disabled');
-                $('.actCreate').removeClass('d-none');
-                $('.actEdit').addClass('d-none');
-            }
-        }).css('cursor', 'pointer');
-    }
 
     toggleDetail = () => {
         $(`[data-group="detail"]`).addClass('active');
@@ -158,23 +64,23 @@
                 const formattedDate = moment(createdAt).format('MMMM Do YYYY, h:mm:ss a');
                 const numericId = data.id;
                 const formattedId = String(numericId).padStart(4, '0');
-                const gender = data.users_gender === 1 ? 'Woman' : 'Man';
+                const gender = data.gender === 1 ? 'Woman' : 'Man';
                 toggleDetail();
 
                 //proses add data ini
                 $(`#username`).text(data.name);
-                $(`#fullname`).text(data.users_fullname);
+                $(`#fullname`).text(data.fullname);
                 $(`#email`).text(data.email);
                 $(`#join_date`).text(formattedDate);
                 $('#id_user').text(formattedId);
                 $('#gender').text(gender);
-                $('#lulusan').text(data.users_lulusan);
-                $('#kota').text(data.users_kota);
-                $('#link_porto').text(data.users_portofolio_link);
-                $('#pekerjaan_sekarang').text(data.users_posisi_kerja);
-                $('#skills').text(data.users_skills);
+                $('#lulusan').text(data.lulusan);
+                $('#kota').text(data.kota);
+                $('#link_porto').text(data.portofolio_link);
+                $('#pekerjaan_sekarang').text(data.posisi_kerja);
+                $('#skills').text(data.skills);
                 $('#negara').text("KAMU NANYA HAH?");
-                $('#link_resume').text(data.users_resume_link);
+                $('#link_resume').text(data.resume_link);
             },
             complete: (response) => {
                 unblockPage(500);

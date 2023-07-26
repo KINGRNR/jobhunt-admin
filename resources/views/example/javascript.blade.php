@@ -13,6 +13,7 @@
 <script type="text/javascript">
     var form = 'formExample';
     $(() => {
+        blockPage();
         init()
 
     })
@@ -31,6 +32,7 @@
             serverSide: true,
             clickable: true,
             searchAble: true,
+            orderable: false,
             searching: true,
             destroyAble: true,
             ajax: {
@@ -98,6 +100,7 @@
                 // console.log(response);
                 if (response.status == 'Success') {
                     $('#kt_modal_add_example').modal('show');
+                    $(`input, select`).removeClass('is-invalid');
                     let data = response.data;
                     console.log(data.example_active);
 
@@ -141,6 +144,7 @@
         onReset();
         $('.actEdit').addClass('d-none');
         $('.actCreate').removeClass('d-none');
+        $(`input, select`).removeClass('is-invalid');
     }
     onReset = () => {
         $('#formExample').find('input, select').removeAttr('disabled');
@@ -153,6 +157,17 @@
 
 
     onSave = () => {
+        var validasi = 'true';
+        $("#example_name, #example_active, #example_code").addClass('input-required');
+        $(".input-required").each(function(i, obj) {
+            if ($(this).val() == "" || $(this).val() == null) {
+                $(this).removeClass("is-valid").addClass("is-invalid");
+                validasi = 'false-invalid';
+            } else {
+                $(this).removeClass("is-invalid");
+                $(this).parent().find(".error_code").removeClass("invalid-feedback").text("").show();
+            }
+        });
         let formData = $('#formExample').serialize();
         let data = {};
         let lastMenuId = localStorage.getItem('menuId');
@@ -167,7 +182,7 @@
         let exampleId = $('[name="example_id"]').val();
 
         let route = exampleId ? 'update' : 'create';
-
+        if (validasi === 'true') {
         Swal.fire({
             title: 'Konfirmasi',
             text: 'Apakah kamu ingin melanjutkan?',
@@ -221,6 +236,14 @@
                 });
             }
         });
+    } else if (validasi === 'false-invalid') {
+        Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Lengkapi Form Terlebih Dahulu!',
+                confirmButtonClass: 'swal2-confirm btn btn-primary',
+            });
+    }
     };
     onDelete = (id = '') => {
         let lastMenuId = localStorage.getItem('menuId');

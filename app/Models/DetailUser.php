@@ -9,20 +9,20 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
-class ManageUser extends Model
+class DetailUser extends Model
 {
     use HasFactory;
     //use InteractsWithNanoid;
-    protected $table = 'users';
+    protected $table = 'detail_users';
     protected $dateFormat = 'Y-m-d H:i:s';
 
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'detail_user_id';
     public $incrementing = false;
 
+ 
     protected $nanoidLength = 16;
 
-    protected $fillable = ['id','name', 'email', 'role_id'];
-
+    protected $fillable = ['detail_user_id','fullname', 'gender', 'lulusan', 'kota', 'provinsi', 'user_id', 'negara', 'portofolio_link', 'resume_link', 'skills', 'posisi_kerja'];
     // const CREATED_AT = 'example_created_at';
     // const UPDATED_AT = 'example_updated_at';
 
