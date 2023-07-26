@@ -27,7 +27,7 @@
 
 
     function initializeDataTables() {
-        let table = $('#table-user').DataTable({
+        let table = $('#table-company').DataTable({
             processing: true,
             serverSide: true,
             clickable: true,
@@ -35,7 +35,7 @@
             searching: true,
             destroyAble: true,
             ajax: {
-                url: "{{ route('listuser.index') }}",
+                url: "{{ route('managecompany.index') }}",
                 type: "GET",
                 dataType: "json",
             },
@@ -44,6 +44,10 @@
                     "render": function(data, type, row, meta) {
                         return meta.row + 1;
                     }
+                },
+                {
+                    data: 'company_id',
+                    name: 'company_id'
                 },
                 {
                     data: 'photo_url',
@@ -58,31 +62,21 @@
                     }
                 },
                 {
-                    data: 'name',
-                    name: 'name'
+                    data: 'company_name',
+                    name: 'company_name'
                 },
                 {
-                    data: 'email',
-                    name: 'email'
+                    data: 'company_since',
+                    name: 'company_since'
                 },
                 {
-                    data: 'created_at',
-                    name: 'created_at',
-                    render: function(data, type, row) {
-                        var date = new Date(data);
+                    data: 'company_description',
+                    name: 'company_description'
+                },
+                {
+                    data: 'company_active',
+                    name: 'company_active',
 
-                        var formattedDate = date.toLocaleString('en-US', {
-                            day: '2-digit',
-                            month: '2-digit',
-                            year: 'numeric',
-                        });
-
-                        return formattedDate;
-                    }
-                },
-                {
-                    data: 'name',
-                    name: 'name'
                 },
                 {
                     render: function(data, type, row) {
@@ -158,23 +152,23 @@
                 const formattedDate = moment(createdAt).format('MMMM Do YYYY, h:mm:ss a');
                 const numericId = data.id;
                 const formattedId = String(numericId).padStart(4, '0');
-                const gender = data.users_gender === 1 ? 'Woman' : 'Man';
+                const gender = data.gender === 1 ? 'Woman' : 'Man';
                 toggleDetail();
 
                 //proses add data ini
                 $(`#username`).text(data.name);
-                $(`#fullname`).text(data.users_fullname);
+                $(`#fullname`).text(data.fullname);
                 $(`#email`).text(data.email);
                 $(`#join_date`).text(formattedDate);
                 $('#id_user').text(formattedId);
                 $('#gender').text(gender);
-                $('#lulusan').text(data.users_lulusan);
-                $('#kota').text(data.users_kota);
-                $('#link_porto').text(data.users_portofolio_link);
-                $('#pekerjaan_sekarang').text(data.users_posisi_kerja);
-                $('#skills').text(data.users_skills);
+                $('#lulusan').text(data.lulusan);
+                $('#kota').text(data.kota);
+                $('#link_porto').text(data.portofolio_link);
+                $('#pekerjaan_sekarang').text(data.posisi_kerja);
+                $('#skills').text(data.skills);
                 $('#negara').text("KAMU NANYA HAH?");
-                $('#link_resume').text(data.users_resume_link);
+                $('#link_resume').text(data.resume_link);
             },
             complete: (response) => {
                 unblockPage(500);

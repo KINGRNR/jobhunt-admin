@@ -8,10 +8,10 @@ use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\DetailUser;
-use App\Models\ManageUser;
+use App\Models\ManageCompany;
 use App\Models\Role;
 
-class ListUserController extends \App\Core\BaseController
+class ManageCompanyController extends \App\Core\BaseController
 {
 
     public function index(Request $request)
@@ -22,31 +22,34 @@ class ListUserController extends \App\Core\BaseController
         //     ->join('roles', 'users.role_id', '=', 'role.id')
         //     ->select('users.*', 'role.name AS role_name')
         //     ->get();
-        $data = ManageUser::join('roles', 'users.users_role_id', '=', 'roles.role_id')->get(['users.*', 'roles.*']);
-        return DataTables::of($data)->toJson();
+        $query = DB::table('v_company')->get();
+
+		return Datatables::of($query)->toJson();
+        // $data = ManageCompany::join('roles', 'users.users_role_id', '=', 'roles.role_id')->get(['users.*', 'roles.*']);
+        // return DataTables::of($data)->toJson();
     }
 
-    public function show(Request $request)
-    {
-        $data = $request->post();
-        $user_id = $data['id'];
+    // public function show(Request $request)
+    // {
+    //     $data = $request->post();
+    //     $user_id = $data['id'];
      
-        $userData = ManageUser::join('detail_users', 'users.id', '=', 'detail_users.user_id')
-            ->where('users.id', $user_id)
-            ->first();
-            // print_r($userData);
-            // exit;
-        // If the user with the provided ID exists
-        if ($userData) {
-            // Now you can access all data related to the user
-            return $this->response($userData);
-            // OR
-            // return view('your_view_name', ['userData' => $userData]); // Return view with the data
-        } else {
-            // If the user with the provided ID does not exist
-            return response()->json(['message' => 'User not found'], 404); // Return a 404 response
-        }
-    }
+    //     $userData = ManageUser::join('detail_users', 'users.id', '=', 'detail_users.user_id')
+    //         ->where('users.id', $user_id)
+    //         ->first();
+    //         // print_r($userData);
+    //         // exit;
+    //     // If the user with the provided ID exists
+    //     if ($userData) {
+    //         // Now you can access all data related to the user
+    //         return $this->response($userData);
+    //         // OR
+    //         // return view('your_view_name', ['userData' => $userData]); // Return view with the data
+    //     } else {
+    //         // If the user with the provided ID does not exist
+    //         return response()->json(['message' => 'User not found'], 404); // Return a 404 response
+    //     }
+    // }
 
     // public function create(Request $request)
     // {

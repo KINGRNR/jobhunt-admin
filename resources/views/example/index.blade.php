@@ -30,11 +30,11 @@
     <div class="card-body pt-0">
        
         <!--begin::Table-->
-        <table class="table align-middle table-row-dashed fs-6 gy-5" id="table-example">
+         <table class="table align-middle table-row-dashed fs-6 gy-5 text-center" id="table-example">
             <!--begin::Table head-->
             <thead>
                 <!--begin::Table row-->
-                <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                <tr class="text-center align-middle text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
                     <th class="ps-4" width="20">No</th>
                     <th class="min-w-125px">Code</th>
                     <th class="min-w-125px">Name</th>

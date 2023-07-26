@@ -1,3 +1,30 @@
+<style>
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes fadeOut {
+        from {
+            opacity: 1;
+        }
+        to {
+            opacity: 0;
+        }
+    }
+
+    #welcomePopup {
+        animation: fadeIn 0.5s ease-in-out;
+    }
+
+    #welcomePopup.hidden {
+        animation: fadeOut 0.5s ease-in-out;
+    }
+</style>
 <div class="row mb-7">
     <div class="col-12 col-md-4 col-lg-4 col-xl-4">
         <div class="bg-white rounded-1 p-7 shadow-sm m-3">

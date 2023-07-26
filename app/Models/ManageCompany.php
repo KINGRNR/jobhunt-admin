@@ -9,19 +9,19 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
-class ManageUser extends Model
+class ManageCompany extends Model
 {
     use HasFactory;
     //use InteractsWithNanoid;
-    protected $table = 'users';
+    protected $table = 'Company';
     protected $dateFormat = 'Y-m-d H:i:s';
 
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'company_id';
     public $incrementing = false;
 
     protected $nanoidLength = 16;
 
-    protected $fillable = ['id','name', 'email', 'role_id'];
+    // protected $fillable = ['id','name', 'email', 'role_id'];
 
     // const CREATED_AT = 'example_created_at';
     // const UPDATED_AT = 'example_updated_at';

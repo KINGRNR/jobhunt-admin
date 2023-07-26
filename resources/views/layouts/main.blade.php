@@ -502,7 +502,11 @@
                                             data-kt-menu-trigger="click" data-kt-menu-attach="parent"
                                             data-kt-menu-placement="bottom-end">
                                             <div class="symbol symbol-circle symbol-25px symbol-md-35px">
+                                                @if  (auth()->user()->photo_profile)
+                                                <img alt="Logo" src="{{ auth()->user()->photo_profile}}">
+                                                @else
                                                 <img alt="Logo" src="assets/media/avatars/blank.png">
+                                                @endif
                                             </div>
                                             <!--begin::Name-->
 
@@ -523,8 +527,12 @@
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-3">
                                                 <div class="menu-content d-flex align-items-center px-3">
-                                                    <div class="symbol symbol-50px me-5">
-                                                        <img alt="Logo" src="assets/media/avatars/blank.svg ">
+                                                    <div class="symbol symbol-50px me-5"> 
+                                                         @if  (auth()->user()->photo_profile)
+                                                        <img alt="Logo" src="{{ auth()->user()->photo_profile}}">
+                                                        @else
+                                                        <img alt="Logo" src="assets/media/avatars/blank.png">
+                                                        @endif
                                                     </div>
                                                     <!--end::Avatar-->
 
@@ -550,7 +558,7 @@
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-5">
                                                 <a href="javascript:;" data-con="j93ck5d81mt44dlw"
-                                                    onclick="loadPage(this)" class="menu-link px-5">
+                                                    onclick="" class="menu-link px-5">
                                                     Profile
                                                 </a>
                                             </div>
@@ -628,19 +636,24 @@
                     APP_URL = "{{ getenv('APP_URL') }}/";
 
                     $(() => {
+                        handleURLChange();
 
+                        window.addEventListener('popstate', function(event) {
+                            handleURLChange();
+                        });
+                    });
+
+                    function handleURLChange() {
                         let currentURL = window.location.href;
                         let lastMenuId = localStorage.getItem('menuId');
 
-                        // Jalankan kode untuk mengklik elemen $('[data-con="ozqopvu1arkmk3gv"]')
                         if (getLastUrl() === 'dashboard') {
                             $('[data-con="ozqopvu1arkmk3gv"]').trigger('click');
                         } else {
                             $(`[data-con="${lastMenuId}"]`).trigger('click');
                         }
+                    }
 
-
-                    })
 
 
                     let stateData = null;
@@ -670,8 +683,9 @@
               `)
                                 window.history.pushState(stateData, "", pages.url_path);
                                 $("#pagecontainer").html(atob(pages.view));
-                                blockPage();
                                 localStorage.setItem('menuId', menuId);
+                                blockPage();
+
                             }
                         });
                     }
