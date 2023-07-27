@@ -34,16 +34,10 @@ class ListUserController extends \App\Core\BaseController
         $userData = ManageUser::join('detail_users', 'users.id', '=', 'detail_users.user_id')
             ->where('users.id', $user_id)
             ->first();
-            // print_r($userData);
-            // exit;
-        // If the user with the provided ID exists
+           
         if ($userData) {
-            // Now you can access all data related to the user
             return $this->response($userData);
-            // OR
-            // return view('your_view_name', ['userData' => $userData]); // Return view with the data
         } else {
-            // If the user with the provided ID does not exist
             return response()->json(['message' => 'User not found'], 404); // Return a 404 response
         }
     }

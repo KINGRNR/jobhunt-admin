@@ -1,9 +1,14 @@
+<script>
+import ApexCharts from 'apexcharts'
+</script>
 <script type="text/javascript">
     $(() => {
         init()
 
     })
     init = async () => {
+        await loadchartatas();
+        await loadchartbawah();
         unblockPage();
     }
 
@@ -16,7 +21,7 @@
             // Load the welcome page as a full-size popup
             let timerInterval
             Swal.fire({
-              icon: 'warning',
+                icon: 'warning',
                 title: "Welcome Admin!",
                 html: "Any actions you take on this portal have a <b>significant impact</b> on the sustainability of this website!! <br><br> This Warning Will Close In <span></span> Second ",
                 timer: 10000, // 5 seconds
@@ -46,87 +51,83 @@
     function closeWelcomePopup() {
         $('#welcomePopup').remove();
     }
+    loadchartatas = () => {
+        var options = {
+            series: [{
+                name: 'Total Registered Applicants',
+                data: [100, 200, 300, 400, 500, 600, 900]
+            }],
+            chart: {
+                height: 350,
+                type: 'area'
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                curve: 'smooth'
+            },
+            xaxis: {
+                type: 'month',
+                categories: ["january","February","March","April","May","June","July","August"
+                ]
+            },
+            tooltip: {
+                x: {
+                    format: 'dd/MM/yy HH:mm'
+                },
+            },
+        };
 
-    root = am5.Root.new("totalapplicants");
-
-    root.setThemes([
-        am5themes_Animated.new(root)
-    ]);
-
-    chart = root.container.children.push(
-        am5xy.XYChart.new(root, {
-            panY: false,
-            wheelY: "zoomX",
-            layout: root.verticalLayout
-        })
-    );
-
-    // Define data
-    data = [{
-        "bulan": "Januari",
-        "pelamar": 100
-    }, {
-        "bulan": "Februari",
-        "pelamar": 200
-    }, {
-        "bulan": "Maret",
-        "pelamar": 300
-    }, {
-        "bulan": "April",
-        "pelamar": 400
-    }, {
-        "bulan": "Mei",
-        "pelamar": 500
-    }, {
-        "bulan": "Juni",
-        "pelamar": 450
-    }, {
-        "bulan": "Juli",
-        "pelamar": 600
-    }, {
-        "bulan": "Agustus",
-        "pelamar": 800
-    }, ]
-
-    // Craete Y-axis
-    yAxis = chart.yAxes.push(
-        am5xy.ValueAxis.new(root, {
-            renderer: am5xy.AxisRendererY.new(root, {})
-        })
-    );
-
-    // Create X-Axis
-    xAxis = chart.xAxes.push(
-        am5xy.CategoryAxis.new(root, {
-            maxDeviation: 0.2,
-            renderer: am5xy.AxisRendererX.new(root, {}),
-            categoryField: "bulan"
-        })
-    );
-    xAxis.data.setAll(data);
-
-    // Create series
-    function createSeries(name, field) {
-        series = chart.series.push(
-            am5xy.LineSeries.new(root, {
-                name: name,
-                xAxis: xAxis,
-                yAxis: yAxis,
-                valueYField: field,
-                categoryXField: "bulan",
-                stacked: true
-            })
-        );
-        series.strokes.template.setAll({
-            strokeWidth: 3,
-            strokeDasharray: [10, 5]
-        });
-        series.fills.template.setAll({
-            fillOpacity: 0.5,
-            visible: true
-        });
-        series.data.setAll(data);
+        var chart = new ApexCharts(document.querySelector("#totalapplicants"), options);
+        chart.render();
     }
+    loadchartbawah = () => {
+        var options = {
+            series: [{
+                name: 'Total Accepted Applicants',
+                data: [320, 400, 200]
+            }, {
+                name: 'Total Rejected Applicants',
+                data: [200, 350, 110]
+            }],
+            chart: {
+                type: 'bar',
+                height: 400
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: false,
+                    columnWidth: '55%',
+                    endingShape: 'rounded'
+                },
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                show: true,
+                width: 2,
+                colors: ['transparent']
+            },
+            xaxis: {
+                categories: ['January','February', 'March'],
+            },
+            colors: ["#1B61AD", "#D0D5DD"],
+            fill: {
+                opacity: 1
+            },
+            tooltip: {
+                y: {
+                    formatter: function(val) {
+                        return "$ " + val + " thousands"
+                    }
+                }
+            }
+        };
 
-    createSeries("Pelamar", "pelamar");
+        var chart = new ApexCharts(document.querySelector("#totalacc"), options);
+        chart.render();
+
+    }
 </script>
