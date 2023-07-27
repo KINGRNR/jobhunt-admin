@@ -5,10 +5,15 @@
                 <div class="d-flex flex-wrap flex-sm-nowrap mt-3 justify-content-center align-items-center">
                     <div class="me-7 mb-4">
                         <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
-                            <img src="assets/media/avatars/150-26.jpg" alt="image" class="img-fluid"
+ 
+                            <img src="assets/media/avatars/blank.png" alt="image" id="profile_image" class="img-fluid"
                                 style="border-radius: 50%;" />
+
+
                         </div>
 
+                    </div> <div class="symbol symbol-circle symbol-25px symbol-md-35px">
+                      
                     </div>
 
                     <div class="flex-grow-1 mt-3">
@@ -247,7 +252,7 @@
                         </div>
                         <div class="row mb-7">
                             <div class="col-lg-8">
-                                <button class="btn btn-light" onclick="toogleTable()">Back Here!</button>
+                                <button class="btn btn-light" onclick="toggleTable()">Back Here!</button>
                             </div>
                         </div>
                     </div>
@@ -289,7 +294,7 @@
             </div>
             </div>
         </div>
-        <div class="card mb-5 mb-xl-10" id="job_history">
+        <div class="card mb-5 mb-xl-10" id="job_history" style="display: none;">
             @include('listuser.table')
         </div>
     </div>

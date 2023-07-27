@@ -92,14 +92,14 @@
                 </div>
             </div>
         </div>
-        <div id="totalapplicants" style="height: 500px;" ></div>
+        <div id="totalapplicants" class="h-100 mt-2" ></div>
     </div>
 </div>
 
 
-<div class="row mb-9">
+<div class="mb-9 d-flex">
     <div class="col-12 col-xl-4">
-        <div class="card card-bordered mb-10">
+        <div class="card card-bordered mb-10 me-3">
             <div class="card-body">
                 <div class="table-responsive" id="informasi" >
                     <div class="d-flex align-items-center justify-content-between mb-3">
@@ -181,8 +181,8 @@
         </div>
 </div>
 
-    <div class="col-12 col-xl-8">
-        <div class="bg-white rounded-1 p-7 shadow-sm m-3">
+    <div class="col-12 col-xl-8 card card-bordered mb-10">
+        <div class="bg-white p-7  m-3">
 
             <div class="d-flex justify-content-between">
                 <div class="">
@@ -191,7 +191,7 @@
             </div>
             <small>Top 10 Companies</small>
 
-            <div id="totalacc" style="height: 500px;" ></div>
+            <div id="totalacc" class="h-100"></div>
 
         </div>
     </div>

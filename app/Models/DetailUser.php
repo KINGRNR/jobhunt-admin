@@ -22,7 +22,7 @@ class DetailUser extends Model
  
     protected $nanoidLength = 16;
 
-    protected $fillable = ['detail_user_id','fullname', 'gender', 'lulusan', 'kota', 'provinsi', 'user_id', 'negara', 'portofolio_link', 'resume_link', 'skills', 'posisi_kerja'];
+    protected $fillable = ['detail_user_id','users_fullname', 'users_gender', 'users_lulusan', 'users_kota', 'users_provinsi', 'user_id', 'users_negara', 'users_portofolio_link', 'users_resume_link', 'users_skills', 'users_posisi_kerja', 'users_linkedin_acc', 'users_alamat'];
     // const CREATED_AT = 'example_created_at';
     // const UPDATED_AT = 'example_updated_at';
 
