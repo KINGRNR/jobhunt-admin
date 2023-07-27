@@ -53,7 +53,7 @@
                                 '" alt="User Photo" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 5px;">';
                         } else {
                             return '<img src="' + APP_URL +
-                                'storage/profile/dummy.jpg" alt="Default Photo" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 5px;">';
+                                'assets/media/avatars/blank.png" alt="Default Photo" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 5px;">';
                         }
                     }
                 },
@@ -136,7 +136,7 @@
         $('#kt_profile_details_view').fadeOut();
         $('#job_history').fadeIn();
     }
-    toogleTable = () => {
+    toggleTable = () => {
         $('.table-user-ini').fadeIn();
         $('.detail').fadeOut();
     }
@@ -151,7 +151,7 @@
                 id: id
             },
             success: (response) => {
-                console.log(response.data);
+                console.log(response);
                 const data = response.data;
                 //proses format men format data ya ges ya
                 const createdAt = data.created_at;
@@ -175,6 +175,23 @@
                 $('#skills').text(data.users_skills);
                 $('#negara').text("KAMU NANYA HAH?");
                 $('#link_resume').text(data.users_resume_link);
+                $('#profile_image').attr('src', data.photo_profile);
+                const profileImageSrc = data.photo_profile ? data.photo_profile :
+                    'assets/media/avatars/blank.png';
+                $('#profile_image').attr('src', profileImageSrc);
+
+            },
+            error: (xhr, status, error) => {
+                let errorMessage = 'An error occurred while fetching data.';
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    errorMessage = xhr.responseJSON.message;
+                }
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: errorMessage,
+                });
             },
             complete: (response) => {
                 unblockPage(500);

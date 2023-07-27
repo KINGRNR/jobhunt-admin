@@ -21,7 +21,9 @@ class ManageUser extends Model
 
     protected $nanoidLength = 16;
 
-    protected $fillable = ['id','name', 'email', 'role_id'];
+    protected $fillable = [
+        'id', 'name', 'email', 'role_id', 'photo_profile'
+    ];
 
     // const CREATED_AT = 'example_created_at';
     // const UPDATED_AT = 'example_updated_at';
@@ -39,13 +41,13 @@ class ManageUser extends Model
     //     return $example_id;//Return the generated id as it does not exist in the DB
     // }
 
-//    protected static function boot(): void
-//    {
-//        parent::boot();
-//
-//        static::creating(function (self $model): void {
-//            $model->{$model->getKeyName()} = $model->generateNanoid();
-//        });
-//    }
+    //    protected static function boot(): void
+    //    {
+    //        parent::boot();
+    //
+    //        static::creating(function (self $model): void {
+    //            $model->{$model->getKeyName()} = $model->generateNanoid();
+    //        });
+    //    }
 
 }
