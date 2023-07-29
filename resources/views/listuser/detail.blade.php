@@ -3,7 +3,7 @@
         <div class="card mb-5 mb-xl-10">
             <div class="card-body pt-9 pb-0">
                 <div class="d-flex flex-wrap flex-sm-nowrap mt-3 justify-content-center align-items-center">
-                    <div class="me-7 mb-4">
+                    <div class="me-7 mb-4"> 
                         <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
  
                             <img src="assets/media/avatars/blank.png" alt="image" id="profile_image" class="img-fluid"
@@ -38,12 +38,12 @@
 
 
                                 <div class="me-0">
-                                    <button class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary"
-                                        data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end"
-                                        style="width: 24px;
-                                        height: 24px;">
-                                        <i class="bi bi-three-dots fs-3"></i>
-                                    </button>
+                                        <button class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary"
+                                            data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end"
+                                            style="width: 24px;
+                                            height: 24px;">
+                                            <i class="bi bi-three-dots fs-3"></i>
+                                        </button>
                                     <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-bold w-200px py-3"
                                         data-kt-menu="true">
 
