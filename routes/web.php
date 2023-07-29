@@ -10,6 +10,7 @@ use App\Http\Controllers\ExampleController;
 use App\Http\Middleware\loginCheck;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\LoginWithGoogleController;
+use App\Http\Controllers\ConfigurationController;
 
 use App\Models\Example;
 use Illuminate\Notifications\Notification;
@@ -24,7 +25,8 @@ use Illuminate\Notifications\Notification;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::controller(LoginWithGoogleController::class)->group(function(){
+
+Route::controller(LoginWithGoogleController::class)->group(function () {
     Route::get('authorized/google', 'redirectToGoogle')->name('auth.google');
     Route::get('authorized/google/callback', 'handleGoogleCallback');
 });
@@ -44,9 +46,10 @@ Route::middleware([loginCheck::class])->group(function () {
     // Route::get('/dashboard', [MainController::class, 'index'])->name('dashboard');
 
     Route::post('/main/getPage', [MainController::class, 'getPage']);
-    Route::get('examples', [ExampleController::class,'index'])->name('example.index');
-    Route::get('users', [ListUserController::class,'index'])->name('listuser.index');
-    Route::get('jobs', [ManageCompanyController::class,'index'])->name('managecompany.index');
+    Route::get('examples', [ExampleController::class, 'index'])->name('example.index');
+    Route::get('users', [ListUserController::class, 'index'])->name('listuser.index');
+    Route::get('jobs', [ManageCompanyController::class, 'index'])->name('managecompany.index');
+
 
     Route::post('/save-token', [NotificationController::class, 'saveToken'])->name('save-token');
     Route::post('/send-notification', [NotificationController::class, 'sendNotification'])->name('send.notification');
@@ -62,6 +65,10 @@ Route::middleware([loginCheck::class])->group(function () {
             Route::post('/listuser/' . $value, $value);
         }
     });
+    Route::controller(ConfigurationController::class)->group(function () {
+        foreach (['getConfig', 'save', 'uploadFile', 'deleteFile'] as $key => $value) {
+            Route::post('/config/' . $value, $value);
+        }
+    });
     Route::get('/{menu}', [MainController::class, 'index'])->where('menu', '([A-Za-z0-9\-\/]+)');
 });
-

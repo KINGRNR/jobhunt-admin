@@ -483,8 +483,8 @@
                                                 <!--begin::Wrapper-->
                                                 <div class="d-flex flex-column px-9">
                                                     <div class="text-center px-4 py-6">
-                                                        <img class="mw-100 mh-200px" alt="image"
-                                                            src="assets/media/misc/notif.png">
+                                                        {{-- <img class="mw-100 mh-200px" alt="image"
+                                                            src="assets/media/misc/notif.png"> --}}
                                                     </div>
                                                     <!--end::Illustration-->
                                                 </div>

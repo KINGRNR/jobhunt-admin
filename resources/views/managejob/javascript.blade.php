@@ -28,74 +28,7 @@
 
     function initializeDataTables() {
         let table = $('#table-user').DataTable({
-            processing: true,
-            serverSide: true,
-            clickable: true,
-            searchAble: true,
-            searching: true,
-            destroyAble: true,
-            ajax: {
-                url: "{{ route('listuser.index') }}",
-                type: "GET",
-                dataType: "json",
-            },
-            columns: [{
-                    "targets": 0,
-                    "render": function(data, type, row, meta) {
-                        return meta.row + 1;
-                    }
-                },
-                {
-                    data: 'photo_url',
-                    render: function(data, type, row) {
-                        if (data) {
-                            return '<img src="' + data +
-                                '" alt="User Photo" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 5px;">';
-                        } else {
-                            return '<img src="' + APP_URL +
-                                'assets/media/avatars/blank.png" alt="Default Photo" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 5px;">';
-                        }
-                    }
-                },
-                {
-                    data: 'name',
-                    name: 'name'
-                },
-                {
-                    data: 'email',
-                    name: 'email'
-                },
-                {
-                    data: 'created_at',
-                    name: 'created_at',
-                    render: function(data, type, row) {
-                        var date = new Date(data);
-
-                        var formattedDate = date.toLocaleString('en-US', {
-                            day: '2-digit',
-                            month: '2-digit',
-                            year: 'numeric',
-                        });
-
-                        return formattedDate;
-                    }
-                },
-                {
-                    data: 'name',
-                    name: 'name'
-                },
-                {
-                    render: function(data, type, row) {
-                        let userId = row.id;
-
-                        return `
-            <span class="badge bg-warning text-dark">gatau</span>
-        `;
-                    }
-                },
-            ]
-
-        });
+ });
         $('#search_example').on('input', function() {
             var searchValue = $(this).val();
             table.search(searchValue).draw();
@@ -103,15 +36,17 @@
 
         $('#table-user tbody').on('click', 'tr', function() {
             let rowData = table.row(this).data();
-            if (rowData) {
-                let id = rowData.id;
-                onDetail(id);
-            } else {
-                onReset();
-                $('#formExample').find('input, select').removeAttr('disabled');
-                $('.actCreate').removeClass('d-none');
-                $('.actEdit').addClass('d-none');
-            }
+                            toggleDetail();
+
+            // if (rowData) {
+            //     let id = rowData.id;
+            //     onDetail();
+            // } else {
+            //     onReset();
+            //     $('#formExample').find('input, select').removeAttr('disabled');
+            //     $('.actCreate').removeClass('d-none');
+            //     $('.actEdit').addClass('d-none');
+            // }
         }).css('cursor', 'pointer');
     }
 

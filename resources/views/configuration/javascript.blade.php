@@ -18,215 +18,113 @@
 
     })
     init = async () => {
+        await showConfig('app', true);
         await unblockPage(500);
     }
-    $('#modal_form').on('hidden.bs.modal', function() {
-        $(`input, select`).removeAttr('disabled');
-    });
+    showConfig = (group = '', init = false) => {
+        var group = (init) ? group : $(group).data('group');
 
-    toggleDetail = () => {
-        $(`[data-group="detail"]`).addClass('active');
-        $(`[data-group="job"]`).removeClass('active');
-        $('.table-user-ini').fadeOut();
-        $('.detail').fadeIn();
+        $(`.tabConfig`).removeClass('active');
+        $(`[data-group="${group}"]`).addClass('active');
+
+        return new Promise((resolve) => {
+            blockPage();
+            $.ajax({
+                url: APP_URL + 'config/getConfig',
+                data: {
+                    group: group
+                },
+                type: "POST",
+                success: (response) => {
+                    resolve(true)
+                    var html = [];
+                    $.each(response.data.config, (i, v) => {
+                        html.push(createTemplates(v));
+                    });
+                    $('#contentConfig').html('').html(html.join(''));
+                },
+                complete: (response) => {
+                    // $.each(response.data.config, (i, v) => {
+                    //     if (v.config_type == 'file') {
+                    //         uploadFileOnChange(v.config_id);
+                    //         // set logo
+                    //         if (v.config_code == 'app.logo') {
+                    //             $('#logoApp').attr('src',
+                    //                 '/files/uploads-logos-origins-' +
+                    //                 v.config_value);
+                    //         }
+                    //     }
+                    //     $(`[id="${v.config_code}"]`).text(v.config_value);
+                    // });
+
+                    // $('#dataConfiguration').removeClass('d-none');
+                    unblockPage(500);
+                }
+            })
+        });
     }
-    toggleDetailUser = () => {
-        $(`[data-group="detail"]`).addClass('active');
-        $(`[data-group="job"]`).removeClass('active');
-        $('#job_history').fadeOut();
-        $('#kt_profile_details_view').fadeIn();
-    }
-    toggleJob = () => {
-        $(`[data-group="detail"]`).removeClass('active');
-        $(`[data-group="job"]`).addClass('active');
-        $('#kt_profile_details_view').fadeOut();
-        $('#job_history').fadeIn();
-    }
-    toogleTable = () => {
-        $('.table-user-ini').fadeIn();
-        $('.detail').fadeOut();
+    createTemplates = (value) => {
+
+        switch (value.config_type) {
+            case 'text':
+                return createTypeText(value);
+                break;
+            case 'file':
+                return createTypeFile(value);
+                break;
+            case 'textarea':
+                return createTypeTextarea(value);
+                break;
+            case 'password':
+                return createTypePassword(value);
+                break;
+            default:
+                return '';
+                break;
+        }
     }
 
-    onDetail = (id) => {
-        blockPage();
+    createTypeText = (value) => {
+        return `
+        <div class="row">
+                     <label class="col-lg-4 col-form-label required fw-bold fs-6">${value.config_title}</label>
+                     <input type="text" name="${value.config_id}" class="form-control" placeholder="${value.config_title}" value="${value.config_value}">
+                      <div class="fv-plugins-message-container invalid-feedback"></div></div>
+		`;
+    }
+    createTypeTextarea = (value, withysiwyg = false) => {
+        if (!withysiwyg) {
+            return `
+            <div class="row">
+                     <label class="col-lg-4 col-form-label required fw-bold fs-6">${value.config_title}</label>
+                     <input type="text" name="${value.config_id}" class="form-control" placeholder="${value.config_title}" value="${value.config_value}">
+                      <div class="fv-plugins-message-container invalid-feedback"></div></div>
+			`;
+        }
+    }
+    save  = () => {
+        var formData = $("#configForm").serialize();
+
         $.ajax({
-            url: APP_URL + 'listuser/show',
-            method: 'POST',
-            data: {
-                _token: '{{ csrf_token() }}',
-                id: id
+            url: APP_URL + 'config/save',
+            type: "POST",
+            data: formData,
+            success: function(response) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Success",
+                    text: "Data saved successfully!",
+                    showConfirmButton: true,
+                });
             },
-            success: (response) => {
-                console.log(response.data);
-                const data = response.data;
-                //proses format men format data ya ges ya
-                const createdAt = data.created_at;
-                const formattedDate = moment(createdAt).format('MMMM Do YYYY, h:mm:ss a');
-                const numericId = data.id;
-                const formattedId = String(numericId).padStart(4, '0');
-                const gender = data.gender === 1 ? 'Woman' : 'Man';
-                toggleDetail();
-
-                //proses add data ini
-                $(`#username`).text(data.name);
-                $(`#fullname`).text(data.fullname);
-                $(`#email`).text(data.email);
-                $(`#join_date`).text(formattedDate);
-                $('#id_user').text(formattedId);
-                $('#gender').text(gender);
-                $('#lulusan').text(data.lulusan);
-                $('#kota').text(data.kota);
-                $('#link_porto').text(data.portofolio_link);
-                $('#pekerjaan_sekarang').text(data.posisi_kerja);
-                $('#skills').text(data.skills);
-                $('#negara').text("KAMU NANYA HAH?");
-                $('#link_resume').text(data.resume_link);
-            },
-            complete: (response) => {
-                unblockPage(500);
+            error: function(xhr, status, error) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "An error occurred. Please try again later.",
+                    showConfirmButton: true            
+                });
             }
         });
     }
-    // onDisplayEdit = () => {
-    //     $('#formExample').find('input, select').removeAttr('disabled');
-    //     $('.actEdit').addClass('d-none');
-    //     $('.actCreate').removeClass('d-none');
-    // }
-    // onForm = () => {
-    //     onReset();
-    //     $('.actEdit').addClass('d-none');
-    //     $('.actCreate').removeClass('d-none');
-    // }
-    // onReset = () => {
-    //     $('#formExample').find('input, select').removeAttr('disabled');
-    //     let form = $('#formExample');
-    //     form.find('input[type="text"], input[type="email"], input[type="number"], input[type="hidden"]').val('');
-    //     form.find('textarea').val('');
-    //     form.find('select').prop('selectedIndex', 0);
-    //     form.find('input[type="checkbox"]').prop('checked', false);
-    // }
-
-
-    // onSave = () => {
-    //     let formData = $('#formExample').serialize();
-    //     let data = {};
-    //     let lastMenuId = localStorage.getItem('menuId');
-    //     let pairs = formData.split('&');
-    //     for (let i = 0; i < pairs.length; i++) {
-    //         let pair = pairs[i].split('=');
-    //         let key = decodeURIComponent(pair[0]);
-    //         let value = decodeURIComponent(pair[1]);
-    //         data[key] = value;
-    //     }
-
-    //     let exampleId = $('[name="example_id"]').val();
-
-    //     let route = exampleId ? 'update' : 'create';
-
-    //     Swal.fire({
-    //         title: 'Konfirmasi',
-    //         text: 'Apakah kamu ingin melanjutkan?',
-    //         icon: 'question',
-    //         showCancelButton: true,
-    //         confirmButtonText: 'Ya',
-    //         cancelButtonText: 'Tidak',
-    //         customClass: {
-    //             confirmButton: 'btn btn-primary',
-    //             cancelButton: 'btn btn-secondary'
-    //         },
-    //         buttonsStyling: false
-    //     }).then((result) => {
-    //         if (result.isConfirmed) {
-    //             $.ajax({
-    //                 url: APP_URL + 'example/' + route,
-    //                 method: 'POST',
-    //                 data: {
-    //                     _token: '{{ csrf_token() }}',
-    //                     data,
-    //                     example_active: $('#checkedStatus').is(':checked') ? 1 : 0,
-
-    //                 },
-    //                 success: function(response) {
-    //                     Swal.fire({
-    //                         text: 'Data saved successfully!',
-    //                         icon: 'success',
-    //                         buttonsStyling: false,
-    //                         confirmButtonText: 'OK',
-    //                         customClass: {
-    //                             confirmButton: 'btn btn-primary'
-    //                         },
-    //                     }).then((result) => {
-    //                         if (result.isConfirmed === true) {
-    //                             $(`[data-con="${lastMenuId}"]`).trigger('click');
-    //                             $('[data-bs-dismiss="modal"]').trigger('click');
-    //                         }
-    //                     })
-    //                 },
-    //                 error: function(xhr, status, error) {
-    //                     Swal.fire({
-    //                         text: 'Error saving data!',
-    //                         icon: 'error',
-    //                         buttonsStyling: false,
-    //                         confirmButtonText: 'OK',
-    //                         customClass: {
-    //                             confirmButton: 'btn btn-primary'
-    //                         }
-    //                     });
-    //                 }
-    //             });
-    //         }
-    //     });
-    // };
-    // onDelete = (id = '') => {
-    //     let lastMenuId = localStorage.getItem('menuId');
-
-    //     Swal.fire({
-    //         title: 'Konfirmasi',
-    //         text: 'Apakah kamu ingin menghapus data ini?',
-    //         icon: 'warning',
-    //         showCancelButton: true,
-    //         confirmButtonText: 'Ya',
-    //         cancelButtonText: 'Tidak',
-    //         customClass: {
-    //             confirmButton: 'btn btn-danger',
-    //             cancelButton: 'btn btn-secondary'
-    //         },
-    //         buttonsStyling: false
-    //     }).then((result) => {
-    //         if (result.isConfirmed) {
-    //             $.ajax({
-    //                 url: APP_URL + 'example/delete',
-    //                 method: 'POST',
-    //                 data: {
-    //                     example_id: $('[name="example_id"]').val(),
-    //                     _token: '{{ csrf_token() }}'
-    //                 },
-    //                 success: function(response) {
-    //                     Swal.fire({
-    //                         text: 'Data berhasil dihapus!',
-    //                         icon: 'success',
-    //                         buttonsStyling: false,
-    //                         confirmButtonText: 'OK',
-    //                         customClass: {
-    //                             confirmButton: 'btn btn-primary'
-    //                         }
-    //                     });
-    //                     $(`[data-con="${lastMenuId}"]`).trigger('click');
-    //                     $('[data-bs-dismiss="modal"]').trigger('click');
-    //                 },
-    //                 error: function(xhr, status, error) {
-    //                     Swal.fire({
-    //                         text: 'Error menghapus data!',
-    //                         icon: 'error',
-    //                         buttonsStyling: false,
-    //                         confirmButtonText: 'OK',
-    //                         customClass: {
-    //                             confirmButton: 'btn btn-primary'
-    //                         }
-    //                     });
-    //                 }
-    //             });
-    //         }
-    //     });
-    // };
 </script>
