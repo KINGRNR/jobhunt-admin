@@ -47,13 +47,6 @@ class MainController extends Controller
                 'menu_code' => strtolower($menu_code),
             ];
             // print_r($data); exit;
-            $temp = Configuration::where('config_group', 'app')->orderBy('config_order', 'ASC')->get();
-            if ($temp != []) {
-                foreach ($temp as $k => $v) {
-                    session([$v->config_code => $v->config_value]);
-                }
-            }
-
             return view('layouts.main', $data);
         } catch (Exception $e) {
             $statusCode = $e->getMessage();

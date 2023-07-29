@@ -117,13 +117,7 @@ import ApexCharts from 'apexcharts'
             fill: {
                 opacity: 1
             },
-            tooltip: {
-                y: {
-                    formatter: function(val) {
-                        return "$ " + val + " thousands"
-                    }
-                }
-            }
+
         };
 
         var chart = new ApexCharts(document.querySelector("#totalacc"), options);
