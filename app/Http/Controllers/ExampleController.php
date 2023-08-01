@@ -30,26 +30,26 @@ class ExampleController extends \App\Core\BaseController
     public function create(Request $request)
     {
         try {
-            $dataArray = $request->all(); // Mendapatkan seluruh data dari request
-
-            // Memisahkan elemen "data" dari array
+            $dataArray = $request->all();
             $data = $dataArray['data'];
-         
+
             $data['example_id'] = Example::generateExampleid();
             $data['example_active'] = $dataArray['example_active'];
-            // print_r($data);
-            // exit;
             $operation = Example::create($data);
 
-            return $this->respondCreated([
-                'success' => true,
-                'message' => 'Successfully saved data.',
-            ]);;
+            return response()->json([
+                'success' =>  true,
+                'status' =>  'Success',
+                'title' => 'Sukses!',
+                'message' => 'Data Berhasil Tersimpan!',
+                'code' => 201
+            ]);
         } catch (\Throwable $th) {
-            return $this->respondCreated([
-                'success' => false,
-                'message' => $th->getMessage()
-                // 'message' => 'Failed to update data, There was an error on the server.'
+            return response()->json([
+                'success' =>  false,
+                'status' =>  'error',
+                'title' => 'Gagal!',
+                'message' => 'Terjadi Kesalahan di Sistem!',
             ]);
         }
     }
@@ -87,40 +87,50 @@ class ExampleController extends \App\Core\BaseController
             $exampleCode = $data['example_code'];
             $exampleName = $data['example_name'];
             $exampleActive = $dataArray['example_active'] ?? 0;
-    
+
             $data = [
                 'example_code' => $exampleCode,
                 'example_name' => $exampleName,
                 'example_active' => $exampleActive,
             ];
-    
+
             $operation = $example->where('example_id', $exampleId)->update($data);
-    
-            return $this->respondUpdated([
-                'success' => true,
-                'message' => 'Successfully updated data.',
+
+            return response()->json([
+                'success' =>  true,
+                'status' =>  'Success',
+                'title' => 'Sukses!',
+                'message' => 'Data Berhasil Terupdate!',
+                'code' => 201
             ]);
         } catch (\Throwable $th) {
-            return $this->respondUpdated([
-                'success' => false,
-                'message' => $th->getMessage()
+            return response()->json([
+                'success' =>  false,
+                'status' =>  'error',
+                'title' => 'Gagal!',
+                'message' => 'Terjadi Kesalahan di Sistem!',
             ]);
         }
     }
-    
+
     public function delete(Example $example)
     {
         try {
             $example = Example::find(request()->example_id);
             $operation = $example->delete();
-            return $this->respondDeleted([
-                'success' => true,
-                'message' => 'Successfully deleted data.',
+            return response()->json([
+                'success' =>  true,
+                'status' =>  'Success',
+                'title' => 'Sukses!',
+                'message' => 'Data Berhasil Terdelete!',
+                'code' => 201
             ]);
         } catch (\Throwable $th) {
-            return $this->respondDeleted([
-                'success' => false,
-                'message' => 'Failed to delete data, There was an error on the server.'
+            return response()->json([
+                'success' =>  false,
+                'status' =>  'error',
+                'title' => 'Gagal!',
+                'message' => 'Terjadi Kesalahan di Sistem!',
             ]);
         }
     }

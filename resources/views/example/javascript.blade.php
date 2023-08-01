@@ -183,67 +183,77 @@
 
         let route = exampleId ? 'update' : 'create';
         if (validasi === 'true') {
-        Swal.fire({
-            title: 'Konfirmasi',
-            text: 'Apakah kamu ingin melanjutkan?',
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonText: 'Ya',
-            cancelButtonText: 'Tidak',
-            customClass: {
-                confirmButton: 'btn btn-primary',
-                cancelButton: 'btn btn-secondary'
-            },
-            buttonsStyling: false
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: APP_URL + 'example/' + route,
-                    method: 'POST',
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        data,
-                        example_active: $('#checkedStatus').is(':checked') ? 1 : 0,
+            Swal.fire({
+                title: 'Konfirmasi',
+                text: 'Apakah kamu ingin melanjutkan?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Ya',
+                cancelButtonText: 'Tidak',
+                customClass: {
+                    confirmButton: 'btn btn-primary',
+                    cancelButton: 'btn btn-secondary'
+                },
+                buttonsStyling: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: APP_URL + 'example/' + route,
+                        method: 'POST',
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            data,
+                            example_active: $('#checkedStatus').is(':checked') ? 1 : 0,
 
-                    },
-                    success: function(response) {
-                        Swal.fire({
-                            text: 'Data saved successfully!',
-                            icon: 'success',
-                            buttonsStyling: false,
-                            confirmButtonText: 'OK',
-                            customClass: {
-                                confirmButton: 'btn btn-primary'
-                            },
-                        }).then((result) => {
-                            if (result.isConfirmed === true) {
-                                $(`[data-con="${lastMenuId}"]`).trigger('click');
-                                $('[data-bs-dismiss="modal"]').trigger('click');
+                        },
+                        success: function(response) {
+                            if (response.status === 'Success') {
+                                Swal.fire({
+                                    title: response.title,
+                                    text: response.message,
+                                    icon: (response.success) ? 'success' : "error",
+                                    buttonsStyling: false,
+                                    confirmButtonText: "Oke!",
+                                    customClass: {
+                                        confirmButton: "btn btn-primary"
+                                    },
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        $(`[data-con="${lastMenuId}"]`).trigger(
+                                            'click');
+                                        $('[data-bs-dismiss="modal"]').trigger('click');
+                                    }
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: 'Terjadi Kesalahan Pada Sistem!',
+                                    icon: 'error',
+                                    confirmButtonText: "Oke!",
+                                    customClass: {
+                                        confirmButton: "btn btn-primary"
+                                    },
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        $(`[data-con="${lastMenuId}"]`).trigger(
+                                            'click');
+                                        $('[data-bs-dismiss="modal"]').trigger('click');
+                                    }
+                                }); 
                             }
-                        })
-                    },
-                    error: function(xhr, status, error) {
-                        Swal.fire({
-                            text: 'Error saving data!',
-                            icon: 'error',
-                            buttonsStyling: false,
-                            confirmButtonText: 'OK',
-                            customClass: {
-                                confirmButton: 'btn btn-primary'
-                            }
-                        });
-                    }
-                });
-            }
-        });
-    } else if (validasi === 'false-invalid') {
-        Swal.fire({
+                        },
+                        error: function(xhr, status, error) {}
+                    });
+                }
+            });
+        } else if (validasi === 'false-invalid') {
+            Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
                 text: 'Lengkapi Form Terlebih Dahulu!',
                 confirmButtonClass: 'swal2-confirm btn btn-primary',
             });
-    }
+        }
     };
     onDelete = (id = '') => {
         let lastMenuId = localStorage.getItem('menuId');
@@ -270,29 +280,41 @@
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(response) {
-                        Swal.fire({
-                            text: 'Data berhasil dihapus!',
-                            icon: 'success',
-                            buttonsStyling: false,
-                            confirmButtonText: 'OK',
-                            customClass: {
-                                confirmButton: 'btn btn-primary'
+                            if (response.status === 'Success') {
+                                Swal.fire({
+                                    title: response.title,
+                                    text: response.message,
+                                    icon: (response.success) ? 'success' : "error",
+                                    buttonsStyling: false,
+                                    confirmButtonText: "Oke!",
+                                    customClass: {
+                                        confirmButton: "btn btn-primary"
+                                    },
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        $(`[data-con="${lastMenuId}"]`).trigger(
+                                            'click');
+                                        $('[data-bs-dismiss="modal"]').trigger('click');
+                                    }
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: 'Terjadi Kesalahan Pada Sistem!',
+                                    icon: 'error',
+                                    confirmButtonText: "Oke!",
+                                    customClass: {
+                                        confirmButton: "btn btn-primary"
+                                    },
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        $(`[data-con="${lastMenuId}"]`).trigger(
+                                            'click');
+                                        $('[data-bs-dismiss="modal"]').trigger('click');
+                                    }
+                                }); 
                             }
-                        });
-                        $(`[data-con="${lastMenuId}"]`).trigger('click');
-                        $('[data-bs-dismiss="modal"]').trigger('click');
-                    },
-                    error: function(xhr, status, error) {
-                        Swal.fire({
-                            text: 'Error menghapus data!',
-                            icon: 'error',
-                            buttonsStyling: false,
-                            confirmButtonText: 'OK',
-                            customClass: {
-                                confirmButton: 'btn btn-primary'
-                            }
-                        });
-                    }
+                        },
                 });
             }
         });
