@@ -3,14 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Configuration;
-use Illuminate\Support\Collection;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Str;
 use App\Models\Menu;
-use App\Models\UnitKerja;
 use Exception;
 use Illuminate\Support\Facades\DB;
-use Config;
 
 class MainController extends Controller
 {
@@ -46,6 +42,12 @@ class MainController extends Controller
                 'menu_id' => $role_menu->menu_id,
                 'menu_code' => strtolower($menu_code),
             ];
+            $temp = Configuration::where('config_group', 'app')->orderBy('config_order', 'ASC')->get();
+            if ($temp != []) {
+                foreach ($temp as $k => $v) {
+                    session([$v->config_code => $v->config_value]);
+                }
+            }
             // print_r($data); exit;
             return view('layouts.main', $data);
         } catch (Exception $e) {
@@ -97,12 +99,6 @@ class MainController extends Controller
         }
         $output['message'] = $data['message'] ?? $message;
 
-        // if (isset($data['menu_title'])) {
-        //     $folderName = Str::of($data['menu_title']);
-        //     $output['view'] = view($folderName . '.index')->render();
-        // }
-
-        // print_r($output); exit;
         return response()->json($output, $status);
     }
 

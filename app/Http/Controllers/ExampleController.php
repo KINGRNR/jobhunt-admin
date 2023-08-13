@@ -8,7 +8,7 @@ use Yajra\DataTables\DataTables;
 
 use App\Models\Example;
 
-class ExampleController extends \App\Core\BaseController
+class ExampleController extends Controller
 {
 
     public function index(Request $request)
@@ -22,10 +22,22 @@ class ExampleController extends \App\Core\BaseController
     public function show(Request $request)
     {
         $data = $request->post();
-        // print_r($data); exit;
         $operation = Example::find($data['example_id']);
-        return $this->response($operation);
+
+        if ($operation) {
+            return response()->json([
+                'status' => 'success',
+                'data' => $operation,
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Data not found.',
+            ]);
+        }
     }
+
+
 
     public function create(Request $request)
     {

@@ -2,13 +2,20 @@
 
     <div class="card">
         <!--begin::Card header-->
+        <div class="card-header cursor-pointer">
 
+            <div class="card-title m-0">
+                <h2 class="ms-3">List Job Application History</h2>
+            </div>
+
+        </div>  
         <!--end::Card header-->
         <!--begin::Card body-->
-        <div class="card-body pt-0">
-
+        <div id="callback">
+        </div>
+        <div class="card-body pt-0" id="card_table">
             <!--begin::Table-->
-            <table class="table align-middle table-row-dashed fs-6 gy-5 text-center" id="table-user">
+            <table class="table align-middle table-row-dashed fs-6 gy-5 text-center" id="table-user_detail">
                 <!--begin::Table head-->
                 <thead>
                     <!--begin::Table row-->
@@ -23,10 +30,10 @@
                 </thead>
                 <tbody class="fw-bold text-gray-600 text-center align-middle">
                     <td class="ps-4" width="20">1</td>
-                    <td class="min-w-20px"><img src="" alt=""></td>
-                    <td class="min-w-125px">29 Des 2022</td>
-                    <td class="min-w-125px">PT Neraca Abadi</td>
-                    <td class="min-w-125px">Accepted</td>
+                    <td class="min-w-20px"></td>
+                    <td class="min-w-125px"></td>
+                    <td class="min-w-125px"></td>
+                    <td class="min-w-125px"></td>
                 </tbody>
             </table>
         </div>
