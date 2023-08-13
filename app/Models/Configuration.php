@@ -8,7 +8,8 @@ class Configuration extends Model
     protected $table         = 'configurations';
     protected $primaryKey    = 'config_id';
     protected $useAutoIncrement = false;
-
+    public $incrementing = false;
+    
     protected $fillable = [
         'config_id',
         'config_code',

@@ -8,45 +8,45 @@ use Illuminate\Support\Facades\DB;
 
 use App\Models\Configuration;
 
-class ConfigurationController extends \App\Core\BaseController
+class ConfigurationController extends Controller
 {
     public function getConfig(Request $request)
     {
         $data = $request->post();
         $operation = Configuration::where('config_group', $data['group'])->orderBy('config_order', 'ASC')->get();
-        // print_r($operation); exit;
 
-        return $this->response([
+        return response()->json([
             'config' => $operation,
         ]);
     }
+
     public function save(Request $request)
     {
-        $data = $request->post();
+        $data = $request->all();
+
         try {
-            $dataSave = [];
             foreach ($data as $key => $value) {
                 if (count(explode('_', $key)) == 1) {
-                    array_push($dataSave, [
-                        'config_id' => $key,
-                        'config_value' => $value
+                    Configuration::where('config_id', $key)->update([
+                        'config_value' => $value,
                     ]);
                 }
             }
-            print_r($dataSave); exit;
 
-            $operation = Configuration::updateBatch('config_id', $dataSave);
-
-            return $this->respondUpdated([
-                'success' => true,
-                'message' => 'Successfully updated data.',
+            return response()->json([
+                'success' =>  true,
+                'status' =>  'Success',
+                'title' => 'Sukses!',
+                'message' => 'Data Berhasil Tersimpan!',
+                'code' => 201
             ]);
         } catch (\Throwable $th) {
-            return $this->respondUpdated([
-                'success' => false,
-                'message' => 'Failed to update data, There was an error on the server.'
+            return response()->json([
+                'success' =>  false,
+                'status' =>  'error',
+                'title' => 'Gagal!',
+                'message' => 'Terjadi Kesalahan di Sistem!',
             ]);
         }
-        return $this->respondUpdated($operation);
     }
 }

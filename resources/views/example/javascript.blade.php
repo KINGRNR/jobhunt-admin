@@ -15,7 +15,6 @@
     $(() => {
         blockPage();
         init()
-
     })
     init = async () => {
         await initializeDataTables();
@@ -28,24 +27,22 @@
 
     function initializeDataTables() {
         let table = $('#table-example').DataTable({
-            processing: true,
-            serverSide: true,
-            clickable: true,
-            searchAble: true,
-            orderable: false,
-            searching: true,
-            destroyAble: true,
+            // responsive: true,
+            searchable: true,
+            destroy: true,
             ajax: {
                 url: "{{ route('example.index') }}",
                 type: "GET",
                 dataType: "json",
             },
             columns: [{
-                    "targets": 0,
-                    "render": function(data, type, row, meta) {
+                    orderable: false,
+                    targets: 0,
+                    render: function(data, type, row, meta) {
                         return meta.row + 1;
                     }
-                }, {
+                },
+                {
                     data: 'example_code',
                     name: 'example_code'
                 },
@@ -63,8 +60,8 @@
                     }
                 },
             ]
-
         });
+
         $('#search_example').on('input', function() {
             var searchValue = $(this).val();
             table.search(searchValue).draw();
@@ -97,8 +94,8 @@
                 example_id: id
             },
             success: (response) => {
-                // console.log(response);
-                if (response.status == 'Success') {
+                console.log(response.status);
+                if (response.status == 'success') {
                     $('#kt_modal_add_example').modal('show');
                     $(`input, select`).removeClass('is-invalid');
                     let data = response.data;
@@ -160,7 +157,10 @@
         var validasi = 'true';
         $("#example_name, #example_active, #example_code").addClass('input-required');
         $(".input-required").each(function(i, obj) {
-            if ($(this).val() == "" || $(this).val() == null) {
+            // Menghapus spasi dari awal dan akhir nilai input
+            let inputValue = $(this).val().trim();
+
+            if (inputValue === "") {
                 $(this).removeClass("is-valid").addClass("is-invalid");
                 validasi = 'false-invalid';
             } else {
@@ -239,7 +239,7 @@
                                             'click');
                                         $('[data-bs-dismiss="modal"]').trigger('click');
                                     }
-                                }); 
+                                });
                             }
                         },
                         error: function(xhr, status, error) {}
@@ -280,41 +280,41 @@
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(response) {
-                            if (response.status === 'Success') {
-                                Swal.fire({
-                                    title: response.title,
-                                    text: response.message,
-                                    icon: (response.success) ? 'success' : "error",
-                                    buttonsStyling: false,
-                                    confirmButtonText: "Oke!",
-                                    customClass: {
-                                        confirmButton: "btn btn-primary"
-                                    },
-                                }).then((result) => {
-                                    if (result.isConfirmed) {
-                                        $(`[data-con="${lastMenuId}"]`).trigger(
-                                            'click');
-                                        $('[data-bs-dismiss="modal"]').trigger('click');
-                                    }
-                                });
-                            } else {
-                                Swal.fire({
-                                    title: 'Error!',
-                                    text: 'Terjadi Kesalahan Pada Sistem!',
-                                    icon: 'error',
-                                    confirmButtonText: "Oke!",
-                                    customClass: {
-                                        confirmButton: "btn btn-primary"
-                                    },
-                                }).then((result) => {
-                                    if (result.isConfirmed) {
-                                        $(`[data-con="${lastMenuId}"]`).trigger(
-                                            'click');
-                                        $('[data-bs-dismiss="modal"]').trigger('click');
-                                    }
-                                }); 
-                            }
-                        },
+                        if (response.status === 'Success') {
+                            Swal.fire({
+                                title: response.title,
+                                text: response.message,
+                                icon: (response.success) ? 'success' : "error",
+                                buttonsStyling: false,
+                                confirmButtonText: "Oke!",
+                                customClass: {
+                                    confirmButton: "btn btn-primary"
+                                },
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    $(`[data-con="${lastMenuId}"]`).trigger(
+                                        'click');
+                                    $('[data-bs-dismiss="modal"]').trigger('click');
+                                }
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'Terjadi Kesalahan Pada Sistem!',
+                                icon: 'error',
+                                confirmButtonText: "Oke!",
+                                customClass: {
+                                    confirmButton: "btn btn-primary"
+                                },
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    $(`[data-con="${lastMenuId}"]`).trigger(
+                                        'click');
+                                    $('[data-bs-dismiss="modal"]').trigger('click');
+                                }
+                            });
+                        }
+                    },
                 });
             }
         });

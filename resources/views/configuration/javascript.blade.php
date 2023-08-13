@@ -12,7 +12,7 @@
 </script>
 <script type="text/javascript">
     APP_URL = "{{ getenv('APP_URL') }}/";
-    var form = 'formExample';
+    var form = 'form_config';
     $(() => {
         init()
 
@@ -29,6 +29,8 @@
 
         return new Promise((resolve) => {
             blockPage();
+            var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
             $.ajax({
                 url: APP_URL + 'config/getConfig',
                 data: {
@@ -36,35 +38,27 @@
                 },
                 type: "POST",
                 success: (response) => {
-                    resolve(true)
+                    resolve(true);
+                    console.log(response.config);
+                    $.each(response.config, (i, v) => {
+                    $(`[id="${v.config_code}"]`).text(v.config_value);
+                    });
                     var html = [];
-                    $.each(response.data.config, (i, v) => {
+                    $.each(response.config, (i, v) => {
+
                         html.push(createTemplates(v));
                     });
                     $('#contentConfig').html('').html(html.join(''));
+
                 },
                 complete: (response) => {
-                    // $.each(response.data.config, (i, v) => {
-                    //     if (v.config_type == 'file') {
-                    //         uploadFileOnChange(v.config_id);
-                    //         // set logo
-                    //         if (v.config_code == 'app.logo') {
-                    //             $('#logoApp').attr('src',
-                    //                 '/files/uploads-logos-origins-' +
-                    //                 v.config_value);
-                    //         }
-                    //     }
-                    //     $(`[id="${v.config_code}"]`).text(v.config_value);
-                    // });
-
-                    // $('#dataConfiguration').removeClass('d-none');
                     unblockPage(500);
                 }
-            })
+            });
         });
     }
-    createTemplates = (value) => {
 
+    createTemplates = (value) => {
         switch (value.config_type) {
             case 'text':
                 return createTypeText(value);
@@ -88,7 +82,7 @@
         return `
         <div class="row">
                      <label class="col-lg-4 col-form-label required fw-bold fs-6">${value.config_title}</label>
-                     <input type="text" name="${value.config_id}" class="form-control" placeholder="${value.config_title}" value="${value.config_value}">
+                     <input type="text" name="${value.config_id}" id="${value.config_id}" class="form-control input-required" placeholder="${value.config_title}" value="${value.config_value}">
                       <div class="fv-plugins-message-container invalid-feedback"></div></div>
 		`;
     }
@@ -97,34 +91,125 @@
             return `
             <div class="row">
                      <label class="col-lg-4 col-form-label required fw-bold fs-6">${value.config_title}</label>
-                     <input type="text" name="${value.config_id}" class="form-control" placeholder="${value.config_title}" value="${value.config_value}">
+                     <input type="text" name="${value.config_id}" id="${value.config_id}" class="form-control input-required" placeholder="${value.config_title}" value="${value.config_value}">
                       <div class="fv-plugins-message-container invalid-feedback"></div></div>
 			`;
         }
     }
-    save  = () => {
-        var formData = $("#configForm").serialize();
+    createTypeFile = (value, isImage = true) => {
+        if (isImage) {
+            let img = 'storage/profile/' + value.config_value;
+            let html = `
+				<div class="row mb-6">
+					<label class="col-lg-3 col-form-label fw-bold fs-6">${value.config_title}</label>
+					<div class="col-lg-9">
 
-        $.ajax({
-            url: APP_URL + 'config/save',
-            type: "POST",
-            data: formData,
-            success: function(response) {
-                Swal.fire({
-                    icon: "success",
-                    title: "Success",
-                    text: "Data saved successfully!",
-                    showConfirmButton: true,
-                });
-            },
-            error: function(xhr, status, error) {
-                Swal.fire({
-                    icon: "error",
-                    title: "Error",
-                    text: "An error occurred. Please try again later.",
-                    showConfirmButton: true            
-                });
+						<div class="image-input image-input-circle dataFile${value.config_id}" id="${value.config_id}" data-kt-image-input="true" style="background-image: url(${img})">
+					    <div class="image-input-wrapper w-125px h-125px dataFile${value.config_id}" style="background-image: url(${img})"></div>
+
+					    <label class="btn btn-icon btn-circle btn-color-muted btn-active-color-primary w-25px h-25px bg-body shadow"
+					        data-kt-image-input-action="change"
+					        data-bs-toggle="tooltip"
+					        data-bs-dismiss="click"
+					        title="Change File">
+					         <i class="bi bi-pencil-fill fs-7"></i>
+
+					         <input type="file" name="${value.config_id}" accept=".png, .jpg, .jpeg, .svg" />
+					         <input type="hidden" name="hide_${value.config_id}" />
+					    </label>
+
+					    <span class="btn btn-icon btn-circle btn-color-muted btn-active-color-primary w-25px h-25px bg-body shadow d-none"
+					    	data-action-remove="${value.config_id}"
+					        data-kt-image-input-action="remove"
+					        data-bs-toggle="tooltip"
+					        data-bs-dismiss="click"
+					        title="Remove File">
+					         <i class="bi bi-x fs-2 text-danger"></i>
+					    </span>
+					</div>
+					</div>
+				</div>
+			`;
+            return html;
+        }
+
+    }
+
+
+
+    save = () => {
+        var validasi = 'true';
+        $(".input-required").each(function(i, obj) {
+            // Menghapus spasi dari awal dan akhir nilai input
+            let inputValue = $(this).val().trim();
+
+            if (inputValue === "") {
+                $(this).removeClass("is-valid").addClass("is-invalid");
+                validasi = 'false-invalid';
+            } else {
+                $(this).removeClass("is-invalid");
+                $(this).parent().find(".error_code").removeClass("invalid-feedback").text("").show();
             }
         });
+        var data = $('[name="' + form + '"]')[0];
+        var formData = new FormData(data);
+        if (validasi === 'true') {
+            Swal.fire({
+                title: 'Konfirmasi',
+                text: 'Apakah kamu ingin melanjutkan?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Ya',
+                cancelButtonText: 'Tidak',
+                customClass: {
+                    confirmButton: 'btn btn-primary',
+                    cancelButton: 'btn btn-secondary'
+                },
+                buttonsStyling: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: APP_URL + 'config/save',
+                        type: "POST",
+                        processData: false,
+                        contentType: false,
+                        data: formData,
+                        success: function(response) {
+                            if (response.success) {
+                                Swal.fire({
+                                    title: response.title,
+                                    text: response.message,
+                                    icon: (response.success) ? 'success' : "error",
+                                    buttonsStyling: false,
+                                    confirmButtonText: "Oke!",
+                                    customClass: {
+                                        confirmButton: "btn btn-primary"
+                                    },
+                                }).then(() => {
+                                    location.reload();
+                                });
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Error",
+                                text: "An error occurred. Please try again later.",
+                                showConfirmButton: true,
+                            }).then(() => {
+                                location.reload();
+                            });
+                        }
+                    });
+                }
+            });
+        } else if (validasi === 'false-invalid') {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Lengkapi Form Terlebih Dahulu!',
+                confirmButtonClass: 'swal2-confirm btn btn-primary',
+            });
+        }
     }
 </script>

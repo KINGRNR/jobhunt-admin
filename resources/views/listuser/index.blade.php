@@ -32,7 +32,6 @@
         <!--end::Card header-->
         <!--begin::Card body-->
         <div class="card-body pt-0">
-
             <!--begin::Table-->
             <table class="table align-middle table-row-dashed fs-6 gy-5 text-center" id="table-user">
                 <!--begin::Table head-->
@@ -45,7 +44,6 @@
                         <th class="min-w-125px">Email</th>
                         <th class="min-w-125px">Joining Date</th>
                         <th class="min-w-125px">Full Name</th>
-                        <th class="min-w-125px">Action</th>
                     </tr>
                     <!--end::Table row-->
                 </thead>
@@ -62,10 +60,10 @@
     @include('listuser.form')
 </div>
 
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+{{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
 <!-- Include the jQuery and DataTables JS -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script> --}}
 
 
 

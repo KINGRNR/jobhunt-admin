@@ -28,12 +28,8 @@
 
     function initializeDataTables() {
         let table = $('#table-user').DataTable({
-            processing: true,
-            serverSide: true,
-            clickable: true,
-            searchAble: true,
-            searching: true,
-            destroyAble: true,
+            searchable: true,
+            destroy: true,
             ajax: {
                 url: "{{ route('listuser.index') }}",
                 type: "GET",
@@ -84,15 +80,6 @@
                     data: 'name',
                     name: 'name'
                 },
-                {
-                    render: function(data, type, row) {
-                        let userId = row.id;
-
-                        return `
-            <span class="badge bg-warning text-dark">gatau</span>
-        `;
-                    }
-                },
             ]
 
         });
@@ -106,6 +93,7 @@
             if (rowData) {
                 let id = rowData.id;
                 onDetail(id);
+                onDetailJob(id);
             } else {
                 onReset();
                 $('#formExample').find('input, select').removeAttr('disabled');
@@ -195,146 +183,118 @@
             }
         });
     }
-    // onDisplayEdit = () => {
-    //     $('#formExample').find('input, select').removeAttr('disabled');
-    //     $('.actEdit').addClass('d-none');
-    //     $('.actCreate').removeClass('d-none');
-    // }
-    // onForm = () => {
-    //     onReset();
-    //     $('.actEdit').addClass('d-none');
-    //     $('.actCreate').removeClass('d-none');
-    // }
-    // onReset = () => {
-    //     $('#formExample').find('input, select').removeAttr('disabled');
-    //     let form = $('#formExample');
-    //     form.find('input[type="text"], input[type="email"], input[type="number"], input[type="hidden"]').val('');
-    //     form.find('textarea').val('');
-    //     form.find('select').prop('selectedIndex', 0);
-    //     form.find('input[type="checkbox"]').prop('checked', false);
-    // }
-
-
-    // onSave = () => {
-    //     let formData = $('#formExample').serialize();
-    //     let data = {};
-    //     let lastMenuId = localStorage.getItem('menuId');
-    //     let pairs = formData.split('&');
-    //     for (let i = 0; i < pairs.length; i++) {
-    //         let pair = pairs[i].split('=');
-    //         let key = decodeURIComponent(pair[0]);
-    //         let value = decodeURIComponent(pair[1]);
-    //         data[key] = value;
-    //     }
-
-    //     let exampleId = $('[name="example_id"]').val();
-
-    //     let route = exampleId ? 'update' : 'create';
-
-    //     Swal.fire({
-    //         title: 'Konfirmasi',
-    //         text: 'Apakah kamu ingin melanjutkan?',
-    //         icon: 'question',
-    //         showCancelButton: true,
-    //         confirmButtonText: 'Ya',
-    //         cancelButtonText: 'Tidak',
-    //         customClass: {
-    //             confirmButton: 'btn btn-primary',
-    //             cancelButton: 'btn btn-secondary'
+    // onDetailJob = (id) => {
+    //     blockPage();
+    //     $.ajax({
+    //         url: APP_URL + 'listuser/detailJob',
+    //         method: 'POST',
+    //         data: {
+    //             _token: '{{ csrf_token() }}',
+    //             id: id
     //         },
-    //         buttonsStyling: false
-    //     }).then((result) => {
-    //         if (result.isConfirmed) {
-    //             $.ajax({
-    //                 url: APP_URL + 'example/' + route,
-    //                 method: 'POST',
-    //                 data: {
-    //                     _token: '{{ csrf_token() }}',
-    //                     data,
-    //                     example_active: $('#checkedStatus').is(':checked') ? 1 : 0,
+    //         success: (response) => {
+    //             const data = response.data;
+    //             console.log(data);
+    //             // Clear existing rows in the table body
 
-    //                 },
-    //                 success: function(response) {
-    //                     Swal.fire({
-    //                         text: 'Data saved successfully!',
-    //                         icon: 'success',
-    //                         buttonsStyling: false,
-    //                         confirmButtonText: 'OK',
-    //                         customClass: {
-    //                             confirmButton: 'btn btn-primary'
-    //                         },
-    //                     }).then((result) => {
-    //                         if (result.isConfirmed === true) {
-    //                             $(`[data-con="${lastMenuId}"]`).trigger('click');
-    //                             $('[data-bs-dismiss="modal"]').trigger('click');
-    //                         }
-    //                     })
-    //                 },
-    //                 error: function(xhr, status, error) {
-    //                     Swal.fire({
-    //                         text: 'Error saving data!',
-    //                         icon: 'error',
-    //                         buttonsStyling: false,
-    //                         confirmButtonText: 'OK',
-    //                         customClass: {
-    //                             confirmButton: 'btn btn-primary'
-    //                         }
-    //                     });
+    //             $('#table-user tbody').empty();
+
+    //             // Loop through the data and create rows
+    //             for (let i = 0; i < data.length; i++) {
+    //                 const item = data[i];
+    //                 const newRow = $('<tr>');
+    //                 newRow.append($('<td>').text(i + 1));
+    //                 newRow.append($('<td>').text("km nanya?"));
+    //                 newRow.append($('<td>').text(item.job_name));
+    //                 newRow.append($('<td>').text(item.company_name));
+    //                 let badgeText = '';
+    //                 if (item.job_type === '1') {
+    //                     badgeText = 'Full Time';
+    //                     badgeColorClass = 'badge-success'; // Green color
+    //                 } else if (item.job_type === '2') {
+    //                     badgeText = 'Part Time';
+    //                     badgeColorClass = 'badge-warning'; // Yellow color
+    //                 } else if (item.job_type === '3') {
+    //                     badgeText = 'Intern';
+    //                     badgeColorClass = 'badge-info'; // Blue color
     //                 }
-    //             });
-    //         }
-    //     });
-    // };
-    // onDelete = (id = '') => {
-    //     let lastMenuId = localStorage.getItem('menuId');
+    //                 const badge = $('<span>').addClass('badge ' + badgeColorClass).text(badgeText);
 
-    //     Swal.fire({
-    //         title: 'Konfirmasi',
-    //         text: 'Apakah kamu ingin menghapus data ini?',
-    //         icon: 'warning',
-    //         showCancelButton: true,
-    //         confirmButtonText: 'Ya',
-    //         cancelButtonText: 'Tidak',
-    //         customClass: {
-    //             confirmButton: 'btn btn-danger',
-    //             cancelButton: 'btn btn-secondary'
+    //                 newRow.append($('<td>').append(badge)); // Add the badge to the table cell
+
+
+    //                 // ... Add other columns ...
+
+    //                 $('#table-user tbody').append(newRow);
+    //             }
+
+
     //         },
-    //         buttonsStyling: false
-    //     }).then((result) => {
-    //         if (result.isConfirmed) {
-    //             $.ajax({
-    //                 url: APP_URL + 'example/delete',
-    //                 method: 'POST',
-    //                 data: {
-    //                     example_id: $('[name="example_id"]').val(),
-    //                     _token: '{{ csrf_token() }}'
-    //                 },
-    //                 success: function(response) {
-    //                     Swal.fire({
-    //                         text: 'Data berhasil dihapus!',
-    //                         icon: 'success',
-    //                         buttonsStyling: false,
-    //                         confirmButtonText: 'OK',
-    //                         customClass: {
-    //                             confirmButton: 'btn btn-primary'
-    //                         }
-    //                     });
-    //                     $(`[data-con="${lastMenuId}"]`).trigger('click');
-    //                     $('[data-bs-dismiss="modal"]').trigger('click');
-    //                 },
-    //                 error: function(xhr, status, error) {
-    //                     Swal.fire({
-    //                         text: 'Error menghapus data!',
-    //                         icon: 'error',
-    //                         buttonsStyling: false,
-    //                         confirmButtonText: 'OK',
-    //                         customClass: {
-    //                             confirmButton: 'btn btn-primary'
-    //                         }
-    //                     });
-    //                 }
-    //             });
-    //         }
     //     });
-    // };
+    // }
+    onDetailJob = (id) => {
+        blockPage();
+        $.ajax({
+            url: APP_URL + 'listuser/detailJob',
+            method: 'POST',
+            data: {
+                _token: '{{ csrf_token() }}',
+                id: id
+            },
+            success: (response) => {
+                // const data = response.data;
+                console.log(response);
+                if (response.data.length === 0) {
+                    $("#card_table").addClass('d-none');
+                    $("#callback").html('<div class="d-flex align-items-center justify-content-center" style="height: 100%;"><img src="storage/data/nodata.png" alt="Error" class="img-fluid" style="max-width: 100%; max-height: 100%; object-fit: contain;" /></div>');
+                // Initialize DataTable
+            } else {
+                $("#card_table").removeClass('d-none');
+
+                let table = $('#table-user_detail').DataTable({
+                    destroy: true, // Destroy existing DataTable instance
+                    data: response.data,
+                    columns: [{
+                            data: null,
+                            render: (data, type, row, meta) => meta.row + 1
+                        },
+                        {
+                            data: null,
+                            render: () =>
+                                '<img src="" alt="f" width="50">'
+                        },
+                        {
+                            data: 'job_name',
+                            name: 'job_name'
+                        },
+                        {
+                            data: 'company_name',
+                            name: 'company_name'
+                        },
+                        {
+                            data: 'job_type',
+                            render: (data) => {
+                                let badgeText = '';
+                                let badgeColorClass = '';
+                                if (data === '1') {
+                                    badgeText = 'Full Time';
+                                    badgeColorClass = 'badge-success';
+                                } else if (data === '2') {
+                                    badgeText = 'Part Time';
+                                    badgeColorClass = 'badge-warning';
+                                } else if (data === '3') {
+                                    badgeText = 'Intern';
+                                    badgeColorClass = 'badge-info';
+                                }
+                                return `<span class="badge ${badgeColorClass}">${badgeText}</span>`;
+                            }
+                        }
+                    ]
+                });
+            }
+                // Unblock the page
+                unblockPage();
+            }
+        });
+    }
 </script>
