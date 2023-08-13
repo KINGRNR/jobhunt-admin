@@ -5,7 +5,7 @@
                 <div class="d-flex flex-wrap flex-sm-nowrap mt-3 justify-content-start align-items-center">
                     <div class="me-7 mb-4">
                         <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
-                            <img src="assets/media/avatars/150-26.jpg" alt="image" class="img-fluid" />
+                            <img src="storage/profile/27shoot549-23.jpg" alt="image" class="img-fluid" style="object-fit: contain;" />
                         </div>
 
                     </div>
@@ -33,7 +33,7 @@
                                         </defs>
                                     </svg>
                                 </span>
-                                <span id="app.telp">0862389445</span>
+                                <span id="app.telp"></span>
                             </div>
                         </div>
                         <div class="d-flex align-items-center mb-2">
@@ -49,7 +49,7 @@
                                             fill="#707070" />
                                     </svg>
                                 </span>
-                                <span id="app.address">Jl Suka Raya, Simpang Lima, Malang, Jawa Timur, 65121</span>
+                                <span id="app.address"></span>
                             </div>
                         </div>
                         <div class="d-flex align-items-center mb-2">
@@ -69,7 +69,7 @@
                                         </defs>
                                     </svg>
                                 </span>
-                                <span id="app.description">PT FKS Multi Agro, Malang Tbk</span>
+                                <span id="app.description"></span>
                             </div>
                         </div>
                     </div>

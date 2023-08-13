@@ -11,17 +11,11 @@ use App\Models\DetailUser;
 use App\Models\ManageUser;
 use App\Models\Role;
 
-class ListUserController extends \App\Core\BaseController
+class ListUserController extends Controller
 {
 
     public function index(Request $request)
     {
-        // $data = ManageUser::select('*');
-        // return DataTables::of(Example::all())->toJson();
-        // $data = DB::table('users')
-        //     ->join('roles', 'users.role_id', '=', 'role.id')
-        //     ->select('users.*', 'role.name AS role_name')
-        //     ->get();
         $data = ManageUser::join('roles', 'users.users_role_id', '=', 'roles.role_id')->get(['users.*', 'roles.*']);
         return DataTables::of($data)->toJson();
     }
@@ -30,113 +24,44 @@ class ListUserController extends \App\Core\BaseController
     {
         $data = $request->post();
         $user_id = $data['id'];
-     
+
         $userData = ManageUser::join('detail_users', 'users.id', '=', 'detail_users.user_id')
             ->where('users.id', $user_id)
             ->first();
-           
+
         if ($userData) {
-            return $this->response($userData);
+            return response()->json([
+                'status' => 'success',
+                'data' => $userData,
+            ]);
         } else {
-            return response()->json(['message' => 'User not found'], 404); // Return a 404 response
+            return response()->json([
+                'status' => 'error',
+                'message' => 'User not found'
+            ], 404); // Return a 404 response
         }
     }
 
-    // public function create(Request $request)
-    // {
-    //     try {
-    //         $dataArray = $request->all(); // Mendapatkan seluruh data dari request
-
-    //         // Memisahkan elemen "data" dari array
-    //         $data = $dataArray['data'];
-
-    //         $data['example_id'] = Example::generateExampleid();
-    //         $data['example_active'] = $dataArray['example_active'];
-    //         // print_r($data);
-    //         // exit;
-    //         $operation = Example::create($data);
-
-    //         return $this->respondCreated([
-    //             'success' => true,
-    //             'message' => 'Successfully saved data.',
-    //         ]);;
-    //     } catch (\Throwable $th) {
-    //         return $this->respondCreated([
-    //             'success' => false,
-    //             'message' => $th->getMessage()
-    //             // 'message' => 'Failed to update data, There was an error on the server.'
-    //         ]);
-    //     }
-    // }
-
-    // public function update(Request $request, Example $example)
-    // {
-    //     try {
-    //         $dataArray = $request->all(); // Mendapatkan seluruh data dari request
-
-
-    //         $data = $dataArray['data'];
-    //         $exampleId  = $data['example_id'];
-    //         // print_r($example); exit;
-
-    //         $data['example_active'] = $request->example_active ?? 0;
-    //         $operation = $example->update($data);
-
-    //         return $this->respondUpdated([
-    //             'success' => true,
-    //             'message' => 'Successfully updated data.',
-    //         ]);
-    //     } catch (\Throwable $th) {
-    //         return $this->respondUpdated([
-    //             'success' => false,
-    //             'message' => $th->getMessage()
-    //         ]);
-    //     }
-    // }
-    public function update(Request $request, Example $example)
+    public function detailJob(Request $request)
     {
-        try {
-            $dataArray = $request->all();
-            $data = $dataArray['data'];
-            $exampleId = $data['example_id'];
-            $exampleCode = $data['example_code'];
-            $exampleName = $data['example_name'];
-            $exampleActive = $dataArray['example_active'] ?? 0;
+        $data = $request->post();
+        $user_id = $data['id'];
 
-            $data = [
-                'example_code' => $exampleCode,
-                'example_name' => $exampleName,
-                'example_active' => $exampleActive,
+        $userData = DB::table('v_users_job')
+            ->where('job_users_users_id', $user_id)
+            ->get();
+
+        if ($userData->count() > 0) {
+            $responseData = [
+                'draw' => 1,
+                'recordsTotal' => $userData->count(),
+                'recordsFiltered' => $userData->count(),
+                'data' => $userData
             ];
 
-            $operation = $example->where('example_id', $exampleId)->update($data);
-
-            return $this->respondUpdated([
-                'success' => true,
-                'message' => 'Successfully updated data.',
-            ]);
-        } catch (\Throwable $th) {
-            return $this->respondUpdated([
-                'success' => false,
-                'message' => $th->getMessage()
-            ]);
-        }
-    }
-
-    public function delete(Example $example)
-    {
-        try {
-            $example = Example::find(request()->example_id);
-            $operation = $example->delete();
-            return $this->respondDeleted([
-                'success' => true,
-                'message' => 'Successfully deleted data.',
-            ]);
-        } catch (\Throwable $th) {
-            return $this->respondDeleted([
-                'success' => false,
-                'message' => 'Failed to delete data, There was an error on the server.'
-            ]);
+            return response()->json($responseData);
+        } else {
+            return response()->json(['message' => 'User belum punya pekerjaan', 'data' => []]);
         }
     }
 }
