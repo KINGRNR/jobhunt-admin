@@ -5,7 +5,7 @@
             enctype="multipart/form-data">
             <div class="card card-bordered">
                 <div class="card-body">
-                    <input type="hidden" name="example_id">
+                    <input type="hidden" name="example_id" id="example_id">
                     <div class="fv-row mb-5">
                         <label for="" class="required form-label">Code</label>
                         <input type="text" name="example_code" id="example_code"

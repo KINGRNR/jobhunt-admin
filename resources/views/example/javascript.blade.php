@@ -13,12 +13,12 @@
 <script type="text/javascript">
     var form = 'formExample';
     $(() => {
-        blockPage();
+        blockPage(100);
         init()
     })
     init = async () => {
         await initializeDataTables();
-        await unblockPage(500);
+        await unblockPage();
     }
     $('#modal_form').on('hidden.bs.modal', function() {
         $(`input, select`).removeAttr('disabled');
@@ -31,9 +31,31 @@
             searchable: true,
             destroy: true,
             ajax: {
-                url: "{{ route('example.index') }}",
+                url: API_URL + "getexamples",
                 type: "GET",
                 dataType: "json",
+                error: function(xhr, status, error) {
+                    if (xhr.status === 0) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Tidak dapat terhubung ke server',
+                            text: 'Mohon segera menghubungi developer.',
+                            showCancelButton: true, 
+                            confirmButtonText: 'Reload',
+                            cancelButtonText: 'Lanjut', 
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                location.reload();
+                            }
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Terjadi kesalahan saat memuat data',
+                            text: 'Status: ' + xhr.status + ' - ' + error,
+                        });
+                    }
+                }
             },
             columns: [{
                     orderable: false,
@@ -87,12 +109,8 @@
     onEdit = (id) => {
         blockPage();
         $.ajax({
-            url: APP_URL + 'example/show',
-            method: 'POST',
-            data: {
-                _token: '{{ csrf_token() }}',
-                example_id: id
-            },
+            url: API_URL + 'getexample/' + id,
+            method: 'GET',
             success: (response) => {
                 console.log(response.status);
                 if (response.status == 'success') {
@@ -152,6 +170,15 @@
         form.find('input[type="checkbox"]').prop('checked', false);
     }
 
+    function generateRandomString() {
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let result = '';
+        const charactersLength = characters.length;
+        for (let i = 0; i < 16; i++) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        return result;
+    }
 
     onSave = () => {
         var validasi = 'true';
@@ -168,20 +195,28 @@
                 $(this).parent().find(".error_code").removeClass("invalid-feedback").text("").show();
             }
         });
-        let formData = $('#formExample').serialize();
-        let data = {};
         let lastMenuId = localStorage.getItem('menuId');
-        let pairs = formData.split('&');
-        for (let i = 0; i < pairs.length; i++) {
-            let pair = pairs[i].split('=');
-            let key = decodeURIComponent(pair[0]);
-            let value = decodeURIComponent(pair[1]);
-            data[key] = value;
+
+        var data = {
+            "example_id": $('[name="example_id"]').val(),
+            "example_code": $('[name="example_code"]').val(),
+            "example_name": $('[name="example_name"]').val(),
+            "example_active": $('#checkedStatus').is(':checked') ? 1 : 0,
+        };
+
+
+        let exampleId = data.example_id;
+
+        let route = exampleId ? 'updateexample/' + exampleId : 'insertexamples/create';
+
+        if (route === 'insertexamples/create') {
+            const randomID = generateRandomString();
+            data.example_id = randomID;
+            console.log(randomID);
+        } else if (route === 'update') {
+            var id = exampleId;
         }
 
-        let exampleId = $('[name="example_id"]').val();
-
-        let route = exampleId ? 'update' : 'create';
         if (validasi === 'true') {
             Swal.fire({
                 title: 'Konfirmasi',
@@ -198,31 +233,29 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: APP_URL + 'example/' + route,
-                        method: 'POST',
-                        data: {
-                            _token: '{{ csrf_token() }}',
-                            data,
-                            example_active: $('#checkedStatus').is(':checked') ? 1 : 0,
-
-                        },
+                        url: API_URL + route,
+                        type: "POST",
+                        data: JSON.stringify(data),
+                        contentType: "application/json", // Set the content type to JSON
                         success: function(response) {
-                            if (response.status === 'Success') {
+                            var parsedResponse = JSON.parse(response);
+                            console.log(parsedResponse);
+                            if (parsedResponse.status === "success") {
+                                $(`[data-con="${lastMenuId}"]`).trigger(
+                                    'click');
+                                $('[data-bs-dismiss="modal"]').trigger('click');
                                 Swal.fire({
-                                    title: response.title,
-                                    text: response.message,
-                                    icon: (response.success) ? 'success' : "error",
+                                    title: parsedResponse.title,
+                                    text: parsedResponse.message,
+                                    icon: (parsedResponse.success) ? 'success' :
+                                        "error",
                                     buttonsStyling: false,
                                     confirmButtonText: "Oke!",
                                     customClass: {
                                         confirmButton: "btn btn-primary"
                                     },
-                                }).then((result) => {
-                                    if (result.isConfirmed) {
-                                        $(`[data-con="${lastMenuId}"]`).trigger(
-                                            'click');
-                                        $('[data-bs-dismiss="modal"]').trigger('click');
-                                    }
+
+
                                 });
                             } else {
                                 Swal.fire({
@@ -255,6 +288,7 @@
             });
         }
     };
+
     onDelete = (id = '') => {
         let lastMenuId = localStorage.getItem('menuId');
 
@@ -273,29 +307,30 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: APP_URL + 'example/delete',
+                    url: `${API_URL}deleteexample/${id}`,
                     method: 'POST',
                     data: {
                         example_id: $('[name="example_id"]').val(),
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(response) {
-                        if (response.status === 'Success') {
+                        var parsedResponse = JSON.parse(response);
+                        console.log(parsedResponse);
+                        if (parsedResponse.status === "success") {
+                            $(`[data-con="${lastMenuId}"]`).trigger(
+                                'click');
+                            $('[data-bs-dismiss="modal"]').trigger('click');
                             Swal.fire({
-                                title: response.title,
-                                text: response.message,
-                                icon: (response.success) ? 'success' : "error",
+                                title: parsedResponse.title,
+                                text: parsedResponse.message,
+                                icon: (parsedResponse.success) ? 'success' : "error",
                                 buttonsStyling: false,
                                 confirmButtonText: "Oke!",
                                 customClass: {
                                     confirmButton: "btn btn-primary"
                                 },
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    $(`[data-con="${lastMenuId}"]`).trigger(
-                                        'click');
-                                    $('[data-bs-dismiss="modal"]').trigger('click');
-                                }
+
+
                             });
                         } else {
                             Swal.fire({

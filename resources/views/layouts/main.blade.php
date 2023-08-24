@@ -493,6 +493,7 @@
 
                 <script type="text/javascript">
                     APP_URL = "{{ getenv('APP_URL') }}/";
+                    API_URL = "{{ getenv('API_URL') }}/";
 
                     $(() => {
                         handleURLChange();
@@ -527,6 +528,37 @@
                         return url.split('/').reverse()[0];
                     }
 
+                    //     function loadPage(element) {
+                    //         // $("#pagecontainer").empty();
+                    //         let menuId = $(element).data('con');
+                    //         let CSRF_NAME = 'csrf_cookie_name';
+                    //         $.ajax({
+                    //             url: APP_URL + "main/getPage",
+                    //             data: {
+                    //                 _token: '{{ csrf_token() }}',
+                    //                 menu_id: menuId
+                    //             },
+                    //             type: "POST",
+                    //             success: function(pages) {
+                    //                 $(".menu-link").removeClass("active");
+                    //                 $(`.menu-link[data-con="${menuId}"]`).addClass("active");
+                    //                 $('#page_breadcrumb').html(atob(pages.breadcrumb));
+                    //                 $('#titleContent').html('').html(`
+    // <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1 parentTitle">${pages.menu_title}</h1>
+
+    //   `)
+                    //                 console.log(pages.url_path);
+                    //                 window.history.pushState(stateData, "", pages.url_path);
+                    //                 $("#pagecontainer").html(atob(pages.view));
+                    //                 localStorage.setItem('menuId', menuId);
+                    //                 blockPage();
+
+                    //             }
+                    //         });
+                    //     }
+                    //PHP BACKEND
+
+                    //API
                     function loadPage(element) {
                         // $("#pagecontainer").empty();
                         let menuId = $(element).data('con');
@@ -560,12 +592,12 @@
                         const loadingDiv = $(
                             '<div class="loading loading-spinner-overlay" id="loading-spinner"><div class="loading-spinner"></div><p class="loading-text">Loading Data</p></div>'
                         );
-                        loadingDiv.hide().appendTo("#pagecontainer").fadeIn(500);
+                        loadingDiv.hide().appendTo("#pagecontainer").fadeIn();
                     }
 
 
                     function unblockPage() {
-                        $("#pagecontainer").find(".loading").fadeOut(500);
+                        $("#pagecontainer").find(".loading").fadeOut();
                     }
                 </script>
 
