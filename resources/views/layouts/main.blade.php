@@ -382,7 +382,7 @@
                                 <div class="me-3">
                                     <div class="d-flex align-items-center ms-1" id="kt_header_user_menu_toggle">
                                         <!--begin::User info-->
-                                        <div class="btn bg-light bg-opacity-20 btn-flex align-items-center bg-hover-white bg-hover-opacity-10 py-2 ps-2 pe-2 me-n2"
+                                        <div class="btn btn-icon btn-color-light btn-active-color-primary bg-hover-white bg-hover-opacity-10 bg-light bg-opacity-20 w-50px h-50px w-lg-48px h-lg-48px position-relative"
                                             data-kt-menu-trigger="click" data-kt-menu-attach="parent"
                                             data-kt-menu-placement="bottom-end">
                                             <div class="symbol symbol-circle symbol-25px symbol-md-35px">
