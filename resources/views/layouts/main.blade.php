@@ -382,7 +382,7 @@
                                 <div class="me-3">
                                     <div class="d-flex align-items-center ms-1" id="kt_header_user_menu_toggle">
                                         <!--begin::User info-->
-                                        <div class="btn bg-light bg-opacity-20 btn-flex align-items-center bg-hover-white bg-hover-opacity-10 py-2 ps-2 pe-2 me-n2"
+                                        <div class="btn btn-icon btn-color-light btn-active-color-primary bg-hover-white bg-hover-opacity-10 bg-light bg-opacity-20 w-50px h-50px w-lg-48px h-lg-48px position-relative"
                                             data-kt-menu-trigger="click" data-kt-menu-attach="parent"
                                             data-kt-menu-placement="bottom-end">
                                             <div class="symbol symbol-circle symbol-25px symbol-md-35px">
@@ -442,9 +442,15 @@
 
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-5">
-                                                <a href="javascript:;" data-con="j93ck5d81mt44dlw" onclick=""
+                                                <a href="javascript:;" data-con="sqtlpuyaaivgnsda" onclick="loadPage(this)"
                                                     class="menu-link px-5">
                                                     Profile
+                                                </a>
+                                            </div>
+                                            <div class="menu-item px-5">
+                                                <a href="javascript:;" data-con="sqtlpuyaaivasdas" onclick="loadPage(this)"
+                                                    class="menu-link px-5">
+                                                    Error Log
                                                 </a>
                                             </div>
                                             <div class="menu-item px-5">
@@ -493,6 +499,7 @@
 
                 <script type="text/javascript">
                     APP_URL = "{{ getenv('APP_URL') }}/";
+                    API_URL = "{{ getenv('API_URL') }}/";
 
                     $(() => {
                         handleURLChange();
@@ -527,6 +534,37 @@
                         return url.split('/').reverse()[0];
                     }
 
+                    //     function loadPage(element) {
+                    //         // $("#pagecontainer").empty();
+                    //         let menuId = $(element).data('con');
+                    //         let CSRF_NAME = 'csrf_cookie_name';
+                    //         $.ajax({
+                    //             url: APP_URL + "main/getPage",
+                    //             data: {
+                    //                 _token: '{{ csrf_token() }}',
+                    //                 menu_id: menuId
+                    //             },
+                    //             type: "POST",
+                    //             success: function(pages) {
+                    //                 $(".menu-link").removeClass("active");
+                    //                 $(`.menu-link[data-con="${menuId}"]`).addClass("active");
+                    //                 $('#page_breadcrumb').html(atob(pages.breadcrumb));
+                    //                 $('#titleContent').html('').html(`
+    // <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1 parentTitle">${pages.menu_title}</h1>
+
+    //   `)
+                    //                 console.log(pages.url_path);
+                    //                 window.history.pushState(stateData, "", pages.url_path);
+                    //                 $("#pagecontainer").html(atob(pages.view));
+                    //                 localStorage.setItem('menuId', menuId);
+                    //                 blockPage();
+
+                    //             }
+                    //         });
+                    //     }
+                    //PHP BACKEND
+
+                    //API
                     function loadPage(element) {
                         // $("#pagecontainer").empty();
                         let menuId = $(element).data('con');
@@ -560,12 +598,12 @@
                         const loadingDiv = $(
                             '<div class="loading loading-spinner-overlay" id="loading-spinner"><div class="loading-spinner"></div><p class="loading-text">Loading Data</p></div>'
                         );
-                        loadingDiv.hide().appendTo("#pagecontainer").fadeIn(500);
+                        loadingDiv.hide().appendTo("#pagecontainer").fadeIn();
                     }
 
 
                     function unblockPage() {
-                        $("#pagecontainer").find(".loading").fadeOut(500);
+                        $("#pagecontainer").find(".loading").fadeOut();
                     }
                 </script>
 

@@ -165,6 +165,11 @@
                     'assets/media/avatars/blank.png';
                 $('#profile_image').attr('src', profileImageSrc);
 
+                const completenessPercentage = calculateCompleteness(data);
+
+                $('#completeness').text(completenessPercentage +"%");
+                $('.progress-bar-completeness').attr('aria-valuenow', completenessPercentage).css('width', completenessPercentage +'%');
+
             },
             error: (xhr, status, error) => {
                 let errorMessage = 'An error occurred while fetching data.';
@@ -183,6 +188,28 @@
             }
         });
     }
+    function calculateCompleteness(data) {
+        let completeness = 0;
+
+        if (data.name) completeness += 10;
+        if (data.users_fullname) completeness += 10;
+        if (data.email) completeness += 10;
+        if (data.created_at) completeness += 10;
+        if (data.id) completeness += 10;
+        if (data.users_gender !== undefined) completeness += 10;
+        if (data.users_lulusan) completeness += 10;
+        if (data.users_kota) completeness += 10;
+        if (data.users_portofolio_link) completeness += 10;
+        if (data.users_posisi_kerja) completeness += 10;
+        if (data.users_skills) completeness += 10;
+        if (data.users_resume_link) completeness += 10;
+        if (data.photo_profile) completeness += 10;
+
+        completeness = Math.min(completeness, 100);
+    console.log(completeness)
+        return completeness;
+    }
+
     // onDetailJob = (id) => {
     //     blockPage();
     //     $.ajax({
