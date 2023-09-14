@@ -25,7 +25,7 @@ class ListUserController extends Controller
         $data = $request->post();
         $user_id = $data['id'];
 
-        $userData = ManageUser::join('detail_users', 'users.id', '=', 'detail_users.user_id')
+        $userData = ManageUser::leftJoin('detail_users', 'users.id', '=', 'detail_users.user_id')
             ->where('users.id', $user_id)
             ->first();
 
@@ -38,7 +38,7 @@ class ListUserController extends Controller
             return response()->json([
                 'status' => 'error',
                 'message' => 'User not found'
-            ], 404); // Return a 404 response
+            ], 404);
         }
     }
 

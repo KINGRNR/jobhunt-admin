@@ -442,9 +442,15 @@
 
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-5">
-                                                <a href="javascript:;" data-con="j93ck5d81mt44dlw" onclick=""
+                                                <a href="javascript:;" data-con="sqtlpuyaaivgnsda" onclick="loadPage(this)"
                                                     class="menu-link px-5">
                                                     Profile
+                                                </a>
+                                            </div>
+                                            <div class="menu-item px-5">
+                                                <a href="javascript:;" data-con="sqtlpuyaaivasdas" onclick="loadPage(this)"
+                                                    class="menu-link px-5">
+                                                    Error Log
                                                 </a>
                                             </div>
                                             <div class="menu-item px-5">

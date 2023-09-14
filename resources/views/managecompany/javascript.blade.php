@@ -11,20 +11,17 @@
     integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous">
 </script>
 <script type="text/javascript">
-    APP_URL = "{{ getenv('APP_URL') }}/";
     var form = 'formExample';
     $(() => {
         init()
-
     })
     init = async () => {
         await initializeDataTables();
-        await unblockPage(500);
+        await unblockPage();
     }
     $('#modal_form').on('hidden.bs.modal', function() {
         $(`input, select`).removeAttr('disabled');
     });
-
 
     function initializeDataTables() {
         let table = $('#table-company').DataTable({
@@ -74,22 +71,35 @@
                     name: 'company_description'
                 },
                 {
-                    data: 'company_active',
-                    name: 'company_active',
-
-                },
-                {
+                    data: 'company_isverif',
                     render: function(data, type, row) {
-                        let userId = row.id;
+                        var badgeText, badgeColor;
+                        console.log(data);
+                        // Tentukan teks dan kelas warna badge berdasarkan nilai 'data' menggunakan switch case
+                        if (data === 1) {
+                            badgeText = 'Approved';
+                            badgeColor = 'badge-success';
+                        } else if (data === 2) {
+                            badgeText = 'Rejected';
+                            badgeColor = 'badge-danger';
+                        } else {
+                            badgeText = 'Processing';
+                            badgeColor = 'badge-warning';
+                        }
 
-                        let editButton = '<button onclick="editUser(' + userId +
-                            ')" class="btn btn-warning btn-sm">Edit</button>';
-                        let deleteButton = '<button onclick="deleteUser(' + userId +
-                            ')" class="btn btn-danger btn-sm">Delete</button>';
+                        // Buat elemen badge dengan Bootstrap
+                        var badgeHTML = '<span class="badge ' + badgeColor + '">' + badgeText +
+                            '</span>';
 
-                        return editButton + ' ' + deleteButton;
+                        // Kembalikan HTML badge
+                        return badgeHTML;
                     }
                 },
+                // {
+                //     render: function(data, type, row) {
+
+                //     }
+                // },
             ]
 
         });

@@ -11,7 +11,7 @@ use App\Models\DetailUser;
 use App\Models\ManageCompany;
 use App\Models\Role;
 
-class ManageCompanyController extends \App\Core\BaseController
+class ManageCompanyController extends controller
 {
 
     public function index(Request $request)
@@ -22,9 +22,9 @@ class ManageCompanyController extends \App\Core\BaseController
         //     ->join('roles', 'users.role_id', '=', 'role.id')
         //     ->select('users.*', 'role.name AS role_name')
         //     ->get();
-        $query = DB::table('v_company')->get();
-
-		return Datatables::of($query)->toJson();
+        $data = DB::table('company')->get();
+        // dd($data);
+        return Datatables::of($data)->toJson();
         // $data = ManageCompany::join('roles', 'users.users_role_id', '=', 'roles.role_id')->get(['users.*', 'roles.*']);
         // return DataTables::of($data)->toJson();
     }
@@ -33,7 +33,7 @@ class ManageCompanyController extends \App\Core\BaseController
     // {
     //     $data = $request->post();
     //     $user_id = $data['id'];
-     
+
     //     $userData = ManageUser::join('detail_users', 'users.id', '=', 'detail_users.user_id')
     //         ->where('users.id', $user_id)
     //         ->first();
