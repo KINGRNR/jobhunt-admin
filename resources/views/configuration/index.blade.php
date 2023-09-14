@@ -5,7 +5,7 @@
                 <div class="d-flex flex-wrap flex-sm-nowrap mt-3 justify-content-start align-items-center">
                     <div class="me-7 mb-4">
                         <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
-                            <img src="storage/profile/27shoot549-23.jpg" alt="image" class="img-fluid" style="object-fit: contain;" />
+                            <img src="storage/profile/dummy.jpg" alt="image" class="img-fluid" style="object-fit: contain;" />
                         </div>
 
                     </div>

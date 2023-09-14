@@ -40,12 +40,12 @@
                     <!--begin::Table row-->
                     <tr class="text-center align-middle text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
                         <th class="ps-4" width="20">No</th>
+                        <th class="min-w-125px">Company ID</th>
                         <th class="min-w-20px">Photo</th>
-                        <th class="min-w-125px">Company Name</th>
-                        <th class="min-w-125px">Email</th>
-                        <th class="min-w-125px">Joining Date</th>
-                        <th class="min-w-125px">Full Name</th>
-                        <th class="min-w-125px">Action</th>
+                        <th class="min-w-125px">Company</th>
+                        <th class="min-w-125px">Request Date</th>
+                        <th class="min-w-125px">Submission Notes</th>
+                        <th class="min-w-125px">Status</th>
                     </tr>
                     <!--end::Table row-->
                 </thead>
@@ -55,19 +55,16 @@
         </div>
     </div>
 </div>
+
 <div class="col-12">
-    @include('managecompany.detail')
+    {{-- @include('managecompany.detail') --}}
 </div>
 <div class="modal fade" id="kt_modal_add_example" tabindex="-1" aria-hidden="true">
-    @include('managecompany.form')
+    {{-- @include('managecompany.form') --}}
 </div>
-
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+@include('managecompany.javascript')
+{{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
 <!-- Include the jQuery and DataTables JS -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script> --}}
 
-
-
-
-@include('managecompany.javascript')
