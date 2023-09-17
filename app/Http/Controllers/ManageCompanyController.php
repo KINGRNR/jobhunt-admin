@@ -16,6 +16,7 @@ class ManageCompanyController extends controller
 
     public function index(Request $request)
     {
+        
         // $data = ManageUser::select('*');
         // return DataTables::of(Example::all())->toJson();
         // $data = DB::table('users')

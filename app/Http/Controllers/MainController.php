@@ -17,6 +17,7 @@ class MainController extends Controller
             session(['user_id' => auth()->user()->id]);
             session(['user_name' => auth()->user()->username]);
 
+            
             $menu = $this->getMenu(auth()->user()->id);
 
             $menu_code = str_replace(" ", "-", ucwords(str_replace("-", " ", $menu_code)));

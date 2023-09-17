@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
+    
+
     /*
     |--------------------------------------------------------------------------
     | Register Controller

@@ -11,11 +11,12 @@ use App\Models\DetailUser;
 use App\Models\ManageUser;
 use App\Models\Role;
 
-class ListUserController extends Controller
+class ListuserController extends Controller
 {
 
     public function index(Request $request)
     {
+
         $data = ManageUser::join('roles', 'users.users_role_id', '=', 'roles.role_id')->get(['users.*', 'roles.*']);
         return DataTables::of($data)->toJson();
     }

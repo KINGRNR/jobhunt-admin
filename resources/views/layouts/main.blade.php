@@ -19,6 +19,7 @@
     <meta property="og:url" content="https://keenthemes.com/metronic" />
     <meta property="og:site_name" content="Keenthemes | Metronic" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
     <!--begin::Javascript-->
     <!--begin::Global Javascript Bundle(used by all pages)-->
     <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase.js"></script>
