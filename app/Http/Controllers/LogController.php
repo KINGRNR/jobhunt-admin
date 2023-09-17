@@ -13,6 +13,7 @@ class LogController extends Controller
         $logContents = file_get_contents($logFilePath);
         $logLines = explode("\n", $logContents);
 
+        
         return response()->json(['log' => $logLines]);
     }
 }
