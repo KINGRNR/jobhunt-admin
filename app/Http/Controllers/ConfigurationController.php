@@ -12,6 +12,7 @@ class ConfigurationController extends Controller
 {
     public function getConfig(Request $request)
     {
+        
         $data = $request->post();
         $operation = Configuration::where('config_group', $data['group'])->orderBy('config_order', 'ASC')->get();
 

@@ -15,6 +15,7 @@ class NotificationController extends Controller
     //     }
     public function saveToken(Request $request)
     {
+        
         $user = Auth::user();
         $user->device_token = $request->token;
         $user->save();

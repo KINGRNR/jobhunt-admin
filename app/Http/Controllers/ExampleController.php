@@ -13,6 +13,7 @@ class ExampleController extends Controller
 
     public function index(Request $request)
     {
+        
         // return DataTables::of(Example::all())->toJson();
         $data = Example::select('*');
         return Datatables::of($data)

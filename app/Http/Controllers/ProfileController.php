@@ -11,6 +11,7 @@ class ProfileController extends Controller
 {
     public function show()
 	{
+		
 		$user = session()->get('user_id');
 		$operation['data'] = DB::table('v_detail_users')->where('id', $user)->first();
 		// $operation['profile'] = $operation['data']->picture;
