@@ -73,13 +73,12 @@
                 {
                     data: 'company_isverif',
                     render: function(data, type, row) {
-                        var badgeText, badgeColor;
+                        let badgeText, badgeColor;
                         console.log(data);
-                        // Tentukan teks dan kelas warna badge berdasarkan nilai 'data' menggunakan switch case
-                        if (data === 1) {
+                        if (data == 1) {
                             badgeText = 'Approved';
                             badgeColor = 'badge-success';
-                        } else if (data === 2) {
+                        } else if (data == 2) {
                             badgeText = 'Rejected';
                             badgeColor = 'badge-danger';
                         } else {
@@ -90,7 +89,7 @@
                         // Buat elemen badge dengan Bootstrap
                         var badgeHTML = '<span class="badge ' + badgeColor + '">' + badgeText +
                             '</span>';
-
+                        console.log(badgeHTML)
                         // Kembalikan HTML badge
                         return badgeHTML;
                     }
