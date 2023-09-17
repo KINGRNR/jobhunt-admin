@@ -1,21 +1,21 @@
 <?php
 
-use app\Http\Controllers\HomeController;
-use illuminate\Support\Facades\Route;
-use illuminate\Support\Facades\Auth;
-use app\Http\Controllers\MainController;
-use app\Http\Controllers\ListUserController;
-use app\Http\Controllers\ManageCompanyController;
-use app\Http\Controllers\ExampleController;
-use app\Http\Middleware\loginCheck;
-use app\Http\Controllers\NotificationController;
-use app\Http\Controllers\LoginWithGoogleController;
-use app\Http\Controllers\ConfigurationController;
-use app\Http\Controllers\ProfileController;
-use app\Http\Controllers\LogController;
+use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\MainController;
+use App\Http\Controllers\ListUserController;
+use App\Http\Controllers\ManageCompanyController;
+use App\Http\Controllers\ExampleController;
+use App\Http\Middleware\loginCheck;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\LoginWithGoogleController;
+use App\Http\Controllers\ConfigurationController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\LogController;
 
-use app\Models\Example;
-use illuminate\Notifications\Notification;
+use App\Models\Example;
+use Illuminate\Notifications\Notification;
 
 /*
 |--------------------------------------------------------------------------
