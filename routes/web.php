@@ -4,7 +4,7 @@ use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\MainController;
-use App\Http\Controllers\ListUserController;
+use App\Http\Controllers\ListuserController;
 use App\Http\Controllers\ManageCompanyController;
 use App\Http\Controllers\ExampleController;
 use App\Http\Middleware\loginCheck;
@@ -64,7 +64,7 @@ Route::middleware([loginCheck::class])->group(function () {
             Route::post('/example/' . $value, $value);
         }
     });
-    Route::controller(ListUserController::class)->group(function () {
+    Route::controller(ListuserController::class)->group(function () {
         foreach (['show', 'create', 'update', 'delete', 'getData', 'detailJob'] as $key => $value) {
             Route::post('/listuser/' . $value, $value);
         }
