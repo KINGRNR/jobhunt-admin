@@ -53,6 +53,7 @@
                             icon: 'error',
                             title: 'Terjadi kesalahan saat memuat data',
                             text: 'Status: ' + xhr.status + ' - ' + error,
+                            confirmButtonText: 'Lanjut',
                         });
                     }
                 }
