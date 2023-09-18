@@ -43,6 +43,7 @@
                         <th class="min-w-100px">Email</th>
                         <th class="min-w-100px">Joining Date</th>
                         <th class="min-w-100px">Full Name</th>
+                        <th class="min-w-100px">Role</th>                    
                     </tr>
                     <!--end::Table row-->
                 </thead>

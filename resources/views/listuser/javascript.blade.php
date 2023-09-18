@@ -75,6 +75,29 @@
                     data: 'users_fullname',
                     name: 'users_fullname'
                 },
+                {
+                    data: 'users_role_id',
+                    render: function(data, type, row) {
+                        let badgeText, badgeColor;
+                        if (data == 'FOV4Qtgi5lcQ9kCY') {
+                            badgeText = 'Admin';
+                            badgeColor = 'badge-success';
+                        } else if (data == 'BfiwyVUDrXOpmStr') {
+                            badgeText = 'User/Pelamar';
+                            badgeColor = 'badge-warning';
+                        } else {
+                            badgeText = 'Company';
+                            badgeColor = 'badge-warning';
+                        }
+
+                        // Buat elemen badge dengan Bootstrap
+                        var badgeHTML = '<span class="badge ' + badgeColor + '">' + badgeText +
+                            '</span>';
+                        console.log(badgeHTML)
+                        // Kembalikan HTML badge
+                        return badgeHTML;
+                    }
+                },
             ]
 
         });
