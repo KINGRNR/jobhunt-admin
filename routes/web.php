@@ -65,7 +65,7 @@ Route::middleware([loginCheck::class])->group(function () {
         }
     });
     Route::controller(ListuserController::class)->group(function () {
-        foreach (['show', 'create', 'update', 'delete', 'getData', 'detailJob'] as $key => $value) {
+        foreach (['show', 'create', 'update', 'delete', 'getData', 'detailJob', 'savesuspend'] as $key => $value) {
             Route::post('/listuser/' . $value, $value);
         }
     });

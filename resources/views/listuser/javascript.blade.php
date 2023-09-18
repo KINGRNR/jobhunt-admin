@@ -12,7 +12,7 @@
 </script>
 <script type="text/javascript">
     APP_URL = "{{ getenv('APP_URL') }}/";
-    var form = 'formExample';
+    var formSuspend = 'formSuspend';
     $(() => {
         init()
 
@@ -30,36 +30,31 @@
         let table = $('#table-user').DataTable({
             searchable: true,
             destroy: true,
+            serverSide: true,
             ajax: {
                 url: "{{ route('listuser.index') }}",
                 type: "GET",
                 dataType: "json",
             },
             columns: [{
-                    "targets": 0,
-                    "render": function(data, type, row, meta) {
-                        return meta.row + 1;
-                    }
-                },
-                {
-                    data: 'photo_url',
-                    render: function(data, type, row) {
-                        if (data) {
-                            return '<img src="' + data +
-                                '" alt="User Photo" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 5px;">';
-                        } else {
-                            return '<img src="' + APP_URL +
-                                'assets/media/avatars/blank.png" alt="Default Photo" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 5px;">';
-                        }
-                    }
+                "targets": 0,
+                "render": function(data, type, row, meta) {
+                    return '<span class="ps-3">' + (meta.row + meta.settings._iDisplayStart + 1) + '</span>';
+                }
                 },
                 {
                     data: 'name',
                     name: 'name'
                 },
                 {
-                    data: 'email',
-                    name: 'email'
+                    data: null,
+                    name: 'user_data',
+                    render: function(data, type, row) {
+                        var emails = data && data.email ? data.email : '-';
+                        var photo = data && data.photo_url ? data.photo_profile : APP_URL + 'assets/media/avatars/blank.png';
+
+                        return '<div class=""><img src="' + photo + '" alt="User Photo" class="rounded-circle" style="width: 30px; height: 30px; margin-right: 5px;">' + ' <span>' + emails + '</span></div>';
+                    }
                 },
                 {
                     data: 'created_at',
@@ -77,8 +72,8 @@
                     }
                 },
                 {
-                    data: 'name',
-                    name: 'name'
+                    data: 'users_fullname',
+                    name: 'users_fullname'
                 },
             ]
 
@@ -92,8 +87,23 @@
             let rowData = table.row(this).data();
             if (rowData) {
                 let id = rowData.id;
-                onDetail(id);
-                onDetailJob(id);
+                Swal.fire({
+                    title: 'Action',
+                    showCancelButton: true,
+                    showDenyButton: true,
+                    confirmButtonText: 'Details',
+                    denyButtonText: `Suspend`,
+                    customClass: {
+                        popup: 'custom-swal-popup',
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        onDetail(id);
+                        onDetailJob(id);
+                    } else if (result.isDenied) {
+                        toggleModalBanned(id);
+                    }
+                })
             } else {
                 onReset();
                 $('#formExample').find('input, select').removeAttr('disabled');
@@ -108,6 +118,44 @@
         $(`[data-group="job"]`).removeClass('active');
         $('.table-user-ini').fadeOut();
         $('.detail').fadeIn();
+    }
+    toggleModalBanned = (id) => {
+        $.ajax({
+            url: APP_URL + 'listuser/show',
+            method: 'POST',
+            data: {
+                _token: '{{ csrf_token() }}',
+                id: id
+            },
+            success: (response) => {
+                const data = response.data;
+                $(`#selected_user`).val(data.users_fullname).attr('readonly' , 'readonly');
+                $('#suspendModal').modal('show');
+                $("#kt_daterangepicker_1").daterangepicker({
+                    timePicker: true,
+                    startDate: moment().startOf("hour"),
+                    endDate: moment().startOf("hour").add(32, "hour"),
+                    locale: {
+                        format: "M/DD hh:mm A"
+                    }
+                });
+            },
+            error: (xhr, status, error) => {
+                let errorMessage = 'An error occurred while fetching data.';
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    errorMessage = xhr.responseJSON.message;
+                }
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: errorMessage,
+                });
+            },
+            complete: (response) => {
+                unblockPage(500);
+            }
+        });
     }
     toggleDetailUser = () => {
         $(`[data-group="detail"]`).addClass('active');
@@ -126,6 +174,60 @@
         $('.detail').fadeOut();
     }
 
+    onSaveSuspend = () => {
+        console.log('hai')
+        var data = $('[name="' + formSuspend + '"]')[0];
+        var formData = new FormData(data);
+            Swal.fire({
+                title: 'Konfirmasi',
+                text: 'Apakah kamu ingin melanjutkan?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Ya',
+                cancelButtonText: 'Tidak',
+                customClass: {
+                    confirmButton: 'btn btn-primary',
+                    cancelButton: 'btn btn-secondary'
+                },
+                buttonsStyling: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: APP_URL + 'listuser/savesuspend',
+                        type: "POST",
+                        processData: false,
+                        contentType: false,
+                        data: formData,
+                        success: function(response) {
+                            if (response.success) {
+                                Swal.fire({
+                                    title: response.title,
+                                    text: response.message,
+                                    icon: (response.success) ? 'success' : "error",
+                                    buttonsStyling: false,
+                                    confirmButtonText: "Oke!",
+                                    customClass: {
+                                        confirmButton: "btn btn-primary"
+                                    },
+                                }).then(() => {
+                                    location.reload();
+                                });
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Error",
+                                text: "An error occurred. Please try again later.",
+                                showConfirmButton: true,
+                            }).then(() => {
+                                location.reload();
+                            });
+                        }
+                    });
+                }
+            });
+        } 
     onDetail = (id) => {
         blockPage();
         $.ajax({
@@ -188,7 +290,7 @@
             }
         });
     }
-    function calculateCompleteness(data) {
+     function calculateCompleteness(data) {
         let completeness = 0;
 
         if (data.name) completeness += 10;
