@@ -37,17 +37,16 @@
                 <!--begin::Table head-->
                 <thead>
                     <!--begin::Table row-->
-                    <tr class="text-center align-middle text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                    <tr class="text-start align-middle text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
                         <th class="ps-4" width="20">No</th>
-                        <th class="min-w-20px">Photo</th>
-                        <th class="min-w-125px">Username</th>
-                        <th class="min-w-125px">Email</th>
-                        <th class="min-w-125px">Joining Date</th>
-                        <th class="min-w-125px">Full Name</th>
+                        <th class="min-w-100px">Username</th>
+                        <th class="min-w-100px">Email</th>
+                        <th class="min-w-100px">Joining Date</th>
+                        <th class="min-w-100px">Full Name</th>
                     </tr>
                     <!--end::Table row-->
                 </thead>
-                <tbody class="fw-bold text-gray-600 text-center align-middle">
+                <tbody class="fw-bold text-gray-600 text-start align-middle">
                 </tbody>
             </table>
         </div>
@@ -66,6 +65,36 @@
 <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script> --}}
 
 
-
-
+<div class="modal fade" id="suspendModal" tabindex="-1" aria-labelledby="suspendModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Suspend User</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <form action="javascript:onSaveSuspend()" method="post" id="formSuspend" name="formSuspend" autocomplete="off" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="User" class="form-label">Selected User:</label>
+                            <input type="text" class="form-control" id="selected_user" name="selected_user">
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Deskripsi:</label>
+                            <textarea class="form-control input-required" id="description" name="description" rows="4"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="endDate" class="form-label">Range Tanggal:</label>
+                            <input class="form-control form-control-solid input-required" placeholder="Pick date rage" id="kt_daterangepicker_1"/>
+                            </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" id="confirmBtn">Confirm</button>
+                {{-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancelBtn">Cancel</button> --}}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 @include('listuser.javascript')

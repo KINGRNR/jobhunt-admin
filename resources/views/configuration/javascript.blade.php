@@ -140,7 +140,6 @@
     save = () => {
         var validasi = 'true';
         $(".input-required").each(function(i, obj) {
-            // Menghapus spasi dari awal dan akhir nilai input
             let inputValue = $(this).val().trim();
 
             if (inputValue === "") {
