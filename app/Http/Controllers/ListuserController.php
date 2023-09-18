@@ -17,7 +17,7 @@ class ListuserController extends Controller
     public function index(Request $request)
     {
 
-        $data = ManageUser::join('roles', 'users.users_role_id', '=', 'roles.role_id')->get(['users.*', 'roles.*']);
+        $data = ManageUser::leftJoin('detail_users', 'users.id', '=', 'detail_users.user_id')->get(['users.*', 'detail_users.*']);
         return DataTables::of($data)->toJson();
     }
 
