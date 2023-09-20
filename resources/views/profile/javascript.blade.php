@@ -4,7 +4,7 @@
 
     })
     init = () => {
-         onEdit();
+         show();
          unblockPage();
     }
     changeMenu = (type, el) => {
@@ -21,13 +21,18 @@
             $("#ubahPassword-tab").click();
         }
     }
-    onEdit = () => {
+    show = () => {
         blockPage();
         $.ajax({
             url: "{{ route('profile.show') }}",
             type: "GET",
+            dataType: "json",
             success: (response) => {
-                console.log(response.data);
+                // console.log(response.data);
+                let data = response.data;
+                $('#username').val(data.username);
+                $('#name').val(data.fullname);
+                $('#email').val(data.email);
             },
             complete: (response) => {
                 unblockPage();

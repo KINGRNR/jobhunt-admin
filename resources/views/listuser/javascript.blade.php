@@ -25,6 +25,10 @@
         $(`input, select`).removeAttr('disabled');
     });
 
+    function countSelectedRows() {
+        const selectedRowCount = $('.row-checkbox:checked').not('#checkAll').length;
+        $('#selectedRowCount').text(selectedRowCount);
+    }
 
     function initializeDataTables() {
         let table = $('#table-user').DataTable({
@@ -37,10 +41,18 @@
                 dataType: "json",
             },
             columns: [{
-                "targets": 0,
-                "render": function(data, type, row, meta) {
-                    return '<span class="ps-3">' + (meta.row + meta.settings._iDisplayStart + 1) + '</span>';
-                }
+                    "targets": 0,
+                    "orderable": false,
+                    "render": function(data, type, row, meta) {
+                        return '<div class="ms-6"><input class="form-check-input row-checkbox" type="checkbox"></div>';
+                    }
+                },
+                {
+                    "orderable": false,
+                    render: function(data, type, row, meta) {
+                        return '<span class="ps-3">' + (meta.row + meta.settings._iDisplayStart + 1) +
+                            '</span>';
+                    }
                 },
                 {
                     data: 'name',
@@ -51,9 +63,23 @@
                     name: 'user_data',
                     render: function(data, type, row) {
                         var emails = data && data.email ? data.email : '-';
-                        var photo = data && data.photo_url ? data.photo_profile : APP_URL + 'assets/media/avatars/blank.png';
+                        var photo = data && data.photo_profile ? data.photo_profile : '';
+                        var googlePhoto = data && data.google_photo_profile ? data
+                            .google_photo_profile : '';
 
-                        return '<div class=""><img src="' + photo + '" alt="User Photo" class="rounded-circle" style="width: 30px; height: 30px; margin-right: 5px;">' + ' <span>' + emails + '</span></div>';
+                        if (!photo && googlePhoto) {
+                            return '<div class=""><img src="' + googlePhoto +
+                                '" alt="Google User Photo" class="rounded-circle" style="width: 30px; height: 30px; margin-right: 5px;">' +
+                                ' <span>' + emails + '</span></div>';
+                        } else if (photo) {
+                            return '<div class=""><img src="' + photo +
+                                '" alt="User Photo" class="rounded-circle" style="width: 30px; height: 30px; margin-right: 5px;">' +
+                                ' <span>' + emails + '</span></div>';
+                        } else {
+                            return '<div class=""><img src="' + APP_URL +
+                                'assets/media/avatars/blank.png" alt="User Photo" class="rounded-circle" style="width: 30px; height: 30px; margin-right: 5px;">' +
+                                ' <span>' + emails + '</span></div>';
+                        }
                     }
                 },
                 {
@@ -90,50 +116,126 @@
                             badgeColor = 'badge-warning';
                         }
 
-                        // Buat elemen badge dengan Bootstrap
                         var badgeHTML = '<span class="badge ' + badgeColor + '">' + badgeText +
                             '</span>';
-                        console.log(badgeHTML)
-                        // Kembalikan HTML badge
                         return badgeHTML;
                     }
                 },
+                {
+                    render: function(data, type, row) {
+                        var id = row.id; // Ambil ID dari data atau sumber lain sesuai kebutuhan
+                        var btnHTML = `
+        <div class="me-0">
+            <button class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary" type="button" 
+                id="toggleDropdownTable" onclick="toggleMenu(${id})">
+                <i class="bi bi-three-dots fs-3"></i>
+            </button>
+        </div>
+    `;
+                        return btnHTML;
+                    },
+                },
+            ],
+            order: [
+                [2, 'asc']
             ]
-
         });
-        $('#search_example').on('input', function() {
+        table.on('draw', function() {
+            $('.row-checkbox').prop('checked', false);
+            countSelectedRows();
+        });
+        $('#search_user').on('input', function() {
             var searchValue = $(this).val();
             table.search(searchValue).draw();
         });
+        // $('#toggleDropdownTable').on('click', function() {
+        //     let rowData = table.row(this).data();
+        //     if (rowData) {
+        //         let id = rowData.id;
+        //         Swal.fire({
+        //             title: 'Action',
+        //             showCancelButton: true,
+        //             showDenyButton: true,
+        //             confirmButtonText: 'Details',
+        //             denyButtonText: `Suspend`,
+        //             customClass: {
+        //                 popup: 'custom-swal-popup',
+        //             }
+        //         }).then((result) => {
+        //             if (result.isConfirmed) {
+        //                 onDetail(id);
+        //                 onDetailJob(id);
+        //             } else if (result.isDenied) {
+        //                 toggleModalBanned(id);
+        //             }
+        //         })
+        //     } else {
+        //         onReset();
+        //         $('#formExample').find('input, select').removeAttr('disabled');
+        //         $('.actCreate').removeClass('d-none');
+        //         $('.actEdit').addClass('d-none');
+        //     }
+        // }).css('cursor', 'pointer');
+    }
+    $('#checkAll').click(function() {
+        $('.row-checkbox').prop('checked', this.checked);
+        handleCheckboxSelection();
+        countSelectedRows();
+    });
 
-        $('#table-user tbody').on('click', 'tr', function() {
-            let rowData = table.row(this).data();
-            if (rowData) {
-                let id = rowData.id;
-                Swal.fire({
-                    title: 'Action',
-                    showCancelButton: true,
-                    showDenyButton: true,
-                    confirmButtonText: 'Details',
-                    denyButtonText: `Suspend`,
-                    customClass: {
-                        popup: 'custom-swal-popup',
-                    }
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        onDetail(id);
-                        onDetailJob(id);
-                    } else if (result.isDenied) {
-                        toggleModalBanned(id);
-                    }
-                })
-            } else {
-                onReset();
-                $('#formExample').find('input, select').removeAttr('disabled');
-                $('.actCreate').removeClass('d-none');
-                $('.actEdit').addClass('d-none');
+    $('#table-user tbody').on('click', '.row-checkbox', function() {
+        countSelectedRows();
+    });
+
+    function handleCheckboxSelection() {
+        const isChecked = $('.row-checkbox:checked').length > 0;
+        const isCheckAllChecked = $('#checkAll').prop('checked');
+
+        if (isChecked) {
+            // $('#filter_date').fadeOut()
+            // $('#status').fadeOut(function() {
+            //     $('#selected_row').fadeIn();
+            //     $('#selected_user').fadeIn();
+            // });
+        } else {
+            // $('#selected_row').fadeOut();
+            // $('#selected_user').fadeOut(function() {
+            //     $('#filter_date').fadeIn()
+            //     $('#status').fadeIn();
+            // });
+        }
+    }
+
+    handleCheckboxSelection();
+
+    $('#table-user tbody').on('click', '.row-checkbox', function() {
+        handleCheckboxSelection();
+        countSelectedRows();
+
+        if ($('.row-checkbox:checked').length === 0) {
+            $('#checkAll').prop('checked', false);
+        }
+    });
+
+
+    toggleMenu = (id) => {
+        Swal.fire({
+            title: 'Action',
+            showCancelButton: true,
+            showDenyButton: true,
+            confirmButtonText: 'Details',
+            denyButtonText: `Suspend`,
+            customClass: {
+                popup: 'custom-swal-popup',
             }
-        }).css('cursor', 'pointer');
+        }).then((result) => {
+            if (result.isConfirmed) {
+                onDetail(id);
+                onDetailJob(id);
+            } else if (result.isDenied) {
+                toggleModalBanned(id);
+            }
+        })
     }
 
     toggleDetail = () => {
@@ -152,7 +254,7 @@
             },
             success: (response) => {
                 const data = response.data;
-                $(`#selected_user`).val(data.users_fullname).attr('readonly' , 'readonly');
+                $(`#selected_user`).val(data.users_fullname).attr('readonly', 'readonly');
                 $('#suspendModal').modal('show');
                 $("#kt_daterangepicker_1").daterangepicker({
                     timePicker: true,
@@ -201,56 +303,56 @@
         console.log('hai')
         var data = $('[name="' + formSuspend + '"]')[0];
         var formData = new FormData(data);
-            Swal.fire({
-                title: 'Konfirmasi',
-                text: 'Apakah kamu ingin melanjutkan?',
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonText: 'Ya',
-                cancelButtonText: 'Tidak',
-                customClass: {
-                    confirmButton: 'btn btn-primary',
-                    cancelButton: 'btn btn-secondary'
-                },
-                buttonsStyling: false
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: APP_URL + 'listuser/savesuspend',
-                        type: "POST",
-                        processData: false,
-                        contentType: false,
-                        data: formData,
-                        success: function(response) {
-                            if (response.success) {
-                                Swal.fire({
-                                    title: response.title,
-                                    text: response.message,
-                                    icon: (response.success) ? 'success' : "error",
-                                    buttonsStyling: false,
-                                    confirmButtonText: "Oke!",
-                                    customClass: {
-                                        confirmButton: "btn btn-primary"
-                                    },
-                                }).then(() => {
-                                    location.reload();
-                                });
-                            }
-                        },
-                        error: function(xhr, status, error) {
+        Swal.fire({
+            title: 'Konfirmasi',
+            text: 'Apakah kamu ingin melanjutkan?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Tidak',
+            customClass: {
+                confirmButton: 'btn btn-primary',
+                cancelButton: 'btn btn-secondary'
+            },
+            buttonsStyling: false
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: APP_URL + 'listuser/savesuspend',
+                    type: "POST",
+                    processData: false,
+                    contentType: false,
+                    data: formData,
+                    success: function(response) {
+                        if (response.success) {
                             Swal.fire({
-                                icon: "error",
-                                title: "Error",
-                                text: "An error occurred. Please try again later.",
-                                showConfirmButton: true,
+                                title: response.title,
+                                text: response.message,
+                                icon: (response.success) ? 'success' : "error",
+                                buttonsStyling: false,
+                                confirmButtonText: "Oke!",
+                                customClass: {
+                                    confirmButton: "btn btn-primary"
+                                },
                             }).then(() => {
                                 location.reload();
                             });
                         }
-                    });
-                }
-            });
-        } 
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error",
+                            text: "An error occurred. Please try again later.",
+                            showConfirmButton: true,
+                        }).then(() => {
+                            location.reload();
+                        });
+                    }
+                });
+            }
+        });
+    }
     onDetail = (id) => {
         blockPage();
         $.ajax({
@@ -285,15 +387,17 @@
                 $('#skills').text(data.users_skills);
                 $('#negara').text("KAMU NANYA HAH?");
                 $('#link_resume').text(data.users_resume_link);
-                $('#profile_image').attr('src', data.photo_profile);
                 const profileImageSrc = data.photo_profile ? data.photo_profile :
                     'assets/media/avatars/blank.png';
-                $('#profile_image').attr('src', profileImageSrc);
+                const googlePhotoSrc = data.google_photo_profile ? data.google_photo_profile :
+                    profileImageSrc;
+                $('#profile_image').attr('src', googlePhotoSrc);
 
                 const completenessPercentage = calculateCompleteness(data);
 
-                $('#completeness').text(completenessPercentage +"%");
-                $('.progress-bar-completeness').attr('aria-valuenow', completenessPercentage).css('width', completenessPercentage +'%');
+                $('#completeness').text(completenessPercentage + "%");
+                $('.progress-bar-completeness').attr('aria-valuenow', completenessPercentage).css(
+                    'width', completenessPercentage + '%');
 
             },
             error: (xhr, status, error) => {
@@ -313,7 +417,8 @@
             }
         });
     }
-     function calculateCompleteness(data) {
+
+    function calculateCompleteness(data) {
         let completeness = 0;
 
         if (data.name) completeness += 10;
@@ -331,7 +436,7 @@
         if (data.photo_profile) completeness += 10;
 
         completeness = Math.min(completeness, 100);
-    console.log(completeness)
+        console.log(completeness)
         return completeness;
     }
 
@@ -396,11 +501,7 @@
             success: (response) => {
                 // const data = response.data;
                 console.log(response);
-                if (response.data.length === 0) {
-                    $("#card_table").addClass('d-none');
-                    $("#callback").html('<div class="d-flex align-items-center justify-content-center" style="height: 100%;"><img src="storage/data/nodata.png" alt="Error" class="img-fluid" style="max-width: 100%; max-height: 100%; object-fit: contain;" /></div>');
-                // Initialize DataTable
-            } else {
+                $("#card_table").addClass('d-none'); // Initialize DataTable
                 $("#card_table").removeClass('d-none');
 
                 let table = $('#table-user_detail').DataTable({
@@ -443,7 +544,6 @@
                         }
                     ]
                 });
-            }
                 // Unblock the page
                 unblockPage();
             }

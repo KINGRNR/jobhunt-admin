@@ -38,8 +38,8 @@
         </div>
 
         <div class="row">
-            <label class="col-lg-4 col-form-label required fw-bold fs-6">Nama</label>
-            <input type="text" name="name" id="name" class="form-control input-required" placeholder="Nama">
+            <label class="col-lg-4 col-form-label required fw-bold fs-6">Fullname</label>
+            <input type="text" name="name" id="name" class="form-control input-required" placeholder="Fullname">
             <div class="fv-plugins-message-container invalid-feedback"></div>
         </div>
 
