@@ -2,6 +2,11 @@
     <div class="row mb-5 w-75 mx-auto">
         <div class="bg-white rounded-3 p-7 shadow-sm m-3">
             <div class="d-flex">
+                <div class="ms-2" id="selected_user" style="display: none;">
+                    <div class="selected-row">Selected Row: <span id="selectedRowCount">0</span>
+                    </div>
+                    <button type="button" class="btn btn-sm btn-danger" data-kt-customer-table-select="delete_selected">Delete Selected</button>
+                </div>
                 <input type="date" name="filter_date" id="filter_date" class="form-control form-control-sm"
                     style="width: 20%!important;" onchange="onFilter()">
                 <select name="status" id="status" class="form-select form-select-sm form-select-solid ms-2"
@@ -15,12 +20,9 @@
                     <span class="input-group-text" id="basic-addon1">
                         <i class="align-self-center fs-2 las la-search"></i>
                     </span>
-                    <input type="search" name="search_example" id="search_example" placeholder="Search Here!"
+                    <input type="search" name="search_user" id="search_user" placeholder="Search User!"
                         class="form-control form-control-sm" autocomplete="off">
-
                 </div>
-
-
             </div>
 
         </div>
@@ -33,17 +35,21 @@
         <!--begin::Card body-->
         <div class="card-body pt-0">
             <!--begin::Table-->
-            <table class="table align-middle table-row-dashed fs-6 gy-5 text-center" id="table-user">
+            <table class="table align-middle table-hover  table-row-dashed fs-6 gy-5 text-center" id="table-user">
                 <!--begin::Table head-->
                 <thead>
                     <!--begin::Table row-->
                     <tr class="text-start align-middle text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                        <th class="ps-4" width="20">
+                            <div class="form-check ms-2"><input class="form-check-input row-checkbox" id="checkAll" type="checkbox"></div>
+                        </th>
                         <th class="ps-4" width="20">No</th>
                         <th class="min-w-100px">Username</th>
                         <th class="min-w-100px">Email</th>
                         <th class="min-w-100px">Joining Date</th>
                         <th class="min-w-100px">Full Name</th>
-                        <th class="min-w-100px">Role</th>                    
+                        <th class="min-w-100px">Role</th>
+                        <th>action</th>
                     </tr>
                     <!--end::Table row-->
                 </thead>
