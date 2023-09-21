@@ -106,11 +106,17 @@ class MainController extends Controller
     public function get_breadcrumb($value)
     {
         if (empty($value['menu_parent'])) {
-            return '
+             return '
 
                     <h1 class="d-flex flex-column text-light fw-bolder my-1">
-									<span class="fs-1">' . $value->menu_title . '</span>
-								</h1>';
+									<span class="fs-1">' . $value['menu_title'] . '</span>
+								</h1>
+
+
+								<ul class="breadcrumb breadcrumb-line fw-bold fs-7 my-1">
+									<li class="breadcrumb-item text-gray-400">' . $value['menu_title'] . '</li>
+									<li class="breadcrumb-item text-light">' . $value['menu_module'] . '</li>
+								</ul>';
         } else {
             $parent =  Menu::find($value->menu_parent);
 
@@ -237,7 +243,7 @@ class MainController extends Controller
                    ";
 
                 foreach ($collect->where('menu_level', 2)->where('menu_parent', $value->menu_id)->all() as $keySub => $valueSub) {
-                    if (auth()->user()->role_id != 'ynpklxjdwndask2p' && $value->menu_id == '851cjgng5kp9xi69' && !in_array(strtolower($valueSub->menu_code), session('unit_kerja'))) continue;
+                    if (auth()->user()->role_id != 'ynpklxjdwndask2p' && $value->menu_id == '851cjgng5kp9xi69' && !in_array(strtolower($valueSub->menu_code), session())) continue;
                     // $iconSub = ($valueSub->menu_icon) ? "<span class=\"menu-icon\"><i class=\"{$valueSub->menu_icon} fs-2x text-gray-400\"></i></span>" : "";
                     $html .= "
                                     <div class=\"menu-item\">

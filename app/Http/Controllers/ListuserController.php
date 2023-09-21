@@ -65,4 +65,26 @@ class ListuserController extends Controller
             return response()->json(['message' => 'User belum punya pekerjaan', 'data' => []]);
         }
     }
+
+    public function deleteUser(Request $request)
+    {
+        $data = $request->post('data');
+        $callbackMessage = [];
+
+        foreach ($data as $id => $value) {
+            $user = DB::table('users')->where('id', $id)->first();
+
+            if ($user) {
+                DB::table('users')->where('id', $id)->update(['deleted_at' => now()]);
+                $callbackMessage[$id] = 'User Dengan Id = ' . $id . ' Berhasil di Delete!.';
+            } else {
+                $callbackMessage[$id] = 'User Dengan Id ' . $id . ' Gagal di Delete!.';
+            }
+        }
+
+        return response()->json([
+            'message' => $callbackMessage,
+            'status' => 'success',
+        ]);
+    }
 }
