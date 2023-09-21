@@ -5,7 +5,8 @@
                 <div class="ms-2" id="selected_user" style="display: none;">
                     <div class="selected-row">Selected Row: <span id="selectedRowCount">0</span>
                     </div>
-                    <button type="button" class="btn btn-sm btn-danger" data-kt-customer-table-select="delete_selected">Delete Selected</button>
+                    <button type="button" class="btn btn-sm btn-danger"
+                        data-kt-customer-table-select="delete_selected">Delete Selected</button>
                 </div>
                 <input type="date" name="filter_date" id="filter_date" class="form-control form-control-sm"
                     style="width: 20%!important;" onchange="onFilter()">
@@ -20,7 +21,7 @@
                     <span class="input-group-text" id="basic-addon1">
                         <i class="align-self-center fs-2 las la-search"></i>
                     </span>
-                    <input type="search" name="search_user" id="search_user" placeholder="Search User!"
+                    <input type="search" name="search_user" id="search_user" placeholder="Search User..."
                         class="form-control form-control-sm" autocomplete="off">
                 </div>
             </div>
@@ -30,6 +31,25 @@
 
     <div class="card">
         <!--begin::Card header-->
+        <div class="card-header">
+            <div class="card-title">
+                <h1
+                    style="color: var(--txt, #323232);
+                font-size: 20px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: 140%; /* 28px */
+                letter-spacing: 0.2px;">
+                    List User</h1>
+            </div>
+            <div class="card-toolbar" style="display: none;">
+                <div class="fw-bolder me-3">
+                    <span class="me-2" id="selected_total">10</span>Selected
+                </div>
+                <button type="button" class="btn btn-sm btn-danger" data-kt-customer-table-select="delete_selected"
+                    onclick="deleteSelected()">Delete Selected</button>
+            </div>
+        </div>
 
         <!--end::Card header-->
         <!--begin::Card body-->
@@ -41,7 +61,8 @@
                     <!--begin::Table row-->
                     <tr class="text-start align-middle text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
                         <th class="ps-4" width="20">
-                            <div class="form-check ms-2"><input class="form-check-input row-checkbox" id="checkAll" type="checkbox"></div>
+                            <div class="form-check ms-2"><input class="form-check-input row-checkbox" id="checkAll"
+                                    type="checkbox"></div>
                         </th>
                         <th class="ps-4" width="20">No</th>
                         <th class="min-w-100px">Username</th>
@@ -81,7 +102,8 @@
             </div>
             <div class="modal-body">
                 <div class="container">
-                    <form action="javascript:onSaveSuspend()" method="post" id="formSuspend" name="formSuspend" autocomplete="off" enctype="multipart/form-data">
+                    <form action="javascript:onSaveSuspend()" method="post" id="formSuspend" name="formSuspend"
+                        autocomplete="off" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="User" class="form-label">Selected User:</label>
                             <input type="text" class="form-control" id="selected_user" name="selected_user">
@@ -92,8 +114,9 @@
                         </div>
                         <div class="mb-3">
                             <label for="endDate" class="form-label">Range Tanggal:</label>
-                            <input class="form-control form-control-solid input-required" placeholder="Pick date rage" id="kt_daterangepicker_1"/>
-                            </div>
+                            <input class="form-control form-control-solid input-required" placeholder="Pick date rage"
+                                id="kt_daterangepicker_1" />
+                        </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -104,4 +127,34 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="deleteUser" tabindex="-1" aria-labelledby="deleteUserLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="deleteUserLabel">Delete User</h1>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <form action="javascript:onDeleteUser()" method="post" id="formDeleteUsers"
+                        name="formDeleteUsers" autocomplete="off" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <div id="userId">
+
+                            </div>
+                            <p>Selected Users to Delete:</p>
+                            <ul id="selectedUsersList">
+                                <!-- Daftar nama pengguna yang dipilih akan ditambahkan di sini -->
+                            </ul>
+                        </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-danger" id="deleteConfirmBtn" onclick="onDeleteUser()">Delete</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="deleteCancelBtn">Cancel</button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+
 @include('listuser.javascript')

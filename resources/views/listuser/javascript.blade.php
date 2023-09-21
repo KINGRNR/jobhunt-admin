@@ -27,7 +27,7 @@
 
     function countSelectedRows() {
         const selectedRowCount = $('.row-checkbox:checked').not('#checkAll').length;
-        $('#selectedRowCount').text(selectedRowCount);
+        $('#selected_total').text(selectedRowCount);
     }
 
     function initializeDataTables() {
@@ -44,7 +44,10 @@
                     "targets": 0,
                     "orderable": false,
                     "render": function(data, type, row, meta) {
-                        return '<div class="ms-6"><input class="form-check-input row-checkbox" type="checkbox"></div>';
+                        var id = row.id;
+                        var name = row.name;
+                        return '<div class="ms-6"><input class="form-check-input row-checkbox" type="checkbox" data-id="' +
+                            id + '" data-name="' + name + '"></div>';
                     }
                 },
                 {
@@ -142,40 +145,14 @@
         });
         table.on('draw', function() {
             $('.row-checkbox').prop('checked', false);
+            $('.card-toolbar').fadeOut(300)
             countSelectedRows();
         });
         $('#search_user').on('input', function() {
             var searchValue = $(this).val();
             table.search(searchValue).draw();
         });
-        // $('#toggleDropdownTable').on('click', function() {
-        //     let rowData = table.row(this).data();
-        //     if (rowData) {
-        //         let id = rowData.id;
-        //         Swal.fire({
-        //             title: 'Action',
-        //             showCancelButton: true,
-        //             showDenyButton: true,
-        //             confirmButtonText: 'Details',
-        //             denyButtonText: `Suspend`,
-        //             customClass: {
-        //                 popup: 'custom-swal-popup',
-        //             }
-        //         }).then((result) => {
-        //             if (result.isConfirmed) {
-        //                 onDetail(id);
-        //                 onDetailJob(id);
-        //             } else if (result.isDenied) {
-        //                 toggleModalBanned(id);
-        //             }
-        //         })
-        //     } else {
-        //         onReset();
-        //         $('#formExample').find('input, select').removeAttr('disabled');
-        //         $('.actCreate').removeClass('d-none');
-        //         $('.actEdit').addClass('d-none');
-        //     }
-        // }).css('cursor', 'pointer');
+
     }
     $('#checkAll').click(function() {
         $('.row-checkbox').prop('checked', this.checked);
@@ -192,17 +169,9 @@
         const isCheckAllChecked = $('#checkAll').prop('checked');
 
         if (isChecked) {
-            // $('#filter_date').fadeOut()
-            // $('#status').fadeOut(function() {
-            //     $('#selected_row').fadeIn();
-            //     $('#selected_user').fadeIn();
-            // });
+            $('.card-toolbar').fadeIn(300)
         } else {
-            // $('#selected_row').fadeOut();
-            // $('#selected_user').fadeOut(function() {
-            //     $('#filter_date').fadeIn()
-            //     $('#status').fadeIn();
-            // });
+            $('.card-toolbar').fadeOut(300)
         }
     }
 
@@ -216,6 +185,45 @@
             $('#checkAll').prop('checked', false);
         }
     });
+
+    function deleteSelected() {
+        var selectedUserNames = [];
+
+        $(".row-checkbox:checked").each(function() {
+            var name = $(this).data("name");
+            if (name !== null && name !== undefined) {
+                selectedUserNames.push(name);
+            }
+        });
+
+        var selectedUsersList = document.getElementById("selectedUsersList");
+
+        while (selectedUsersList.firstChild) {
+            selectedUsersList.removeChild(selectedUsersList.firstChild);
+        }
+
+        for (var i = 0; i < selectedUserNames.length; i++) {
+            var userName = selectedUserNames[i];
+            var listItem = document.createElement("li");
+            listItem.textContent = userName;
+            selectedUsersList.appendChild(listItem);
+        }
+
+        $(".row-checkbox:checked").each(function() {
+            var userId = $(this).data("id");
+            if (userId !== null && userId !== undefined) {
+                var userIdInput = document.createElement("input");
+                userIdInput.type = "hidden";
+                userIdInput.name = "data[" + $(this).data("id") + "]";
+                userIdInput.value = userId;
+
+                var userIdDiv = document.getElementById("userId");
+                userIdDiv.appendChild(userIdInput);
+            }
+        });
+
+        $('#deleteUser').modal('show');
+    }
 
 
     toggleMenu = (id) => {
@@ -299,6 +307,45 @@
         $('.detail').fadeOut();
     }
 
+    onDeleteUser = () => {
+        var formDeleteUser = 'formDeleteUsers';
+        var dataDeleteUser = $('[name="' + formDeleteUser + '"]')[0];
+        var formData = new FormData(dataDeleteUser);
+        $.ajax({
+            url: APP_URL + 'listuser/deleteUser',
+            type: "POST",
+            processData: false,
+            contentType: false,
+            data: formData,
+            success: function(response) {
+                console.log(response)
+                if (response.status === 'success') {
+                    Swal.fire({
+                        title: "User Telah Dinonaktifkan",
+                        text: "User akan tetap tersimpan selama 30 hari sebelum dihapus secara permanen.",
+                        icon: "success",
+                        buttonsStyling: false,
+                        confirmButtonText: "Oke!",
+                        customClass: {
+                            confirmButton: "btn btn-primary"
+                        },
+                    }).then(() => {
+                        location.reload();
+                    });
+                }
+            },
+            error: function(xhr, status, error) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "An error occurred. Please try again later.",
+                    showConfirmButton: true,
+                }).then(() => {
+                    location.reload();
+                });
+            }
+        });
+    }
     onSaveSuspend = () => {
         console.log('hai')
         var data = $('[name="' + formSuspend + '"]')[0];
