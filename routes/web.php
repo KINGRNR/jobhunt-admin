@@ -51,7 +51,7 @@ Route::middleware([loginCheck::class])->group(function () {
     Route::get('examples', [ExampleController::class, 'index'])->name('example.index');
     Route::get('users', [ListUserController::class, 'index'])->name('listuser.index');
     Route::get('company', [ManageCompanyController::class, 'index'])->name('managecompany.index');
-    Route::get('detailprofiles', [ProfileController::class, 'show'])->name('profile.show');
+    Route::get('profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::get('log', [LogController::class, 'showLog'])->name('log.showLog');
 
 
@@ -65,7 +65,7 @@ Route::middleware([loginCheck::class])->group(function () {
         }
     });
     Route::controller(ListuserController::class)->group(function () {
-        foreach (['show', 'create', 'update', 'delete', 'getData', 'detailJob', 'savesuspend'] as $key => $value) {
+        foreach (['show', 'create', 'update', 'delete', 'getData', 'detailJob', 'savesuspend', 'deleteUser'] as $key => $value) {
             Route::post('/listuser/' . $value, $value);
         }
     });
