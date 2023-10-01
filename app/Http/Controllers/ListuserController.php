@@ -21,6 +21,13 @@ class ListuserController extends Controller
         return DataTables::of($data)->toJson();
     }
 
+    public function showall(Request $request)
+    {
+
+        $data = ManageUser::leftJoin('detail_users', 'users.id', '=', 'detail_users.user_id')->get(['users.*', 'detail_users.*']);
+        return response()->json();
+    }
+
     public function show(Request $request)
     {
         $data = $request->post();

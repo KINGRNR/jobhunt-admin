@@ -25,24 +25,26 @@
                 </span>
             @enderror
         </div>
-
         <div class="fv-row mb-10">
             <div class="d-flex flex-stack mb-2">
                 <label class="form-label fw-bolder text-dark fs-14 mb-0">Password</label>
-                {{-- <a href="{{ route('password.request') }}" class="link-primary fs-14 fw-bolder">Forgot Password ?</a> --}}
             </div>
-            <input
-                class="form-control @error('password') is-invalid @enderror form-control-lg fs-14 form-control-solid border border-gray-200 text-gray-900"
-                id="password" type="password" name="password" value="KaliBolu" placeholder="Enter your password" required
-                autocomplete="current-password">
-
+            <div class="position-relative">
+                <input
+                    class="form-control @error('password') is-invalid @enderror form-control-lg fs-14 form-control-solid border border-gray-200 text-gray-900"
+                    id="password" type="password" name="password" value="KaliBolu" placeholder="Enter your password" required
+                    autocomplete="current-password">
+                    <button type="button" onclick="togglePassword()" class="btn-visible btn position-absolute shadow-none flex-center" style="top: 50%; right: 0; transform: translateY(-50%); color: #808080; display: flex;" fdprocessedid="mwa89f">
+                        <i class="far fa-eye"></i>
+                    </button>
+            </div>
             @error('password')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
             @enderror
         </div>
-
+        
         <div class="fv-row mb-10">
             <div class="d-flex flex-stack mb-2">
                 {{-- <label class="form-label fw-bolder text-dark fs-14 mb-0">Password</label> --}}
@@ -55,8 +57,8 @@
 
         <div class="text-center">
 
-            <button type="submit" class="btn btn-lg w-100 mb-5" style="background-color: #1B61AD">
-                <span class="indicator-label text-white">SIGN IN</span>
+            <button type="submit" class="btn btn-lg w-100 mb-4" style="background-color: #1B61AD">
+                <span class="indicator-label text-white">Sign In</span>
                 <span class="indicator-progress">Please wait...
                     <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
             </button>
@@ -64,4 +66,17 @@
                 <img alt="Logo" src="assets/media/svg/brand-logos/google-icon.svg" class="h-20px me-3">Continue with
                 Google</a>
     </form>
-    @endsection
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        togglePassword = () => {
+            if ($('#password').attr('type') == 'password') {
+                $('#password').attr('type', 'text')
+                $('.far.fa-eye').removeClass('fa-eye').addClass('fa-eye-slash')
+            } else {
+                $('.far.fa-eye-slash').removeClass('fa-eye-slash').addClass('fa-eye')
+                $('#password').attr('type', 'password')
+            }
+        }
+    </script>
+@endsection

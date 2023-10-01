@@ -145,7 +145,7 @@
         });
         table.on('draw', function() {
             $('.row-checkbox').prop('checked', false);
-            $('.card-toolbar').fadeOut(300)
+            $('.deleted-selected').fadeOut(300)
             countSelectedRows();
         });
         $('#search_user').on('input', function() {
@@ -169,9 +169,9 @@
         const isCheckAllChecked = $('#checkAll').prop('checked');
 
         if (isChecked) {
-            $('.card-toolbar').fadeIn(300)
+            $('.deleted-selected').fadeIn(300)
         } else {
-            $('.card-toolbar').fadeOut(300)
+            $('.deleted-selected').fadeOut(300)
         }
     }
 

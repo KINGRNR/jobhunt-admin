@@ -1,53 +1,61 @@
 <div class="table-user-ini">
     <div class="row mb-5 w-75 mx-auto">
-        <div class="bg-white rounded-3 p-7 shadow-sm m-3">
-            <div class="d-flex">
-                <div class="ms-2" id="selected_user" style="display: none;">
-                    <div class="selected-row">Selected Row: <span id="selectedRowCount">0</span>
-                    </div>
-                    <button type="button" class="btn btn-sm btn-danger"
-                        data-kt-customer-table-select="delete_selected">Delete Selected</button>
-                </div>
-                <input type="date" name="filter_date" id="filter_date" class="form-control form-control-sm"
-                    style="width: 20%!important;" onchange="onFilter()">
-                <select name="status" id="status" class="form-select form-select-sm form-select-solid ms-2"
-                    style="width: 20%!important;">
-                    <option value="">Status</option>
-                    <option value="approve">Approved</option>
-                    <option value="reject">Rejected</option>
-                    <option value="processing">Processing</option>
-                </select>
-                <div class="input-group ms-2">
-                    <span class="input-group-text" id="basic-addon1">
-                        <i class="align-self-center fs-2 las la-search"></i>
-                    </span>
-                    <input type="search" name="search_user" id="search_user" placeholder="Search User..."
-                        class="form-control form-control-sm" autocomplete="off">
-                </div>
-            </div>
-
-        </div>
     </div>
 
     <div class="card">
         <!--begin::Card header-->
-        <div class="card-header">
+        <div class="card-header py-4">
             <div class="card-title">
-                <h1
+                {{-- <h1
                     style="color: var(--txt, #323232);
                 font-size: 20px;
                 font-style: normal;
                 font-weight: 600;
                 line-height: 140%; /* 28px */
                 letter-spacing: 0.2px;">
-                    List User</h1>
-            </div>
-            <div class="card-toolbar" style="display: none;">
-                <div class="fw-bolder me-3">
-                    <span class="me-2" id="selected_total">10</span>Selected
+                    List User</h1> --}}
+                <div class="input-group ms-2">
+                    <span class="input-group-text" id="basic-addon1">
+                        <i class="align-self-center fs-2 las la-search"></i>
+                    </span>
+                    <input type="search" name="search_user" id="search_user" placeholder="Cari"
+                        class="form-control form-control-sm" autocomplete="off" style="display: flex;
+                        height: 48px;
+                        flex-direction: column;
+                        align-items: flex-start;
+                        gap: 8px;
+                        flex: 1 0 0;
+                        width: 241px;">
                 </div>
-                <button type="button" class="btn btn-sm btn-danger" data-kt-customer-table-select="delete_selected"
-                    onclick="deleteSelected()">Delete Selected</button>
+            </div>
+            <div class="card-toolbar">
+                    <div class="d-flex">
+                        <input type="date" name="filter_date" id="filter_date" class="form-control form-control-sm me-2"
+                            style="display: flex;
+                            width: 141px;
+                            height: 48px;
+                            padding: 10px 16px;
+                            align-items: center;
+                            gap: 16px;" onchange="onFilter()">
+                        <select name="status" id="status" class="form-select form-select-sm form-select-solid ms-2"
+                            style="display: flex;
+                            width: 141px;
+                            height: 48px;
+                            padding: 10px 16px;
+                            align-items: center;
+                            gap: 16px;">
+                            <option value="">Status</option>
+                            <option value="approve">Approved</option>
+                            <option value="reject">Rejected</option>
+                            <option value="processing">Processing</option>
+                        </select>
+                    </div>
+
+                    <div class="fw-bolder me-3 ms-2 deleted-selected" style="display: none;">
+                        <span class="me-2" id="selected_total">10</span>Selected
+                    </div>
+                    <button type="button" class="btn btn-sm btn-danger deleted-selected" data-kt-customer-table-select="delete_selected" style="display: none;"
+                        onclick="deleteSelected()">Delete Selected</button>
             </div>
         </div>
 
@@ -149,10 +157,12 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-danger" id="deleteConfirmBtn" onclick="onDeleteUser()">Delete</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="deleteCancelBtn">Cancel</button>
+                <button type="submit" class="btn btn-danger" id="deleteConfirmBtn"
+                    onclick="onDeleteUser()">Delete</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    id="deleteCancelBtn">Cancel</button>
             </div>
-        </form>
+            </form>
         </div>
     </div>
 </div>

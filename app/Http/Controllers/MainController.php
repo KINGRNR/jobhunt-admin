@@ -17,7 +17,7 @@ class MainController extends Controller
             session(['user_id' => auth()->user()->id]);
             session(['user_name' => auth()->user()->username]);
 
-            
+
             $menu = $this->getMenu(auth()->user()->id);
 
             $menu_code = str_replace(" ", "-", ucwords(str_replace("-", " ", $menu_code)));
@@ -105,34 +105,28 @@ class MainController extends Controller
 
     public function get_breadcrumb($value)
     {
-        if (empty($value['menu_parent'])) {
-             return '
-
-                    <h1 class="d-flex flex-column text-light fw-bolder my-1">
-									<span class="fs-1">' . $value['menu_title'] . '</span>
-								</h1>
-
-
-								<ul class="breadcrumb breadcrumb-line fw-bold fs-7 my-1">
-									<li class="breadcrumb-item text-gray-400">' . $value['menu_title'] . '</li>
-									<li class="breadcrumb-item text-light">' . $value['menu_module'] . '</li>
-								</ul>';
+        if (empty($value['menu_parent']) && empty($value['menu_module'])) {
+            return '
+            <ul class="breadcrumb breadcrumb-line fw-bold fs-7 my-1">
+                <li class="breadcrumb-item text-gray-400">' . $value['menu_title'] . '</li>
+            </ul>';
+        } elseif (empty($value['menu_parent'])) {
+            return '
+            <ul class="breadcrumb breadcrumb-line fw-bold fs-7 my-1">
+                <li class="breadcrumb-item text-gray-400">' . $value['menu_title'] . '</li>
+                <li class="breadcrumb-item text-gray-400">' . $value['menu_module'] . '</li>
+            </ul>';
         } else {
-            $parent =  Menu::find($value->menu_parent);
+            $parent = Menu::find($value->menu_parent);
 
             return '
-
-                    <h1 class="d-flex flex-column text-light fw-bolder my-1">
-									<span class="fs-1">' . $parent['menu_title'] . '</span>
-								</h1>
-
-
-								<ul class="breadcrumb breadcrumb-line fw-bold fs-7 my-1">
-									<li class="breadcrumb-item text-gray-400">' . $parent['menu_title'] . '</li>
-									<li class="breadcrumb-item text-light">' . $value['menu_title'] . '</li>
-								</ul>';
+            <ul class="breadcrumb breadcrumb-line fw-bold fs-7 my-1">
+                <li class="breadcrumb-item text-gray-400">' . $parent['menu_title'] . '</li>
+                <li class="breadcrumb-item text-light">' . $value['menu_title'] . '</li>
+            </ul>';
         }
     }
+
 
     public function getMenu($userId)
     {
