@@ -50,6 +50,7 @@ Route::middleware([loginCheck::class])->group(function () {
     Route::post('/main/getPage', [MainController::class, 'getPage']);
     Route::get('examples', [ExampleController::class, 'index'])->name('example.index');
     Route::get('users', [ListUserController::class, 'index'])->name('listuser.index');
+    Route::get('showallusers', [ListUserController::class, 'showall'])->name('listuser.showall');
     Route::get('company', [ManageCompanyController::class, 'index'])->name('managecompany.index');
     Route::get('profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::get('log', [LogController::class, 'showLog'])->name('log.showLog');
