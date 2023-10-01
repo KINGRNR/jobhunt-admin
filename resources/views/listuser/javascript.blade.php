@@ -141,7 +141,10 @@
             ],
             order: [
                 [2, 'asc']
-            ]
+            ],
+            fnInitComplete: function(oSettings, data) {
+                    resolve(true)
+                },
         });
         table.on('draw', function() {
             $('.row-checkbox').prop('checked', false);
