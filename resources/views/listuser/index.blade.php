@@ -1,6 +1,6 @@
 <div class="table-user-ini">
-    <div class="row mb-5 w-75 mx-auto">
-    </div>
+    {{-- <div class="row mb-5 w-75 mx-auto">
+    </div> --}}
 
     <div class="card">
         <!--begin::Card header-->

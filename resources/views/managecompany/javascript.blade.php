@@ -47,20 +47,28 @@
                     name: 'company_id'
                 },
                 {
-                    data: 'photo_url',
+                    data: null,
+                    name: 'company_data',
                     render: function(data, type, row) {
-                        if (data) {
-                            return '<img src="' + data +
-                                '" alt="User Photo" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 5px;">';
+                        var companyName = data && data.company_name ? data.company_name : '-';
+                        var photo = data && data.photo_profile ? data.photo_profile : '';
+                        var googlePhoto = data && data.google_photo_profile ? data
+                            .google_photo_profile : '';
+
+                        if (!photo && googlePhoto) {
+                            return '<div class=""><img src="' + googlePhoto +
+                                '" alt="Google User Photo" class="rounded-circle" style="width: 30px; height: 30px; margin-right: 5px;">' +
+                                ' <span>' + companyName + '</span></div>';
+                        } else if (photo) {
+                            return '<div class=""><img src="' + photo +
+                                '" alt="User Photo" class="rounded-circle" style="width: 30px; height: 30px; margin-right: 5px;">' +
+                                ' <span>' + companyName + '</span></div>';
                         } else {
-                            return '<img src="' + APP_URL +
-                                'storage/profile/dummy.jpg" alt="Default Photo" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 5px;">';
+                            return '<div class=""><img src="' + APP_URL +
+                                'assets/media/avatars/blank.png" alt="User Photo" class="rounded-circle" style="width: 30px; height: 30px; margin-right: 5px;">' +
+                                ' <span>' + companyName + '</span></div>';
                         }
                     }
-                },
-                {
-                    data: 'company_name',
-                    name: 'company_name'
                 },
                 {
                     data: 'company_since',

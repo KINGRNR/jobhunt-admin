@@ -19,7 +19,7 @@
     })
     init = async () => {
         await initializeDataTables();
-        await unblockPage(500);
+        await unblockPage();
     }
     $('#modal_form').on('hidden.bs.modal', function() {
         $(`input, select`).removeAttr('disabled');
