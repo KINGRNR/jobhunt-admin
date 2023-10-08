@@ -102,6 +102,21 @@
                         return badgeHTML;
                     }
                 },
+                {
+                    data: 'company_id',
+                    render: function(data, type, row) {
+                        var id = data; // Ambil ID dari data atau sumber lain sesuai kebutuhan
+                        var btnHTML = `
+        <div class="me-0">
+            <button class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary" type="button" 
+                id="toggleDropdownTable" onclick="toggleMenu(${id})">
+                <i class="bi bi-three-dots fs-3"></i>
+            </button>
+        </div>
+    `;
+                        return btnHTML;
+                    },
+                }
                 // {
                 //     render: function(data, type, row) {
 
@@ -135,23 +150,38 @@
         $('.table-user-ini').fadeOut();
         $('.detail').fadeIn();
     }
-    toggleDetailUser = () => {
-        $(`[data-group="detail"]`).addClass('active');
-        $(`[data-group="job"]`).removeClass('active');
-        $('#job_history').fadeOut();
-        $('#kt_profile_details_view').fadeIn();
-    }
-    toggleJob = () => {
-        $(`[data-group="detail"]`).removeClass('active');
-        $(`[data-group="job"]`).addClass('active');
-        $('#kt_profile_details_view').fadeOut();
-        $('#job_history').fadeIn();
-    }
+    // toggleDetailUser = () => {
+    //     $(`[data-group="detail"]`).addClass('active');
+    //     $(`[data-group="job"]`).removeClass('active');
+    //     $('#job_history').fadeOut();
+    //     $('#kt_profile_details_view').fadeIn();
+    // }
+    // toggleJob = () => {
+    //     $(`[data-group="detail"]`).removeClass('active');
+    //     $(`[data-group="job"]`).addClass('active');
+    //     $('#kt_profile_details_view').fadeOut();
+    //     $('#job_history').fadeIn();
+    // }
     toogleTable = () => {
         $('.table-user-ini').fadeIn();
         $('.detail').fadeOut();
     }
-
+    toggleMenu = (id) => {
+        console.log(id);
+        Swal.fire({
+            title: 'Action',
+            showCancelButton: true,
+            showDenyButton: true,
+            confirmButtonText: 'Details',
+            customClass: {
+                popup: 'custom-swal-popup',
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                onDetail(id);
+            } 
+        })
+    }
     onDetail = (id) => {
         blockPage();
         $.ajax({
@@ -163,29 +193,29 @@
             },
             success: (response) => {
                 console.log(response.data);
-                const data = response.data;
-                //proses format men format data ya ges ya
-                const createdAt = data.created_at;
-                const formattedDate = moment(createdAt).format('MMMM Do YYYY, h:mm:ss a');
-                const numericId = data.id;
-                const formattedId = String(numericId).padStart(4, '0');
-                const gender = data.gender === 1 ? 'Woman' : 'Man';
+                // const data = response.data;
+                // //proses format men format data ya ges ya
+                // const createdAt = data.created_at;
+                // const formattedDate = moment(createdAt).format('MMMM Do YYYY, h:mm:ss a');
+                // const numericId = data.id;
+                // const formattedId = String(numericId).padStart(4, '0');
+                // const gender = data.gender === 1 ? 'Woman' : 'Man';
                 toggleDetail();
 
-                //proses add data ini
-                $(`#username`).text(data.name);
-                $(`#fullname`).text(data.fullname);
-                $(`#email`).text(data.email);
-                $(`#join_date`).text(formattedDate);
-                $('#id_user').text(formattedId);
-                $('#gender').text(gender);
-                $('#lulusan').text(data.lulusan);
-                $('#kota').text(data.kota);
-                $('#link_porto').text(data.portofolio_link);
-                $('#pekerjaan_sekarang').text(data.posisi_kerja);
-                $('#skills').text(data.skills);
-                $('#negara').text("KAMU NANYA HAH?");
-                $('#link_resume').text(data.resume_link);
+                // //proses add data ini
+                // $(`#username`).text(data.name);
+                // $(`#fullname`).text(data.fullname);
+                // $(`#email`).text(data.email);
+                // $(`#join_date`).text(formattedDate);
+                // $('#id_user').text(formattedId);
+                // $('#gender').text(gender);
+                // $('#lulusan').text(data.lulusan);
+                // $('#kota').text(data.kota);
+                // $('#link_porto').text(data.portofolio_link);
+                // $('#pekerjaan_sekarang').text(data.posisi_kerja);
+                // $('#skills').text(data.skills);
+                // $('#negara').text("KAMU NANYA HAH?");
+                // $('#link_resume').text(data.resume_link);
             },
             complete: (response) => {
                 unblockPage(500);
