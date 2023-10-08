@@ -70,6 +70,11 @@ Route::middleware([loginCheck::class])->group(function () {
             Route::post('/listuser/' . $value, $value);
         }
     });
+    Route::controller(ManageCompanyController::class)->group(function () {
+        foreach (['show', 'create', 'update', 'delete', 'getData', 'detailJob', 'savesuspend', 'deleteUser'] as $key => $value) {
+            Route::post('/managecompany/' . $value, $value);
+        }
+    });
     Route::controller(ConfigurationController::class)->group(function () {
         foreach (['getConfig', 'save', 'uploadFile', 'deleteFile'] as $key => $value) {
             Route::post('/config/' . $value, $value);
