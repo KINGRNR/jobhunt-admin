@@ -6,12 +6,15 @@
 
                 <div class="card-title m-0 d-flex">
 
-                    <div class="d-flex align-items-center flex-row-fluid flex-wrap">
-                        <div class="flex-grow-1 me-2">
-                            <h4 class="mb-3 m-0" id="id_user">Marketing Executive</h4>
-                            <h4 class="fw-bolder m-0 text-gray-500 ">PT Neraca </h4>
+                    <div class="d-flex flex-column mt-2">
+                        <div class="d-flex align-items-center">
+                            <span class="text-gray-900 text-hover-primary fs-2 fw-bolder me-1">Marketing Executive</span>
+                            <span class="badge badge-light-warning fw-bolder ms-2 fs-8 py-1 px-3">Request</span>
                         </div>
-                        <span class="badge text-white badge-warning mb-5">Request</span>
+                        <div class="d-flex flex-wrap fw-bold fs-6 pe-2">
+                            <span
+                                class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">PT Neraca Abadi</span>
+                        </div>
                     </div>
                 </div>
                 <div class="card-toolbar m-0">

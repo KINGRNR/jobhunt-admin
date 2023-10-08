@@ -82,7 +82,6 @@
                     data: 'company_isverif',
                     render: function(data, type, row) {
                         let badgeText, badgeColor;
-                        console.log(data);
                         if (data == 1) {
                             badgeText = 'Approved';
                             badgeColor = 'badge-success';
@@ -94,11 +93,8 @@
                             badgeColor = 'badge-warning';
                         }
 
-                        // Buat elemen badge dengan Bootstrap
                         var badgeHTML = '<span class="badge ' + badgeColor + '">' + badgeText +
                             '</span>';
-                        console.log(badgeHTML)
-                        // Kembalikan HTML badge
                         return badgeHTML;
                     }
                 },
@@ -179,43 +175,139 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 onDetail(id);
-            } 
+            }
         })
     }
     onDetail = (id) => {
         blockPage();
         $.ajax({
-            url: APP_URL + 'listuser/show',
+            url: APP_URL + 'managecompany/show',
             method: 'POST',
             data: {
                 _token: '{{ csrf_token() }}',
                 id: id
             },
             success: (response) => {
-                console.log(response.data);
-                // const data = response.data;
-                // //proses format men format data ya ges ya
-                // const createdAt = data.created_at;
-                // const formattedDate = moment(createdAt).format('MMMM Do YYYY, h:mm:ss a');
-                // const numericId = data.id;
-                // const formattedId = String(numericId).padStart(4, '0');
+                var data = response.data
+                let badgeText, badgeColor;
+                if (data.company_isverif == 1) {
+                    badgeText = 'Approved';
+                    badgeColor = 'success';
+                } else if (data.company_isverif == 2) {
+                    badgeText = 'Rejected';
+                    badgeColor = 'danger';
+                } else {
+                    badgeText = 'Request';
+                    badgeColor = 'warning';
+                }
+                const formattedId = String(data.company_id).padStart(4, '0');
                 // const gender = data.gender === 1 ? 'Woman' : 'Man';
                 toggleDetail();
+                var headerDetail = `<div class="card-title m-0 d-flex">
 
-                // //proses add data ini
-                // $(`#username`).text(data.name);
-                // $(`#fullname`).text(data.fullname);
-                // $(`#email`).text(data.email);
-                // $(`#join_date`).text(formattedDate);
-                // $('#id_user').text(formattedId);
-                // $('#gender').text(gender);
-                // $('#lulusan').text(data.lulusan);
-                // $('#kota').text(data.kota);
-                // $('#link_porto').text(data.portofolio_link);
-                // $('#pekerjaan_sekarang').text(data.posisi_kerja);
-                // $('#skills').text(data.skills);
-                // $('#negara').text("KAMU NANYA HAH?");
-                // $('#link_resume').text(data.resume_link);
+<div class="d-flex flex-column mt-2">
+    <div class="d-flex align-items-center">
+        <span class="text-gray-900 text-hover-primary fs-2 fw-bolder me-1">${data.company_name}</span>
+        <span class="badge badge-light-${badgeColor} fw-bolder ms-2 fs-8 py-1 px-3">${badgeText}</span>
+    </div>
+    <div class="d-flex flex-wrap fw-bold fs-6 pe-2">
+        <span
+            class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">${data.company_position}</span>
+    </div>
+</div>
+</div>
+<div class="card-toolbar m-0">
+<h4 class="fw-bolder m-0 text-gray-500">Company ID</h4>
+<h4 class="ms-3 mt-2" id="id_company">${formattedId}</h4>
+</div>`
+            var bodyDetail = `
+              <div class="d-flex flex-wrap flex-sm-nowrap">
+                    <div class="me-7">
+                        <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
+
+                            <img src="assets/media/avatars/blank.png" alt="image" id="profile_image"
+                                class="img-fluid" style="border-radius: 50%;">
+
+
+                        </div>
+
+                    </div>
+                    <div class="flex-grow-1">
+
+                        <div class="row mb-7">
+
+                            <label class="col-lg-4 fw-bold text-muted">Email</label>
+
+                            <div class="col-lg-8">
+                                <span class="fs-6">${data.email}</span>
+                            </div>
+
+                        </div>
+
+                        <div class="row mb-7">
+
+                            <label class="col-lg-4 fw-bold text-muted">Company Phone Number</label>
+
+                            <div class="col-lg-8 fv-row">
+                                <span class=" fs-6">${data.company_number}</span>
+                            </div>
+
+                        </div>
+
+                        <div class="row mb-7">
+
+                            <label class="col-lg-4 fw-bold text-muted">Website</label>
+
+                            <div class="col-lg-8 d-flex align-items-center">
+                                <span class="fs-6 me-2"">${data.company_website}</span>
+                            </div>
+                        </div>
+
+                        <div class="row mb-7">
+                            <label class="col-lg-4 fw-bold text-muted">Address</label>
+                            <div class="col-lg-8">
+                                <span class="fs-6 me-2"">${data.company_address}</span>
+                            </div>
+                        </div>
+                        <div class="row mb-7">
+                            <div class="col-lg-8">
+                                <button class="btn btn-light" onclick="toogleTable()">Kembali</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6">
+                        <div class="row mb-7">
+                            <label class="col-lg-4 fw-bold text-muted">Date Request</label>
+                            <div class="col-lg-8">
+                                <span class=" fs-6">${data.created_at}</span>
+                            </div>
+                        </div>
+                        <div class="row mb-7">
+                            <label class="col-lg-4 fw-bold text-muted">LinkedIn Account</label>
+                            <div class="col-lg-8 fv-row">
+                                <span class=" fs-6">${data.company_linkedin}</span>
+                            </div>
+                        </div>
+                        <div class="row mb-7">
+                            <label class="col-lg-4 fw-bold text-muted">Since</label>
+                            <div class="col-lg-8 d-flex align-items-center">
+                                <span class="fs-6 me-2">${data.company_since}</span>
+                            </div>
+                        </div>
+
+                        <div class="row mb-7">
+                            <label class="col-lg-4 fw-bold text-muted">Description</label>
+                            <div class="col-lg-8">
+                                <span class="fs-6 me-2">${data.company_description}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `
+                $('#header_detail_comp').empty().append(headerDetail);
+                $('#body_detail_comp').empty().append(bodyDetail);
             },
             complete: (response) => {
                 unblockPage(500);

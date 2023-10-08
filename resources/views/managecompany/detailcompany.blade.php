@@ -12,7 +12,7 @@
         <!--end::Card header-->
         <!--begin::Card body-->
         <div class="card-body pt-0">
-
+            <img src="" alt="">
             <!--begin::Table-->
         </div>
     </div>
