@@ -17,7 +17,8 @@
                         <i class="align-self-center fs-2 las la-search"></i>
                     </span>
                     <input type="search" name="search_user" id="search_user" placeholder="Cari"
-                        class="form-control form-control-sm" autocomplete="off" style="display: flex;
+                        class="form-control form-control-sm" autocomplete="off"
+                        style="display: flex;
                         height: 48px;
                         flex-direction: column;
                         align-items: flex-start;
@@ -27,33 +28,35 @@
                 </div>
             </div>
             <div class="card-toolbar">
-                    <div class="d-flex">
-                        <input type="date" name="filter_date" id="filter_date" class="form-control form-control-sm me-2"
-                            style="display: flex;
+                <div class="d-flex">
+                    <input type="date" name="filter_date" id="filter_date" class="form-control form-control-sm me-2"
+                        style="display: flex;
                             width: 141px;
                             height: 48px;
                             padding: 10px 16px;
                             align-items: center;
-                            gap: 16px;" onchange="onFilter()">
-                        <select name="status" id="status" class="form-select form-select-sm form-select-solid ms-2"
-                            style="display: flex;
+                            gap: 16px;"
+                        onchange="onFilter()">
+                    <select name="status" id="status" class="form-select form-select-sm form-select-solid ms-2"
+                        style="display: flex;
                             width: 141px;
                             height: 48px;
                             padding: 10px 16px;
                             align-items: center;
                             gap: 16px;">
-                            <option value="">Status</option>
-                            <option value="approve">Approved</option>
-                            <option value="reject">Rejected</option>
-                            <option value="processing">Processing</option>
-                        </select>
-                    </div>
+                        <option value="">Status</option>
+                        <option value="approve">Approved</option>
+                        <option value="reject">Rejected</option>
+                        <option value="processing">Processing</option>
+                    </select>
+                </div>
 
-                    <div class="fw-bolder me-3 ms-2 deleted-selected" style="display: none;">
-                        <span class="me-2" id="selected_total">10</span>Selected
-                    </div>
-                    <button type="button" class="btn btn-sm btn-danger deleted-selected" data-kt-customer-table-select="delete_selected" style="display: none;"
-                        onclick="deleteSelected()">Delete Selected</button>
+                <div class="fw-bolder me-3 ms-2 deleted-selected" style="display: none;">
+                    <span class="me-2" id="selected_total">10</span>Selected
+                </div>
+                <button type="button" class="btn btn-sm btn-danger deleted-selected"
+                    data-kt-customer-table-select="delete_selected" style="display: none;"
+                    onclick="deleteSelected()">Delete Selected</button>
             </div>
         </div>
 
@@ -66,7 +69,8 @@
                 <!--begin::Table head-->
                 <thead>
                     <!--begin::Table row-->
-                    <tr class="text-start align-middle text-gray-400 fw-bolder fs-7 text-uppercase gs-0">                        <th class="ps-4" width="20">No</th>
+                    <tr class="text-start align-middle text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                        <th class="ps-4" width="20">No</th>
                         <th class="min-w-125px">Company ID</th>
                         <th class="min-w-125px">Company</th>
                         <th class="min-w-125px">Request Date</th>
@@ -93,4 +97,3 @@
 <!-- Include the jQuery and DataTables JS -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script> --}}
-
