@@ -72,6 +72,7 @@
                         <th class="min-w-125px">Request Date</th>
                         <th class="min-w-125px">Submission Notes</th>
                         <th class="min-w-125px">Status</th>
+                        <th class="min-w-125px">More</th>
                     </tr>
                     <!--end::Table row-->
                 </thead>
@@ -81,9 +82,8 @@
         </div>
     </div>
 </div>
-
 <div class="col-12">
-    {{-- @include('managecompany.detail') --}}
+    @include('managecompany.detail')
 </div>
 <div class="modal fade" id="kt_modal_add_example" tabindex="-1" aria-hidden="true">
     {{-- @include('managecompany.form') --}}
