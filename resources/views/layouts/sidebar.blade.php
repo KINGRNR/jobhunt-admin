@@ -26,7 +26,7 @@
             </a>
         </div>
         {{-- Menu Master --}}
-        {{-- <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+        <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
             <span class="menu-link">
                 <span class="menu-icon">
                     <!--begin::Svg Icon | path: icons/duotune/arrows/arr001.svg-->
@@ -63,7 +63,7 @@
                     </a>
                 </div>
             </div>
-        </div> --}}
+        </div>
         {{-- Menu Manage Company --}}
         <div class="menu-item">
             <a class="menu-link menu-title" href="javascript:;" data-con="sqtlpuyaaasfa132" data-type="main"
