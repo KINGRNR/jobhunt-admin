@@ -41,7 +41,7 @@
                     resolve(true);
                     console.log(response.config);
                     $.each(response.config, (i, v) => {
-                    $(`[id="${v.config_code}"]`).text(v.config_value);
+                        $(`[id="${v.config_code}"]`).text(v.config_value);
                     });
                     var html = [];
                     $.each(response.config, (i, v) => {
@@ -174,6 +174,7 @@
                         contentType: false,
                         data: formData,
                         success: function(response) {
+                            console.log(response);
                             if (response.success) {
                                 Swal.fire({
                                     title: response.title,
@@ -189,15 +190,20 @@
                                 });
                             }
                         },
-                        error: function(xhr, status, error) {
+                        error: function(response) {
+                            let err_msg = response.responseJSON
                             Swal.fire({
-                                icon: "error",
-                                title: "Error",
-                                text: "An error occurred. Please try again later.",
-                                showConfirmButton: true,
-                            }).then(() => {
-                                location.reload();
-                            });
+                                    title: err_msg.title,
+                                    text: err_msg.message,
+                                    icon: (err_msg.success) ? 'success' : "error",
+                                    buttonsStyling: false,
+                                    confirmButtonText: "Oke!",
+                                    customClass: {
+                                        confirmButton: "btn btn-primary"
+                                    },
+                                }).then(() => {
+                                    location.reload();
+                                });
                         }
                     });
                 }
