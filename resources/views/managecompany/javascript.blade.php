@@ -38,8 +38,9 @@
             },
             columns: [{
                     "targets": 0,
-                    "render": function(data, type, row, meta) {
-                        return meta.row + 1;
+                     render: function(data, type, row, meta) {
+                        return '<span class="ps-3">' + (meta.row + meta.settings._iDisplayStart + 1) +
+                            '</span>';
                     }
                 },
                 {
@@ -141,6 +142,7 @@
     }
 
     toggleDetail = () => {
+        loadchartatas()
         $(`[data-group="detail"]`).addClass('active');
         $(`[data-group="job"]`).removeClass('active');
         $('.table-user-ini').fadeOut();
@@ -220,7 +222,7 @@
 <h4 class="fw-bolder m-0 text-gray-500">Company ID</h4>
 <h4 class="ms-3 mt-2" id="id_company">${formattedId}</h4>
 </div>`
-            var bodyDetail = `
+                var bodyDetail = `
               <div class="d-flex flex-wrap flex-sm-nowrap">
                     <div class="me-7">
                         <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
@@ -456,4 +458,35 @@
     //         }
     //     });
     // };
+    loadchartatas = () => {
+        var options = {
+            series: [{
+                name: 'Total Registered Applicants',
+                data: [100, 200, 300, 400, 500, 600, 900]
+            }],
+            chart: {
+                height: 350,
+                type: 'area'
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                curve: 'smooth'
+            },
+            xaxis: {
+                type: 'month',
+                categories: ["january","February","March","April","May","June","July","August"
+                ]
+            },
+            tooltip: {
+                x: {
+                    format: 'dd/MM/yy HH:mm'
+                },
+            },
+        };
+
+        var chart = new ApexCharts(document.querySelector("#updraftcompany"), options);
+        chart.render();
+    }
 </script>

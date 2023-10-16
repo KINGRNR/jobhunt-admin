@@ -8,11 +8,11 @@ use Illuminate\Support\Facades\DB;
 
 use App\Models\Configuration;
 
-class ConfigurationController extends Controller
+class ConfigurationController extends BaseResponse
 {
     public function getConfig(Request $request)
     {
-        
+
         $data = $request->post();
         $operation = Configuration::where('config_group', $data['group'])->orderBy('config_order', 'ASC')->get();
 
@@ -21,6 +21,35 @@ class ConfigurationController extends Controller
         ]);
     }
 
+    // public function save(Request $request)
+    // {
+    //     $data = $request->all();
+
+    //     try {
+    //         foreach ($data as $key => $value) {
+    //             if (count(explode('_', $key)) == 1) {
+    //                 Configuration::where('config_id', $key)->update([
+    //                     'config_value' => $value,
+    //                 ]);
+    //             }
+    //         }
+
+    //         return response()->json([
+    //             'success' =>  true,
+    //             'status' =>  'Success',
+    //             'title' => 'Sukses!',
+    //             'message' => 'Data Berhasil Tersimpan!',
+    //             'code' => 201
+    //         ]);
+    //     } catch (\Throwable $th) {
+    //         return response()->json([
+    //             'success' =>  false,
+    //             'status' =>  'error',
+    //             'title' => 'Gagal!',
+    //             'message' => 'Terjadi Kesalahan di Sistem!',
+    //         ]);
+    //     }
+    // }
     public function save(Request $request)
     {
         $data = $request->all();
@@ -34,20 +63,9 @@ class ConfigurationController extends Controller
                 }
             }
 
-            return response()->json([
-                'success' =>  true,
-                'status' =>  'Success',
-                'title' => 'Sukses!',
-                'message' => 'Data Berhasil Tersimpan!',
-                'code' => 201
-            ]);
+            return $this->successResponse($data,[],201);
         } catch (\Throwable $th) {
-            return response()->json([
-                'success' =>  false,
-                'status' =>  'error',
-                'title' => 'Gagal!',
-                'message' => 'Terjadi Kesalahan di Sistem!',
-            ]);
+            return $this->errorResponse();
         }
     }
 }

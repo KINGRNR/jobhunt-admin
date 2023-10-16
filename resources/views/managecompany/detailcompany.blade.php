@@ -12,7 +12,7 @@
         <!--end::Card header-->
         <!--begin::Card body-->
         <div class="card-body pt-0">
-            <img src="" alt="">
+            <div id="updraftcompany" class="h-100 mt-2"></div>
             <!--begin::Table-->
         </div>
     </div>
