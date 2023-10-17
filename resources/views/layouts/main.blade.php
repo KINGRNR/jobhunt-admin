@@ -22,6 +22,9 @@
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <!--begin::Javascript-->
     <!--begin::Global Javascript Bundle(used by all pages)-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
     <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase.js"></script>
     <script src="assets/plugins/global/plugins.bundle.js"></script>
     <script src="assets/js/scripts.bundle.js"></script>
@@ -112,7 +115,8 @@
 <!--begin::Body-->
 
 {{-- <body id="kt_body" class="sidebar-enabled"> --}}
-    <body id="kt_body">
+
+<body id="kt_body">
     <!--begin::Main-->
     <!--begin::Root-->
     <div class="d-flex flex-column flex-root">
@@ -305,7 +309,7 @@
                                 <div class="menu-item px-5">
                                     <a href="{{ route('logout') }}" class="menu-link px-5"
                                         onclick="event.preventDefault();
-          document.getElementById('logout-form').submit();">
+                           document.getElementById('logout-form').submit();">
                                         Sign Out
                                     </a>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST"
@@ -361,7 +365,8 @@
                         <!--begin::Copyright-->
                         <div class="text-dark order-2 order-md-1">
                             <span class="text-gray-400 fw-bold me-1">2023</span>
-                            <a href="https://keenthemes.com" target="_blank" class="text-muted text-hover-primary fw-bold me-2 fs-6">Job-Hunt</a>
+                            <a href="https://keenthemes.com" target="_blank"
+                                class="text-muted text-hover-primary fw-bold me-2 fs-6">Job-Hunt</a>
                         </div>
                         <!--end::Copyright-->
                         <!--begin::Menu-->
@@ -370,10 +375,12 @@
                                 <a href="https://keenthemes.com" target="_blank" class="menu-link px-2">About</a>
                             </li>
                             <li class="menu-item">
-                                <a href="https://keenthemes.com/support" target="_blank" class="menu-link px-2">Support</a>
+                                <a href="https://keenthemes.com/support" target="_blank"
+                                    class="menu-link px-2">Support</a>
                             </li>
                             <li class="menu-item">
-                                <a href="https://1.envato.market/EA4JP" target="_blank" class="menu-link px-2">Purchase</a>
+                                <a href="https://1.envato.market/EA4JP" target="_blank"
+                                    class="menu-link px-2">Purchase</a>
                             </li>
                         </ul>
                         <!--end::Menu-->
@@ -386,12 +393,12 @@
 
                 <!--end::Footer-->
             </div>
-            
+
             <div id="kt_activities" class="bg-body" data-kt-drawer="true" data-kt-drawer-name="activities"
                 data-kt-drawer-activate="true" data-kt-drawer-overlay="true"
                 data-kt-drawer-width="{default:'300px', 'lg': '900px'}" data-kt-drawer-direction="end"
                 data-kt-drawer-toggle="#kt_activities_toggle" data-kt-drawer-close="#kt_activities_close">
-               @include('layouts.notification')
+                @include('layouts.notification')
             </div>
             <!--end::Wrapper-->
             <!--end::Activities drawer-->
@@ -499,11 +506,10 @@
                                 <span class="svg-icon svg-icon-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                         viewBox="0 0 24 24" fill="none">
-                                        <rect opacity="0.5" x="6" y="17.3137" width="16"
-                                            height="2" rx="1" transform="rotate(-45 6 17.3137)"
-                                            fill="black" />
-                                        <rect x="7.41422" y="6" width="16" height="2"
-                                            rx="1" transform="rotate(45 7.41422 6)" fill="black" />
+                                        <rect opacity="0.5" x="6" y="17.3137" width="16" height="2"
+                                            rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+                                        <rect x="7.41422" y="6" width="16" height="2" rx="1"
+                                            transform="rotate(45 7.41422 6)" fill="black" />
                                     </svg>
                                 </span>
                                 <!--end::Svg Icon-->
@@ -826,8 +832,8 @@
                 <span class="svg-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none">
-                        <rect opacity="0.5" x="13" y="6" width="13" height="2"
-                            rx="1" transform="rotate(90 13 6)" fill="black" />
+                        <rect opacity="0.5" x="13" y="6" width="13" height="2" rx="1"
+                            transform="rotate(90 13 6)" fill="black" />
                         <path
                             d="M12.5657 8.56569L16.75 12.75C17.1642 13.1642 17.8358 13.1642 18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25L12.7071 5.70711C12.3166 5.31658 11.6834 5.31658 11.2929 5.70711L5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75C6.16421 13.1642 6.83579 13.1642 7.25 12.75L11.4343 8.56569C11.7467 8.25327 12.2533 8.25327 12.5657 8.56569Z"
                             fill="black" />
@@ -920,34 +926,41 @@
                 //API
                 function loadPage(element) {
                     // $("#pagecontainer").empty();
-                    let menuId = $(element).data('con');
-                    let CSRF_NAME = 'csrf_cookie_name';
-                    $.ajax({
-                        url: APP_URL + "main/getPage",
-                        data: {
-                            _token: '{{ csrf_token() }}',
-                            menu_id: menuId
-                        },
-                        type: "POST",
-                        success: function(pages) {
-                            $(".menu-link").removeClass("active");
-                            $(`.menu-link[data-con="${menuId}"]`).addClass("active");
-                            console.log(atob(pages.breadcrumb))
-                            $('#get_breadcumbs').html(atob(pages.breadcrumb));
-                            $('#titleContent').html('').html(`
+                    return new Promise((resolve, reject) => {
+
+                        let menuId = $(element).data('con');
+                        let CSRF_NAME = 'csrf_cookie_name';
+                        $.ajax({
+                            url: APP_URL + "main/getPage",
+                            data: {
+                                _token: '{{ csrf_token() }}',
+                                menu_id: menuId
+                            },
+                            type: "POST",
+                            success: function(pages) {
+                                $(".menu-link").removeClass("active");
+                                $(`.menu-link[data-con="${menuId}"]`).addClass("active");
+                                $('#get_breadcumbs').html(atob(pages.breadcrumb));
+                                $('#titleContent').html('').html(`
                 <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1 parentTitle">${pages.menu_title}</h1>
                                 
                   `)
-                            console.log(pages.url_path);
-                            window.history.pushState(stateData, "", pages.url_path);
-                            $("#pagecontainer").html(atob(pages.view));
-                            localStorage.setItem('menuId', menuId);
-                            blockPage();
+                                window.history.pushState(stateData, "", pages.url_path);
+                                $("#pagecontainer").html(atob(pages.view));
+                                localStorage.setItem('menuId', menuId);
 
-                        }
+                                blockPage();
+
+                            },
+                        });
+
                     });
                 }
-
+                
+                function removeSkeleton() {
+                    $('.menu-skeleton').hide();
+                    $('.menu-real').fadeIn();
+                }
                 function blockPage() {
                     const loadingDiv = $(
                         '<div class="loading loading-spinner-overlay" id="loading-spinner"><div class="loading-spinner"></div><p class="loading-text">Loading Data</p></div>'
@@ -958,6 +971,7 @@
 
                 function unblockPage() {
                     $("#pagecontainer").find(".loading").fadeOut();
+                    removeSkeleton();
                 }
             </script>
 
@@ -974,6 +988,9 @@
             <script src="{!! asset('//cdn.amcharts.com/lib/5/xy.js') !!}"></script>
             <script src="{!! asset('//cdn.amcharts.com/lib/5/themes/Animated.js') !!}"></script>
             <script src="{!! asset('https://cdn.datatables.net/1.11.1/js/jquery.dataTables.min.js') !!}"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+            </script>
 </body>
 
 </html>
