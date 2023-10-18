@@ -963,9 +963,6 @@
                     const loadingDiv = $(
                         '<div class="loading loading-spinner-overlay" id="loading-spinner"></div>'
                     );
-                    // const loadingDiv = $(
-                    //     `@include('skeletonloading.cardonly')`
-                    // );
                     // $('.card-blocking').removeClass('d-none');
                     loadingDiv.hide().appendTo("#pagecontainer").fadeIn();
                 }
