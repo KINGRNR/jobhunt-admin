@@ -106,7 +106,7 @@
         
     </div>
 
-    <div class="d-flex flex-column flex-root">
+    {{-- <div class="d-flex flex-column flex-root">
         <div class="page d-flex flex-row flex-column-fluid">
             <div id="kt_aside" class="aside py-9" data-kt-drawer="true" data-kt-drawer-name="aside"
                 data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true"
@@ -124,7 +124,7 @@
                         data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_aside_logo, #kt_aside_footer"
                         data-kt-scroll-wrappers="#kt_aside, #kt_aside_menu, #kt_aside_menu_wrapper"
                         data-kt-scroll-offset="100">
-                     
+                        @include('skeletonloading.sidebar')
                     </div>
                 </div>
                 <div class="aside-footer flex-column-auto px-9" id="kt_aside_footer">
@@ -179,7 +179,7 @@
                     fill="black" />
             </svg>
         </span>
-    </div>
+    </div> --}}
 
     {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
