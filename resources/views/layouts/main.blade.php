@@ -926,7 +926,6 @@
                 //API
                 function loadPage(element) {
                     // $("#pagecontainer").empty();
-                    return new Promise((resolve, reject) => {
 
                         let menuId = $(element).data('con');
                         let CSRF_NAME = 'csrf_cookie_name';
@@ -952,8 +951,7 @@
                             },
                         });
 
-                    });
-                }
+                    }
                 
                 function removeSkeleton() {
                     $('.menu-skeleton').hide();
