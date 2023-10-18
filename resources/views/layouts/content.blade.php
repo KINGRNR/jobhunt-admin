@@ -1,3 +1,3 @@
 <div id="pagecontainer">
-    @include('skeletonloading.index')
+    {{-- @include('skeletonloading.index') --}}
 </div>
