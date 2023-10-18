@@ -3,7 +3,7 @@
     data-kt-scroll-dependencies="#kt_aside_logo, #kt_aside_footer"
     data-kt-scroll-wrappers="#kt_aside, #kt_aside_menu, #kt_aside_menu_wrapper" data-kt-scroll-offset="100">
     <!--begin::Menu-->
-    @include('skeletonloading.sidebar')
+    {{-- @include('skeletonloading.sidebar') --}}
 
     <div class="menu menu-column menu-rounded fw-bold my-auto menu-real" id="#kt_aside_menu" data-kt-menu="true" style="display: none;">
         {{-- menu Dashboard --}}
