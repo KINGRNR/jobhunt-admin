@@ -948,9 +948,7 @@
                                 window.history.pushState(stateData, "", pages.url_path);
                                 $("#pagecontainer").html(atob(pages.view));
                                 localStorage.setItem('menuId', menuId);
-
                                 blockPage();
-
                             },
                         });
 
@@ -962,9 +960,16 @@
                     $('.menu-real').fadeIn();
                 }
                 function blockPage() {
+                    // const loadingDiv = $(
+                    //     '<div class="loading loading-spinner-overlay" id="loading-spinner"><div class="loading-spinner"></div><p class="loading-text">Loading Data</p></div>'
+                    // );
                     const loadingDiv = $(
-                        '<div class="loading loading-spinner-overlay" id="loading-spinner"><div class="loading-spinner"></div><p class="loading-text">Loading Data</p></div>'
+                        '<div class="loading loading-spinner-overlay" id="loading-spinner"></div>'
                     );
+                    // const loadingDiv = $(
+                    //     `@include('skeletonloading.cardonly')`
+                    // );
+                    // $('.card-blocking').removeClass('d-none');
                     loadingDiv.hide().appendTo("#pagecontainer").fadeIn();
                 }
 
