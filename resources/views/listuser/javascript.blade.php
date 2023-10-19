@@ -32,7 +32,8 @@
 
     function initializeDataTables() {
         let table = $('#table-user').DataTable({
-            searchable: true,
+            searchAble: true,
+            processing: true,
             destroy: true,
             serverSide: true,
             ajax: {
