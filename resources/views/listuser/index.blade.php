@@ -15,17 +15,23 @@
                 letter-spacing: 0.2px;">
                     List User</h1> --}}
                 <div class="input-group ms-2">
-                    <span class="input-group-text" id="basic-addon1">
-                        <i class="align-self-center fs-2 las la-search"></i>
-                    </span>
-                    <input type="search" name="search_user" id="search_user" placeholder="Cari"
-                        class="form-control form-control-sm" autocomplete="off" style="display: flex;
+                    <div class="w-100 position-relative">
+                        <span class="svg-icon svg-icon-2 search-icon position-absolute top-50 translate-middle-y ms-4">
+                            <i class="align-self-center fs-2 las la-search"></i>
+                        </span>
+                        <input type="search" name="search_user" id="search_user" placeholder="Cari"
+                            class="form-control form-control-sm ps-12" autocomplete="off"
+                            style="display: flex;
                         height: 48px;
                         flex-direction: column;
                         align-items: flex-start;
                         gap: 8px;
                         flex: 1 0 0;
                         width: 241px;">
+                    </div>
+
+                    {{-- <span class="input-group-text" id="basic-addon1">
+                    </span> --}}
                 </div>
             </div>
             <div class="card-toolbar">

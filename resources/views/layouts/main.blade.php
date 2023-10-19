@@ -22,8 +22,7 @@
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <!--begin::Javascript-->
     <!--begin::Global Javascript Bundle(used by all pages)-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase.js"></script>
     <script src="assets/plugins/global/plugins.bundle.js"></script>
@@ -926,7 +925,6 @@
                 //API
                 function loadPage(element) {
                     // $("#pagecontainer").empty();
-                    return new Promise((resolve, reject) => {
 
                         let menuId = $(element).data('con');
                         let CSRF_NAME = 'csrf_cookie_name';
@@ -952,8 +950,7 @@
                             },
                         });
 
-                    });
-                }
+                    }
                 
                 function removeSkeleton() {
                     $('.menu-skeleton').hide();
@@ -966,9 +963,6 @@
                     const loadingDiv = $(
                         '<div class="loading loading-spinner-overlay" id="loading-spinner"></div>'
                     );
-                    // const loadingDiv = $(
-                    //     `@include('skeletonloading.cardonly')`
-                    // );
                     // $('.card-blocking').removeClass('d-none');
                     loadingDiv.hide().appendTo("#pagecontainer").fadeIn();
                 }
@@ -993,8 +987,7 @@
             <script src="{!! asset('//cdn.amcharts.com/lib/5/xy.js') !!}"></script>
             <script src="{!! asset('//cdn.amcharts.com/lib/5/themes/Animated.js') !!}"></script>
             <script src="{!! asset('https://cdn.datatables.net/1.11.1/js/jquery.dataTables.min.js') !!}"></script>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-                integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js">
             </script>
 </body>
 
