@@ -32,10 +32,12 @@
 
     function initializeDataTables() {
         let table = $('#table-user').DataTable({
-            searchAble: true,
             processing: true,
-            destroy: true,
             serverSide: true,
+            clickable: true,
+            searchAble: true,
+            searching: true,
+            destroyAble: true,
             ajax: {
                 url: "{{ route('listuser.index') }}",
                 type: "GET",
@@ -143,9 +145,9 @@
             order: [
                 [2, 'asc']
             ],
-            fnInitComplete: function(oSettings, data) {
-                    resolve(true)
-                },
+            // fnInitComplete: function(oSettings, data) {
+            //         resolve(true)
+            //     },
         });
         table.on('draw', function() {
             $('.row-checkbox').prop('checked', false);
