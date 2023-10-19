@@ -30,6 +30,7 @@
     <!--end::Global Javascript Bundle-->
     <!--begin::Page Vendors Javascript(used by this page)-->
     <script src="assets/plugins/custom/leaflet/leaflet.bundle.js"></script>
+    <script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
 
     <!--end::Page Vendors Javascript-->
     <!--begin::Page Custom Javascript(used by this page)-->
@@ -926,36 +927,37 @@
                 function loadPage(element) {
                     // $("#pagecontainer").empty();
 
-                        let menuId = $(element).data('con');
-                        let CSRF_NAME = 'csrf_cookie_name';
-                        $.ajax({
-                            url: APP_URL + "main/getPage",
-                            data: {
-                                _token: '{{ csrf_token() }}',
-                                menu_id: menuId
-                            },
-                            type: "POST",
-                            success: function(pages) {
-                                $(".menu-link").removeClass("active");
-                                $(`.menu-link[data-con="${menuId}"]`).addClass("active");
-                                $('#get_breadcumbs').html(atob(pages.breadcrumb));
-                                $('#titleContent').html('').html(`
+                    let menuId = $(element).data('con');
+                    let CSRF_NAME = 'csrf_cookie_name';
+                    $.ajax({
+                        url: APP_URL + "main/getPage",
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            menu_id: menuId
+                        },
+                        type: "POST",
+                        success: function(pages) {
+                            $(".menu-link").removeClass("active");
+                            $(`.menu-link[data-con="${menuId}"]`).addClass("active");
+                            $('#get_breadcumbs').html(atob(pages.breadcrumb));
+                            $('#titleContent').html('').html(`
                 <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1 parentTitle">${pages.menu_title}</h1>
                                 
                   `)
-                                window.history.pushState(stateData, "", pages.url_path);
-                                $("#pagecontainer").html(atob(pages.view));
-                                localStorage.setItem('menuId', menuId);
-                                blockPage();
-                            },
-                        });
+                            window.history.pushState(stateData, "", pages.url_path);
+                            $("#pagecontainer").html(atob(pages.view));
+                            localStorage.setItem('menuId', menuId);
+                            blockPage();
+                        },
+                    });
 
-                    }
-                
+                }
+
                 function removeSkeleton() {
                     $('.menu-skeleton').hide();
                     $('.menu-real').fadeIn();
                 }
+
                 function blockPage() {
                     // const loadingDiv = $(
                     //     '<div class="loading loading-spinner-overlay" id="loading-spinner"><div class="loading-spinner"></div><p class="loading-text">Loading Data</p></div>'
@@ -973,7 +975,7 @@
                     removeSkeleton();
                 }
             </script>
-
+            <script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
             <script src="{!! asset('assets/plugins/custom/datatables/datatables.bundle.js') !!}"></script>
             <script src="{!! asset('assets/js/custom/apps/customers/list/export.js') !!}"></script>
             <script src="{!! asset('assets/js/custom/apps/customers/list/list.js') !!}"></script>
@@ -987,7 +989,7 @@
             <script src="{!! asset('//cdn.amcharts.com/lib/5/xy.js') !!}"></script>
             <script src="{!! asset('//cdn.amcharts.com/lib/5/themes/Animated.js') !!}"></script>
             <script src="{!! asset('https://cdn.datatables.net/1.11.1/js/jquery.dataTables.min.js') !!}"></script>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js">
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"> --}}
             </script>
 </body>
 
