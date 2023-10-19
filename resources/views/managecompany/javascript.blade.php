@@ -138,7 +138,7 @@
             ]
 
         });
-        $('#search_example').on('input', function() {
+        $('#search_company').on('input', function() {
             var searchValue = $(this).val();
             table.search(searchValue).draw();
         });
