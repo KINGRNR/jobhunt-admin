@@ -65,33 +65,22 @@
         <div class="card-body pt-0">
 
             <!--begin::Table-->
-            <table class="table align-middle table-hover  table-row-dashed fs-6 gy-5 text-center" id="table-user">
+            <table class="table align-middle table-hover  table-row-dashed fs-6 gy-5 text-center" id="table-job">
                 <!--begin::Table head-->
                 <thead>
                     <!--begin::Table row-->
                     <tr class="text-start align-middle text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
                         <th class="ps-4" width="20">No</th>
-                        <th class="min-w-20px">Photo</th>
-                        <th class="min-w-125px">Joining date</th>
+                        <th class="min-w-125px">Requested Job Date</th>
                         <th class="min-w-125px">Company</th>
                         <th class="min-w-125px">Job Name</th>
-                        <th class="min-w-125px">Jumlah Pelamar</th>
                         <th class="min-w-125px">Job Id</th>
                         <th class="min-w-125px">Status</th>
+                        <th class="min-w-125px">Detail</th>
                     </tr>
                     <!--end::Table row-->
                 </thead>
                 <tbody class="fw-bold text-gray-600 text-start align-middle">
-                    <tr>
-                        <td>1</td>
-                        <td><img src="" alt=""></td>
-                        <td>2020</td>
-                        <td>PT NERAKA</td>
-                        <td>Marketing Executive</td>
-                        <td>13 Pelamar</td>
-                        <td>JB0010</td>
-                        <td><span>REQUESt</span></td>
-                    </tr>
                 </tbody>
             </table>
         </div>

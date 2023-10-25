@@ -142,5 +142,8 @@
         <div class="card mb-5 mb-xl-10" id="job_history">
             @include('managecompany.detailcompany')
         </div>
+        <div class="card mb-5 mb-xl-10" id="job_all">
+            @include('managecompany.detailjob')
+        </div>
     </div>
 </div>

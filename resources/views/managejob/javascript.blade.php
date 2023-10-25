@@ -1,15 +1,5 @@
-<script src="assets/js/custom/apps/customers/list/export.js"></script>
-<script src="assets/js/custom/apps/customers/list/list.js"></script>
-<script src="assets/js/custom/apps/customers/add.js"></script>
-<script src="{!! asset('assets/js/custom/js.cookie.js') !!}"></script>
-{{-- <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script> --}}
+<script src="assets/js/quickact.js"></script>
 <script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
-</script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"
-    integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous">
-</script>
 <script type="text/javascript">
     APP_URL = "{{ getenv('APP_URL') }}/";
     var form = 'formExample';
@@ -27,28 +17,130 @@
 
 
     function initializeDataTables() {
-        let table = $('#table-user').DataTable({
- });
-        $('#search_example').on('input', function() {
+        let table = $('#table-job').DataTable({
+            processing: true,
+            serverSide: true,
+            clickable: true,
+            searchAble: true,
+            searching: true,
+            destroyAble: true,
+            ajax: {
+                url: "{{ route('managejob.index') }}",
+                type: "GET",
+                dataType: "json",
+            },
+            columns: [{
+                    "targets": 0,
+                     render: function(data, type, row, meta) {
+                        return '<span class="ps-3">' + (meta.row + meta.settings._iDisplayStart + 1) +
+                            '</span>';
+                    }
+                },
+                {
+                    data: 'job_requested_date',
+                    name: 'job_requested_date',
+                    render: function(data, type, row) {
+                    
+                    var formattedDate = quick.convertDate(data);
+
+
+                    return formattedDate;
+                }
+                },
+                {
+                    data: null,
+                    name: 'company_data',
+                    render: function(data, type, row) {
+                        var companyName = data && data.company_name ? data.company_name : '-';
+                        var photo = data && data.photo_profile ? data.photo_profile : '';
+                        var googlePhoto = data && data.google_photo_profile ? data
+                            .google_photo_profile : '';
+
+                        if (!photo && googlePhoto) {
+                            return '<div class=""><img src="' + googlePhoto +
+                                '" alt="Google User Photo" class="rounded-circle" style="width: 30px; height: 30px; margin-right: 5px;">' +
+                                ' <span>' + companyName + '</span></div>';
+                        } else if (photo) {
+                            return '<div class=""><img src="' + photo +
+                                '" alt="User Photo" class="rounded-circle" style="width: 30px; height: 30px; margin-right: 5px;">' +
+                                ' <span>' + companyName + '</span></div>';
+                        } else {
+                            return '<div class=""><img src="' + APP_URL +
+                                'assets/media/avatars/blank.png" alt="User Photo" class="rounded-circle" style="width: 30px; height: 30px; margin-right: 5px;">' +
+                                ' <span>' + companyName + '</span></div>';
+                        }
+                    }
+                },
+                {
+                    data: 'job_name',
+                    name: 'job_name'
+                },
+                {
+                    data: 'job_code',
+                    name: 'job_code'
+                },
+                {
+                    data: 'job_status',
+                    render: function(data, type, row) {
+                        let badgeText, badgeColor;
+                        if (data == 1) {
+                            badgeText = 'Approved';
+                            badgeColor = 'badge-light-success';
+                        } else if (data == 2) {
+                            badgeText = 'Rejected';
+                            badgeColor = 'badge-light-danger';
+                        } else {
+                            badgeText = 'Processing';
+                            badgeColor = 'badge-light-warning';
+                        }
+
+                        var badgeHTML = '<span class="badge ' + badgeColor + ' fw-bolder">' + badgeText +
+                            '</span>';
+                        return badgeHTML;
+                    }
+                },
+                {
+                    data: 'company_id',
+                    render: function(data, type, row) {
+                        var id = data; // Ambil ID dari data atau sumber lain sesuai kebutuhan
+                        var btnHTML = `
+        <div class="me-0">
+            <button class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary" type="button" 
+                id="toggleDropdownTable" onclick="toggleMenu(${id})">
+                <i class="bi bi-three-dots fs-3"></i>
+            </button>
+        </div>
+    `;
+                        return btnHTML;
+                    },
+                }
+                // {
+                //     render: function(data, type, row) {
+
+                //     }
+                // },
+            ]
+
+        });
+        $('#search_job').on('input', function() {
             var searchValue = $(this).val();
             table.search(searchValue).draw();
         });
 
-        $('#table-user tbody').on('click', 'tr', function() {
+        $('#table-job tbody').on('click', 'tr', function() {
             let rowData = table.row(this).data();
-                            toggleDetail();
-
-            // if (rowData) {
-            //     let id = rowData.id;
-            //     onDetail();
-            // } else {
-            //     onReset();
-            //     $('#formExample').find('input, select').removeAttr('disabled');
-            //     $('.actCreate').removeClass('d-none');
-            //     $('.actEdit').addClass('d-none');
-            // }
+            if (rowData) {
+                let id = rowData.id;
+                onDetail(id);
+            } else {
+                onReset();
+                $('#formExample').find('input, select').removeAttr('disabled');
+                $('.actCreate').removeClass('d-none');
+                $('.actEdit').addClass('d-none');
+            }
         }).css('cursor', 'pointer');
     }
+
 
     toggleDetail = () => {
         $(`[data-group="detail"]`).addClass('active');

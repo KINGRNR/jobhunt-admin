@@ -84,7 +84,7 @@
                     </span>
                     <!--end::Svg Icon-->
                 </span>
-                <span class="menu-title">Manage Company</span>
+                <span class="menu-title">Company Management</span>
             </a>
         </div>
         {{-- Menu User Management --}}
@@ -126,7 +126,7 @@
                     </span>
                     <!--end::Svg Icon-->
                 </span>
-                <span class="menu-title">Manage Job</span>
+                <span class="menu-title">Job Management</span>
             </a>
         </div>
         {{-- Menu Configuration accordion --}}
