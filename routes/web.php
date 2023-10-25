@@ -13,6 +13,7 @@ use App\Http\Controllers\LoginWithGoogleController;
 use App\Http\Controllers\ConfigurationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LogController;
+use App\Http\Controllers\ManageJobController;
 
 use App\Models\Example;
 use Illuminate\Notifications\Notification;
@@ -52,6 +53,8 @@ Route::middleware([loginCheck::class])->group(function () {
     Route::get('users', [ListUserController::class, 'index'])->name('listuser.index');
     Route::get('showallusers', [ListUserController::class, 'showall'])->name('listuser.showall');
     Route::get('company', [ManageCompanyController::class, 'index'])->name('managecompany.index');
+    // Route::get('companyjob', [ManageCompanyController::class, 'jobIndex'])->name('managecompany.jobIndex');
+    Route::get('job', [ManageJobController::class, 'index'])->name('managejob.index');
     Route::get('profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::get('log', [LogController::class, 'showLog'])->name('log.showLog');
 
@@ -71,7 +74,7 @@ Route::middleware([loginCheck::class])->group(function () {
         }
     });
     Route::controller(ManageCompanyController::class)->group(function () {
-        foreach (['show', 'create', 'update', 'delete', 'getData', 'detailJob', 'savesuspend', 'deleteUser'] as $key => $value) {
+        foreach (['show', 'create', 'update', 'delete', 'getData', 'detailJob', 'jobIndex' ,'savesuspend', 'deleteUser'] as $key => $value) {
             Route::post('/managecompany/' . $value, $value);
         }
     });
