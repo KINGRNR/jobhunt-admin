@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Auth\LoginWithGoogleController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\MainController;
@@ -9,7 +10,6 @@ use App\Http\Controllers\ManageCompanyController;
 use App\Http\Controllers\ExampleController;
 use App\Http\Middleware\loginCheck;
 use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\LoginWithGoogleController;
 use App\Http\Controllers\ConfigurationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LogController;
