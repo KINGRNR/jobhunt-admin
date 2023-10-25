@@ -1,3 +1,4 @@
+<script src="assets/js/quickact.js"></script>
 <script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
 
 <script type="text/javascript">
@@ -33,6 +34,9 @@
                 type: "GET",
                 dataType: "json",
             },
+            order: [
+                [2, 'asc']
+            ],
             columns: [{
                     "targets": 0,
                     "orderable": false,
@@ -82,13 +86,9 @@
                     data: 'created_at',
                     name: 'created_at',
                     render: function(data, type, row) {
-                        var date = new Date(data);
+                    
+                        var formattedDate = quick.convertDate(data);
 
-                        var formattedDate = date.toLocaleString('en-US', {
-                            day: '2-digit',
-                            month: '2-digit',
-                            year: 'numeric',
-                        });
 
                         return formattedDate;
                     }
@@ -131,9 +131,6 @@
                         return btnHTML;
                     },
                 },
-            ],
-            order: [
-                [2, 'asc']
             ],
             // fnInitComplete: function(oSettings, data) {
             //         resolve(true)
@@ -409,8 +406,6 @@
                 console.log(response);
                 const data = response.data;
                 //proses format men format data ya ges ya
-                const createdAt = data.created_at;
-                const formattedDate = moment(createdAt).format('MMMM Do YYYY, h:mm:ss a');
                 const numericId = data.id;
                 const formattedId = String(numericId).padStart(4, '0');
                 const gender = data.users_gender === 1 ? 'Woman' : 'Man';
@@ -420,7 +415,7 @@
                 $(`#username`).text(data.name);
                 $(`#fullname`).text(data.users_fullname);
                 $(`#email`).text(data.email);
-                $(`#join_date`).text(formattedDate);
+                $(`#join_date`).text(quick.convertDate(data.created_at));
                 $('#id_user').text(formattedId);
                 $('#gender').text(gender);
                 $('#lulusan').text(data.users_lulusan);

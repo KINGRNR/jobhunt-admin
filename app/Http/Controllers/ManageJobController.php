@@ -11,7 +11,7 @@ use App\Models\DetailUser;
 use App\Models\ManageCompany;
 use App\Models\Role;
 
-class ManageCompanyController extends controller
+class ManageJobController extends BaseResponse
 {
 
     public function index(Request $request)
@@ -23,22 +23,13 @@ class ManageCompanyController extends controller
         //     ->join('roles', 'users.role_id', '=', 'role.id')
         //     ->select('users.*', 'role.name AS role_name')
         //     ->get();
-        $data = DB::table('company')->get();
+        $data = DB::table('v_job')->get();
         // dd($data);
         return Datatables::of($data)->toJson();
         // $data = ManageCompany::join('roles', 'users.users_role_id', '=', 'roles.role_id')->get(['users.*', 'roles.*']);
         // return DataTables::of($data)->toJson();
     }
-    public function jobIndex(Request $request) 
-    {
-        $id = $request->post();
-        $company_id = $id['id'];
 
-        // dd($company_id);
-        $data = DB::table('v_job')->where('job_company_id', $id['id'])->get();
-        // dd($data);
-        return Datatables::of($data)->toJson();
-    }
     public function show(Request $request)
     {
         $data = $request->post();

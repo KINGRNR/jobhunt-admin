@@ -28,7 +28,7 @@
     }
 </style>
 <div class="row gy-5 g-xl-10">
-    <div class="col-xl-4">
+    <div class="col-xl-4 ">
         <div class="card card-xl-stretch mb-xl-10" style="background-color: #CBE1F5">
             <div class="card-body d-flex flex-column">
                 <div class="d-flex flex-column flex-grow-1" style="position: relative;">
