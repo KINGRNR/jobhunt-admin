@@ -55,7 +55,6 @@ Route::middleware([loginCheck::class])->group(function () {
     Route::get('company', [ManageCompanyController::class, 'index'])->name('managecompany.index');
     // Route::get('companyjob', [ManageCompanyController::class, 'jobIndex'])->name('managecompany.jobIndex');
     Route::get('job', [ManageJobController::class, 'index'])->name('managejob.index');
-    Route::get('profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::get('log', [LogController::class, 'showLog'])->name('log.showLog');
 
 
@@ -84,8 +83,8 @@ Route::middleware([loginCheck::class])->group(function () {
         }
     });
     Route::controller(ProfileController::class)->group(function () {
-        foreach (['index', 'update', 'changePassword'] as $key => $value) {
-            Route::post('/config/' . $value, $value);
+        foreach (['show', 'update', 'changePassword'] as $key => $value) {
+            Route::post('/profile/' . $value, $value);
         }
     });
     Route::get('/{menu}', [MainController::class, 'index'])->where('menu', '([A-Za-z0-9\-\/]+)');

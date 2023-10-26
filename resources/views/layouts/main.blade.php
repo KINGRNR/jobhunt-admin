@@ -23,7 +23,6 @@
     <!--begin::Javascript-->
     <!--begin::Global Javascript Bundle(used by all pages)-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
     <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase.js"></script>
     <script src="assets/plugins/global/plugins.bundle.js"></script>
     <script src="assets/js/scripts.bundle.js"></script>
@@ -48,6 +47,10 @@
     <!--begin::Global Stylesheets Bundle(used by all pages)-->
     <link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <!--end::Global Stylesheets Bundle-->
     <style>
         .loading-spinner-overlay {
@@ -874,24 +877,28 @@
                 });
 
                 function handleURLChange() {
-                    const currentURL = window.location.href;
-                    let lastMenuId = localStorage.getItem('menuId');
+                    // const currentURL = window.location.href;
+                    // let lastMenuId = localStorage.getItem('menuId');
+                    let url = $(location).attr('href');
+                    var lastEndpoint = url.split('/').reverse()[0];
 
-                    if (getLastUrl() === 'dashboard') {
-                        $('[data-con="ozqopvu1arkmk3gv"]').trigger('click');
-                    } else {
-                        $(`[data-con="${lastMenuId}"]`).trigger('click');
-                    }
+                    $(`[data-code="${lastEndpoint}"]`).trigger('click');
+
+                    // if (getLastUrl() === 'dashboard') {
+                    //     $('[data-con="ozqopvu1arkmk3gv"]').trigger('click');
+                    // } else {
+                    //     $(`[data-con="${lastMenuId}"]`).trigger('click');
+                    // }
                 }
 
 
 
                 let stateData = null;
 
-                function getLastUrl() {
-                    let url = $(location).attr('href');
-                    return url.split('/').reverse()[0];
-                }
+                // function getLastUrl() {
+                //     let url = $(location).attr('href');
+                //     return url.split('/').reverse()[0];
+                // }
 
                 //     function loadPage(element) {
                 //         // $("#pagecontainer").empty();
@@ -946,7 +953,7 @@
                   `)
                             window.history.pushState(stateData, "", pages.url_path);
                             $("#pagecontainer").html(atob(pages.view));
-                            localStorage.setItem('menuId', menuId);
+                            // localStorage.setItem('menuId', menuId);
                             blockPage();
                         },
                     });

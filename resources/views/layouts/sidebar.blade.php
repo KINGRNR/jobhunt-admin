@@ -8,7 +8,7 @@
     <div class="menu menu-column menu-rounded fw-bold my-auto menu-real" id="#kt_aside_menu" data-kt-menu="true" style="display: none;">
         {{-- menu Dashboard --}}
         <div class="menu-item">
-            <a class="menu-link active" href="javascript:;" data-con="ozqopvu1arkmk3gv" data-type="main"
+            <a class="menu-link active" href="javascript:;" data-con="ozqopvu1arkmk3gv" data-code="dashboard" data-type="main"
                 onclick="loadPage(this)" title="" data-judul="Dashboard" data-bs-toggle="tooltip"
                 data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right"
                 data-bs-original-title="Dashboard">
@@ -47,7 +47,7 @@
             </span>
             <div class="menu-sub menu-sub-accordion">
                 <div class="menu-item">
-                    <a class="menu-link active" href="javascript:;" data-con="cfweqelm72wwtxbg" data-type="sub"
+                    <a class="menu-link active" href="javascript:;" data-con="cfweqelm72wwtxbg" data-code="example" data-type="sub"
                         onclick="loadPage(this)">
                         <span class="menu-bullet">
                             <span class="bullet bullet-dot"></span>
@@ -56,7 +56,16 @@
                     </a>
                 </div>
                 <div class="menu-item">
-                    <a class="menu-link" href="javascript:;" data-con="ozqopvu1arkmk3gr" data-type="sub"
+                    <a class="menu-link" href="javascript:;" data-con="sqtlpuyaaivgnaSS" data-code="leafletcontoh" data-type="sub"
+                        onclick="loadPage(this)">
+                        <span class="menu-bullet">
+                            <span class="bullet bullet-dot"></span>
+                        </span>
+                        <span class="menu-title">Leaflet Example</span>
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a class="menu-link" href="javascript:;" data-con="ozqopvu1arkmk3gr" data-code="Notification" data-type="sub"
                         onclick="loadPage(this)">
                         <span class="menu-bullet">
                             <span class="bullet bullet-dot"></span>
@@ -68,7 +77,7 @@
         </div>
         {{-- Menu Manage Company --}}
         <div class="menu-item">
-            <a class="menu-link menu-title" href="javascript:;" data-con="sqtlpuyaaasfa132" data-type="main"
+            <a class="menu-link menu-title" href="javascript:;" data-con="sqtlpuyaaasfa132" data-code="managecompany" data-type="main"
                 onclick="loadPage(this)" title="" data-judul="Manage Company" data-bs-toggle="tooltip"
                 data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right"
                 data-bs-original-title="Manage Company">
@@ -89,7 +98,7 @@
         </div>
         {{-- Menu User Management --}}
         <div class="menu-item">
-            <a class="menu-link menu-title" href="javascript:;" data-con="sqtlpuyaaivgna9" data-type="main"
+            <a class="menu-link menu-title" href="javascript:;" data-con="sqtlpuyaaivgna9" data-code="listuser" data-type="main"
                 onclick="loadPage(this)" title="" data-judul="User Management" data-bs-toggle="tooltip"
                 data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right"
                 data-bs-original-title="User Management">
@@ -110,7 +119,7 @@
         </div>
         {{-- Menu Manage Job --}}
         <div class="menu-item">
-            <a class="menu-link menu-title" href="javascript:;" data-con="sqtlpuyaaivgasw2" data-type="main"
+            <a class="menu-link menu-title" href="javascript:;" data-con="sqtlpuyaaivgasw2" data-code="managejob" data-type="main"
                 onclick="loadPage(this)" title="" data-judul="Manage Job" data-bs-toggle="tooltip"
                 data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right"
                 data-bs-original-title="Manage Job">
@@ -149,7 +158,7 @@
             </span>
             <div class="menu-sub menu-sub-accordion">
                 <div class="menu-item">
-                    <a class="menu-link" href="javascript:;" data-con="sqtlpuyaaivgnal8" data-type="sub" onclick="loadPage(this)">
+                    <a class="menu-link" href="javascript:;" data-con="sqtlpuyaaivgnal8" data-type="sub" data-code="configuration" onclick="loadPage(this)">
                         <span class="menu-bullet">
                             <span class="bullet bullet-dot"></span>
                         </span>
