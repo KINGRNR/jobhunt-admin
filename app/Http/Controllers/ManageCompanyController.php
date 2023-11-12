@@ -6,12 +6,14 @@ use Illuminate\Support\Collection;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
-
+use App\Models\Notification;
 use App\Models\DetailUser;
 use App\Models\ManageCompany;
 use App\Models\Role;
 
-class ManageCompanyController extends controller
+use function PHPUnit\Framework\isNull;
+
+class ManageCompanyController extends BaseResponse
 {
 
     public function index(Request $request)
@@ -62,7 +64,31 @@ class ManageCompanyController extends controller
             ], 404);
         }
     }
-
+    public function rejacc(Request $request)
+    {
+        try {
+            $data = $request->post();
+            if(!isset($data['alasan'])) {
+                $data['alasan'] = '-';
+            }
+            $read =  ManageCompany::where('company_id', $data['id'])->update([
+                'company_isverif' => $data['cond'],
+                'company_reject_reason' => $data['alasan'],
+            ]);
+            $notification = Notification::create([
+                'notification_title' => 'Company Request',
+                'notification_message' => $data['msg'],
+                'notification_reason' => $data['alasan'],
+                'notification_by' => 'Admin',
+                'notification_jenis' => 3,
+                'notificaton_to' => $data['user_id'],
+                'notification_read' => 0,
+            ]);
+            return $this->successResponse($read, [], 201);
+        } catch (\Throwable $th) {
+            return $this->errorResponse();
+        }
+    }
     // public function create(Request $request)
     // {
     //     try {
