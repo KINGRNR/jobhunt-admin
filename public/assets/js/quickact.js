@@ -43,7 +43,7 @@ var quick = {
     },
 
     leafletMapShowStatic: function (id, lt, ln) {
-        var map = L.map(id).setView([0, 0], 2);
+        var map = L.map(id).setView([-2.5489, 118.0149], 2);
 
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

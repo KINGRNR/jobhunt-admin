@@ -890,7 +890,7 @@
             <!--begin::Activities-->
             <div class="d-flex align-items-center ms-3 ms-lg-4">
                 <!--begin::Drawer toggle-->
-                <div class="btn btn-icon btn-color-gray-700 btn-active-color-primary btn-outline btn-outline-secondary w-40px h-40px"
+                <div class="btn btn-icon btn-color-gray-700 btn-active-color-primary btn-outline btn-outline-secondary w-40px h-40px position-relative"
                     id="kt_activities_toggle">
                     <!--begin::Svg Icon | path: icons/duotune/general/gen007.svg-->
                     <span class="svg-icon svg-icon-1">
@@ -904,6 +904,9 @@
                                 fill="black" />
                         </svg>
                     </span>
+                    <span id="badge_notif" class="d-none"
+                    style="position: absolute;  top: -10px; right: -10px; width: 20px; height: 20px; border-radius: 50%;background: red;color: white;display: flex; justify-content: center; align-items: center;">
+                </span>
                     <!--end::Svg Icon-->
                 </div>
                 <!--end::Drawer toggle-->

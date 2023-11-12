@@ -1,4 +1,4 @@
-<div class="table-user-ini">
+<div class="table-company-ini">
 
     <div class="card">
         <!--begin::Card header-->
@@ -94,6 +94,7 @@
 <div class="col-12">
     @include('managecompany.detail')
 </div>
+
 <div class="modal fade" id="kt_modal_add_example" tabindex="-1" aria-hidden="true">
     {{-- @include('managecompany.form') --}}
 </div>

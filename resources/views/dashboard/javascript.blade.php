@@ -19,30 +19,33 @@ import ApexCharts from 'apexcharts'
         // If the user hasn't visited the welcome page, show the popup
         if (!hasVisitedWelcomePage) {
             // Load the welcome page as a full-size popup
-            let timerInterval
-            Swal.fire({
-                icon: 'warning',
-                title: "Welcome Admin!",
-                html: "Any actions you take on this portal have a <b>significant impact</b> on the sustainability of this website!! <br><br> This Warning Will Close In <span></span> Second ",
-                timer: 10000, // 5 seconds
-                showConfirmButton: false,
-                timerProgressBar: true,
-                didOpen: () => {
-                    Swal.showLoading()
-                    const b = Swal.getHtmlContainer().querySelector('span')
-                    timerInterval = setInterval(() => {
-                        b.textContent = Swal.getTimerLeft()
-                    }, 100)
-                },
-                willClose: () => {
-                    clearInterval(timerInterval)
-                }
-            }).then((result) => {
-                /* Read more about handling dismissals below */
-                if (result.dismiss === Swal.DismissReason.timer) {
-                    console.log('I was closed by the timer')
-                }
-            })
+            // let timerInterval
+            // Swal.fire({
+            //     icon: 'warning',
+            //     title: "Welcome Admin!",
+            //     html: "Any actions you take on this portal have a <b>significant impact</b> on the sustainability of this website!! <br><br> This Warning Will Close In <span></span> Second ",
+            //     timer: 10000, // 5 seconds
+            //     showConfirmButton: false,
+            //     timerProgressBar: true,
+            //     didOpen: () => {
+            //         Swal.showLoading()
+            //         const b = Swal.getHtmlContainer().querySelector('span')
+            //         timerInterval = setInterval(() => {
+            //             b.textContent = Swal.getTimerLeft()
+            //         }, 100)
+            //     },
+            //     willClose: () => {
+            //         clearInterval(timerInterval)
+            //     }
+            // }).then((result) => {
+            //     /* Read more about handling dismissals below */
+            //     if (result.dismiss === Swal.DismissReason.timer) {
+            //         console.log('I was closed by the timer')
+            //     }
+            // })
+            var blockfirstpage = '<div class="block">generate cache</div>';
+$('#pagecontainer').html(blockfirstpage);
+
             // Set the flag in local storage to indicate that the user has visited the welcome page
             localStorage.setItem('hasVisitedWelcomePage', 'true');
         }

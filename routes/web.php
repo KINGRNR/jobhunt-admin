@@ -56,6 +56,7 @@ Route::middleware([loginCheck::class])->group(function () {
     // Route::get('companyjob', [ManageCompanyController::class, 'jobIndex'])->name('managecompany.jobIndex');
     Route::get('job', [ManageJobController::class, 'index'])->name('managejob.index');
     Route::get('log', [LogController::class, 'showLog'])->name('log.showLog');
+    Route::get('notification', [NotificationController::class, 'index'])->name('notification.index');
 
 
     Route::post('/save-token', [NotificationController::class, 'saveToken'])->name('save-token');
@@ -73,7 +74,7 @@ Route::middleware([loginCheck::class])->group(function () {
         }
     });
     Route::controller(ManageCompanyController::class)->group(function () {
-        foreach (['show', 'create', 'update', 'delete', 'getData', 'detailJob', 'jobIndex' ,'savesuspend', 'deleteUser'] as $key => $value) {
+        foreach (['show', 'create', 'update', 'delete', 'getData', 'detailJob', 'jobIndex' ,'savesuspend', 'deleteUser','rejacc'] as $key => $value) {
             Route::post('/managecompany/' . $value, $value);
         }
     });
@@ -85,6 +86,11 @@ Route::middleware([loginCheck::class])->group(function () {
     Route::controller(ProfileController::class)->group(function () {
         foreach (['show', 'update', 'changePassword'] as $key => $value) {
             Route::post('/profile/' . $value, $value);
+        }
+    });
+    Route::controller(NotificationController::class)->group(function () {
+        foreach (['read'] as $key => $value) {
+            Route::post('/notification/' . $value, $value);
         }
     });
     Route::get('/{menu}', [MainController::class, 'index'])->where('menu', '([A-Za-z0-9\-\/]+)');
