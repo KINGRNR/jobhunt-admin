@@ -196,10 +196,13 @@
                 },
                 success: (response) => {
                     // $('#body_detail_comp').empty()
-                    $('.card-acc-reject').removeClass('d-none')
+                   
 
+                    var data = response.data 
+                    if (data.company_isverif == '0') {
+                    $('.card-acc-reject').removeClass('d-none')
                     $('.detail-job').empty()
-                    var data = response.data
+                }
                     $('#id').val(data.company_id)
                     $('#user_id').val(data.company_user_id)
                     $('.btn-rejacc').attr('data-id', data.company_id)
@@ -321,7 +324,7 @@
                     </div>
                 </div>
             `
-                    if (data.company_isverif != 0 && data.company_isverif != 2) {
+                    if (data.company_isverif == '1') {
                         $('.card-acc-reject').addClass('d-none')
                         var detailJobDatatable = ` <div class="card">
         <!--begin::Card header-->
