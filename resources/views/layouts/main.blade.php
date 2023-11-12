@@ -193,6 +193,8 @@
                                     </svg>
                                 </span>
                                 <!--end::Svg Icon-->
+                               
+
                             </div>
                             <!--begin::Menu-->
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px"
@@ -399,7 +401,7 @@
 
             <div id="kt_activities" class="bg-body" data-kt-drawer="true" data-kt-drawer-name="activities"
                 data-kt-drawer-activate="true" data-kt-drawer-overlay="true"
-                data-kt-drawer-width="{default:'300px', 'lg': '900px'}" data-kt-drawer-direction="end"
+                data-kt-drawer-width="{default:'300px', 'lg': '600px'}" data-kt-drawer-direction="end"
                 data-kt-drawer-toggle="#kt_activities_toggle" data-kt-drawer-close="#kt_activities_close">
                 @include('layouts.notification')
             </div>
@@ -966,12 +968,12 @@
                 }
 
                 function blockPage() {
-                    // const loadingDiv = $(
-                    //     '<div class="loading loading-spinner-overlay" id="loading-spinner"><div class="loading-spinner"></div><p class="loading-text">Loading Data</p></div>'
-                    // );
                     const loadingDiv = $(
-                        '<div class="loading loading-spinner-overlay" id="loading-spinner"></div>'
+                        '<div class="loading loading-spinner-overlay" id="loading-spinner"><div class="loading-spinner"></div><p class="loading-text">Loading Data</p></div>'
                     );
+                    // const loadingDiv = $(
+                    //     '<div class="loading loading-spinner-overlay" id="loading-spinner"></div>'
+                    // );
                     // $('.card-blocking').removeClass('d-none');
                     loadingDiv.hide().appendTo("#pagecontainer").fadeIn();
                 }

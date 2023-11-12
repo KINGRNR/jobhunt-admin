@@ -13,18 +13,18 @@ class ManageCompany extends Model
 {
     use HasFactory;
     //use InteractsWithNanoid;
-    protected $table = 'Company';
-    protected $dateFormat = 'Y-m-d H:i:s';
+    protected $table = 'company';
+    // protected $dateFormat = 'Y-m-d H:i:s';
 
     protected $primaryKey = 'company_id';
     public $incrementing = false;
 
     protected $nanoidLength = 16;
 
-    // protected $fillable = ['id','name', 'email', 'role_id'];
+    // protected $fillable = ['*'];
 
-    // const CREATED_AT = 'example_created_at';
-    // const UPDATED_AT = 'example_updated_at';
+    const CREATED_AT = 'company_created_at';
+    const UPDATED_AT = 'company_updated_at';
 
     // public static function generateExampleid(int $length = 16): string
     // {

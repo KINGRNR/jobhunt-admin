@@ -143,13 +143,6 @@
         }).css('cursor', 'pointer');
     }
 
-    toggleDetail = () => {
-        loadchartatas()
-        $(`[data-group="detail"]`).addClass('active');
-        $(`[data-group="job"]`).removeClass('active');
-        $('.table-user-ini').fadeOut();
-        $('.detail').fadeIn();
-    }
     // toggleDetailUser = () => {
     //     $(`[data-group="detail"]`).addClass('active');
     //     $(`[data-group="job"]`).removeClass('active');
@@ -163,7 +156,7 @@
     //     $('#job_history').fadeIn();
     // }
     toogleTable = () => {
-        $('.table-user-ini').fadeIn();
+        $('.table-company-ini').fadeIn();
         $('.detail').fadeOut();
     }
     toggleMenu = (id) => {
@@ -184,6 +177,13 @@
             }
         })
     }
+    toggleDetail = () => {
+        loadchartatas()
+        $(`[data-group="detail"]`).addClass('active');
+        $(`[data-group="job"]`).removeClass('active');
+        $('.table-company-ini').hide();
+        $('.detail').fadeIn();
+    }
     onDetail = (id, callback) => {
         return new Promise((resolve, reject) => {
             blockPage();
@@ -195,7 +195,16 @@
                     id: id
                 },
                 success: (response) => {
+                    // $('#body_detail_comp').empty()
+                    $('.card-acc-reject').removeClass('d-none')
+
+                    $('.detail-job').empty()
                     var data = response.data
+                    $('#id').val(data.company_id)
+                    $('#user_id').val(data.company_user_id)
+                    $('.btn-rejacc').attr('data-id', data.company_id)
+                    $('.btn-rejacc').attr('data-user-id', data.company_user_id)
+
                     let badgeText, badgeColor;
                     if (data.company_isverif == 1) {
                         badgeText = 'Approved';
@@ -209,7 +218,6 @@
                     }
                     const formattedId = String(data.company_id).padStart(4, '0');
                     // const gender = data.gender === 1 ? 'Woman' : 'Man';
-                    toggleDetail();
                     var headerDetail = `<div class="card-title m-0 d-flex">
 
         <div class="d-flex flex-column mt-2">
@@ -313,7 +321,9 @@
                     </div>
                 </div>
             `
-                    var detailJobDatatable = ` <div class="card">
+                    if (data.company_isverif != 0 && data.company_isverif != 2) {
+                        $('.card-acc-reject').addClass('d-none')
+                        var detailJobDatatable = ` <div class="card">
         <!--begin::Card header-->
         <div class="card-header py-4">
             <div class="card-title">
@@ -365,12 +375,16 @@
             </table>
         </div>
     </div>`
-                    $('#header_detail_comp').empty().append(headerDetail);
+                        $('.detail-job').empty().append(detailJobDatatable);
+
+                    }
                     $('#body_detail_comp').empty().append(bodyDetail);
-                    $('.detail-job').empty().append(detailJobDatatable);
+
+                    $('#header_detail_comp').empty().append(headerDetail);
                     // console.log(detailJobDatatable);
                 },
                 complete: (response) => {
+                    toggleDetail();
                     unblockPage(500);
                     resolve();
                 }
@@ -395,7 +409,9 @@
                     id: id
                 },
             },
-            order: [[1, 'desc']],
+            order: [
+                [1, 'desc']
+            ],
             columns: [{
                     "targets": 0,
                     "orderable": false,
@@ -482,6 +498,147 @@
                 $('.actEdit').addClass('d-none');
             }
         }).css('cursor', 'pointer');
+    }
+
+    accCompany = (data) => {
+
+        var cond = $(data).attr('condition?');
+        var id = $(data).attr('data-id');
+        var user_id = $(data).attr('data-user-id');
+        var msg = $(data).attr('msg');
+
+        // var data = $('[name="' + form + '"]')[0];
+        // var formData = new FormData(data);
+            Swal.fire({
+                title: 'Konfirmasi',
+                text: 'Apakah kamu ingin melanjutkan?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Ya',
+                cancelButtonText: 'Tidak',
+                customClass: {
+                    confirmButton: 'btn btn-primary',
+                    cancelButton: 'btn btn-secondary'
+                },
+                buttonsStyling: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '/managecompany/rejacc',
+                        type: 'POST',
+                        // processData: false,
+                        // contentType: false,
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            id: id,
+                            cond: cond,
+                            user_id: user_id,
+                            msg: msg,
+                        },
+                        dataType: 'json',
+                        success: function(response) {
+                            if (response.success) {
+                                Swal.fire({
+                                    title: response.title,
+                                    text: response.message,
+                                    icon: (response.success) ? 'success' : "error",
+                                    buttonsStyling: false,
+                                    confirmButtonText: "Oke!",
+                                    customClass: {
+                                        confirmButton: "btn btn-primary"
+                                    },
+                                }).then(() => {
+                                    location.reload();
+                                });
+                            }
+                        },
+                        error: function(error) {
+                            console.log(error);
+                        }
+                    });
+                }
+            });
+        }
+    
+    var form = 'formReject';
+    rejectCompany = () => {
+        var validasi = 'true';
+        $(".input-required").each(function(i, obj) {
+            let inputValue = $(this).val().trim();
+
+            if (inputValue === "") {
+                $(this).removeClass("is-valid").addClass("is-invalid");
+                validasi = 'false-invalid';
+            } else {
+                $(this).removeClass("is-invalid");
+                $(this).parent().find(".error_code").removeClass("invalid-feedback").text("").show();
+            }
+        });
+        var data = $('[name="' + form + '"]')[0];
+        var formData = new FormData(data);
+        if (validasi === 'true') {
+            Swal.fire({
+                title: 'Konfirmasi',
+                text: 'Apakah kamu ingin melanjutkan?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Ya',
+                cancelButtonText: 'Tidak',
+                customClass: {
+                    confirmButton: 'btn btn-primary',
+                    cancelButton: 'btn btn-secondary'
+                },
+                buttonsStyling: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '/managecompany/rejacc',
+                        type: 'POST',
+                        processData: false,
+                        contentType: false,
+                        data: formData,
+                        success: function(response) {
+                            if (response.success) {
+                                Swal.fire({
+                                    title: response.title,
+                                    text: response.message,
+                                    icon: (response.success) ? 'success' : "error",
+                                    buttonsStyling: false,
+                                    confirmButtonText: "Oke!",
+                                    customClass: {
+                                        confirmButton: "btn btn-primary"
+                                    },
+                                }).then(() => {
+                                    location.reload();
+                                });
+                            }
+                        },
+                        error: function(response) {
+                            let err_msg = response.responseJSON
+                            Swal.fire({
+                                title: err_msg.title,
+                                text: err_msg.message,
+                                icon: (err_msg.success) ? 'success' : "error",
+                                buttonsStyling: false,
+                                confirmButtonText: "Oke!",
+                                customClass: {
+                                    confirmButton: "btn btn-primary"
+                                },
+                            }).then(() => {
+                                location.reload();
+                            });
+                        }
+                    });
+                }
+            });
+        } else if (validasi === 'false-invalid') {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Lengkapi Form Terlebih Dahulu!',
+                confirmButtonClass: 'swal2-confirm btn btn-primary',
+            });
+        }
     }
     // onDisplayEdit = () => {
     //     $('#formExample').find('input, select').removeAttr('disabled');

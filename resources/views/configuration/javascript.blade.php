@@ -29,7 +29,7 @@
 
         return new Promise((resolve) => {
             blockPage();
-            var csrfToken = $('meta[name="csrf-token"]').attr('content');
+            var csrf = $('meta[name="csrf-token"]').attr('content');
 
             $.ajax({
                 url: APP_URL + 'config/getConfig',
@@ -174,7 +174,6 @@
                         contentType: false,
                         data: formData,
                         success: function(response) {
-                            console.log(response);
                             if (response.success) {
                                 Swal.fire({
                                     title: response.title,

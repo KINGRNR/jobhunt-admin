@@ -5,17 +5,41 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use App\Models\Notification;
 
-class NotificationController extends Controller
+class NotificationController extends BaseResponse
 {
     // public function saveToken(Request $request)
     //     {
     //         auth()->user()->update(['device_token'=>$request->token]);
     //         return response()->json(['token saved successfully.']);
     //     }
+    public function index()
+    {
+        // $id = Session::get('user_id');
+        // $notif = DB::table('notification')->where('notification_to', 'FOV4Qtgi5lcQ9kCY')->findAll();
+        $notif = DB::table('notification')->where('notification_to', 'FOV4Qtgi5lcQ9kCY')->get();
+        return response()->json([
+            'status' => 'success',
+            'data' => $notif
+        ]);
+    }
+    public function read(Request $request)
+    {
+        try {
+            $id = $request->post();
+            $read =  Notification::where('notification_id', $id['id'])->update([
+                'notification_read' => 1,
+            ]);
+            return $this->successResponse($read, [], 201);
+        } catch (\Throwable $th) {
+            return $this->errorResponse();
+        }
+    }
     public function saveToken(Request $request)
     {
-        
+
         $user = Auth::user();
         $user->device_token = $request->token;
         $user->save();
