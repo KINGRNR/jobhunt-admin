@@ -31,9 +31,14 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    // 'google' => [
+    //     'client_id' => '602229220206-3mfq3v1t9c5fp0q6hid21vvarbt6o67e.apps.googleusercontent.com',
+    //     'client_secret' => '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',
+    //     'redirect' => 'https://admin.jobhuntdev.xyz/authorized/google/callback',
+    // ],
     'google' => [
-        'client_id' => '602229220206-3mfq3v1t9c5fp0q6hid21vvarbt6o67e.apps.googleusercontent.com',
-        'client_secret' => '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',
-        'redirect' => 'https://admin.jobhuntdev.xyz/authorized/google/callback',
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => env('GOOGLE_REDIRECT'),
     ],
 ];

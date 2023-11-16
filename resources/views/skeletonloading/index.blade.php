@@ -93,14 +93,14 @@
     </style>
     <div class="card" aria-hidden="true" style="height: 100vh">
         <div class="card-body d-flex flex-column align-items-center justify-content-center">
-            <p class="card-text placeholder-glow">
+            {{-- <p class="card-text placeholder-glow">
                 <svg height="240" width="240">
                     <line class="loader-pointer" x1="120" y1="120" x2="120" y2="97" />
                     <line class="loader-line" x1="120" y1="120" x2="135" y2="120" />
                     <circle class="loader-circle" cx="120" cy="120" r="30" />
                     <circle class="loader-center" cx="120" cy="120" r="5" />
                 </svg>
-            </p>
+            </p> --}}
             <p class="text-muted" style="position: absolute; margin-top: 100px;">Please wait, loading content</p>
         </div>
         
