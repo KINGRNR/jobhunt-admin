@@ -36,7 +36,8 @@ class ListuserController extends Controller
         $userData = ManageUser::leftJoin('detail_users', 'users.id', '=', 'detail_users.user_id')
             ->where('users.id', $user_id)
             ->first();
-
+        
+        $userData['resume'] = DB::table('resume')->where('resume_user_id', $user_id)->first();
         if ($userData) {
             return response()->json([
                 'status' => 'success',

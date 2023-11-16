@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\Auth\LoginWithGoogleController;
+use App\Http\Controllers\Auth\LoginWithGooglecontroller;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\MainController;
@@ -29,7 +29,7 @@ use Illuminate\Notifications\Notification;
 |
 */
 
-Route::controller(LoginWithGoogleController::class)->group(function () {
+Route::controller(LoginWithGooglecontroller::class)->group(function () {
     Route::get('authorized/google', 'redirectToGoogle')->name('auth.google');
     Route::get('authorized/google/callback', 'handleGoogleCallback');
 });
