@@ -65,16 +65,10 @@
                     name: 'user_data',
                     render: function(data, type, row) {
                         var emails = data && data.email ? data.email : '-';
-                        var photo = data && data.photo_profile ? data.photo_profile : '';
-                        var googlePhoto = data && data.google_photo_profile ? data
-                            .google_photo_profile : '';
+                        var photo = data && data.resume_official_photo ? data.resume_official_photo : '';
 
-                        if (!photo && googlePhoto) {
-                            return '<div class=""><img src="' + googlePhoto +
-                                '" alt="Google User Photo" class="rounded-circle" style="width: 30px; height: 30px; margin-right: 5px;">' +
-                                ' <span>' + emails + '</span></div>';
-                        } else if (photo) {
-                            return '<div class=""><img src="' + photo +
+                        if (photo) {
+                            return '<div class=""><img src="'+ FILE_URL + 'user_photo/'+ photo +
                                 '" alt="User Photo" class="rounded-circle" style="width: 30px; height: 30px; margin-right: 5px;">' +
                                 ' <span>' + emails + '</span></div>';
                         } else {
@@ -96,8 +90,8 @@
                     }
                 },
                 {
-                    data: 'users_fullname',
-                    name: 'users_fullname'
+                    data: 'resume_fullname',
+                    name: 'resume_fullname'
                 },
                 {
                     data: 'users_role_id',
