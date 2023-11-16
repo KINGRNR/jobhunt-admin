@@ -19,7 +19,9 @@ class NotificationController extends BaseResponse
     {
         // $id = Session::get('user_id');
         // $notif = DB::table('notification')->where('notification_to', 'FOV4Qtgi5lcQ9kCY')->findAll();
-        $notif = DB::table('notification')->where('notification_to', 'FOV4Qtgi5lcQ9kCY')->get();
+        $notif['unread'] = DB::table('notification')->where('notification_to', 'FOV4Qtgi5lcQ9kCY')->where('notification_read', 0)->get();
+        $notif['read'] = DB::table('notification')->where('notification_to', 'FOV4Qtgi5lcQ9kCY')->where('notification_read', 1)->get();
+
         return response()->json([
             'status' => 'success',
             'data' => $notif
@@ -29,9 +31,16 @@ class NotificationController extends BaseResponse
     {
         try {
             $id = $request->post();
-            $read =  Notification::where('notification_id', $id['id'])->update([
-                'notification_read' => 1,
-            ]);
+            // print_r($id); exit;
+            if (isset($id['id'])) {
+                $read =  Notification::where('notification_id', $id['id'])->update([
+                    'notification_read' => 1,
+                ]);
+            } else {
+                $read =  Notification::where('notification_to', $id['role'])->update([
+                    'notification_read' => 1,
+                ]);
+            }
             return $this->successResponse($read, [], 201);
         } catch (\Throwable $th) {
             return $this->errorResponse();

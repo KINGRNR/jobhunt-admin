@@ -48,9 +48,9 @@
     <link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <!--end::Global Stylesheets Bundle-->
     <style>
         .loading-spinner-overlay {
@@ -193,7 +193,7 @@
                                     </svg>
                                 </span>
                                 <!--end::Svg Icon-->
-                               
+
 
                             </div>
                             <!--begin::Menu-->
@@ -399,12 +399,12 @@
                 <!--end::Footer-->
             </div>
 
-            <div id="kt_activities" class="bg-body" data-kt-drawer="true" data-kt-drawer-name="activities"
+            {{-- <div id="kt_activities" class="bg-body" data-kt-drawer="true" data-kt-drawer-name="activities"
                 data-kt-drawer-activate="true" data-kt-drawer-overlay="true"
                 data-kt-drawer-width="{default:'300px', 'lg': '600px'}" data-kt-drawer-direction="end"
                 data-kt-drawer-toggle="#kt_activities_toggle" data-kt-drawer-close="#kt_activities_close">
                 @include('layouts.notification')
-            </div>
+            </div> --}}
             <!--end::Wrapper-->
             <!--end::Activities drawer-->
             <!--begin::Chat drawer-->
@@ -848,7 +848,25 @@
             </div>
             <!--end::Scrolltop-->
             <!--end::Main-->
-
+            <div class="modal fade draggable-modal" tabindex="-1" id="modal_notif" role="basic" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header" style="display: flex; flex-direction: column; align-items: flex-start;">
+                            <h3 class="modal-title" style="margin: 0;" id="modal_notif_title"></h3>
+                            <span style="margin-top: 5px;" id="nama_pengirim_notif"></span>
+                            {{-- <span id="tanggal_notif">Tanggal : 27 Juni 2023</span> --}}
+                        </div>
+            
+                        <div class="modal-body modal-body-cetak">
+                            {{-- <h5>Judul Notifikasi</h5> --}}
+                            <p id="deskripsi_notif"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Tutup</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <script>
                 var hostUrl = "assets/";
             </script>
@@ -934,8 +952,9 @@
 
                 //API
                 function loadPage(element) {
-                    // $("#pagecontainer").empty();
+                    blockPage()
 
+                    // $("#pagecontainer").empty();
                     let menuId = $(element).data('con');
                     let CSRF_NAME = 'csrf_cookie_name';
                     $.ajax({
@@ -950,13 +969,13 @@
                             $(`.menu-link[data-con="${menuId}"]`).addClass("active");
                             $('#get_breadcumbs').html(atob(pages.breadcrumb));
                             $('#titleContent').html('').html(`
-                <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1 parentTitle">${pages.menu_title}</h1>
-                                
-                  `)
+                    <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1 parentTitle">${pages.menu_title}</h1>
+                                    
+                    `)
                             window.history.pushState(stateData, "", pages.url_path);
                             $("#pagecontainer").html(atob(pages.view));
-                            // localStorage.setItem('menuId', menuId);
-                            blockPage();
+                            localStorage.setItem('menuId', menuId);
+                            // blockPage();
                         },
                     });
 
@@ -998,7 +1017,10 @@
             <script src="{!! asset('//cdn.amcharts.com/lib/5/xy.js') !!}"></script>
             <script src="{!! asset('//cdn.amcharts.com/lib/5/themes/Animated.js') !!}"></script>
             <script src="{!! asset('https://cdn.datatables.net/1.11.1/js/jquery.dataTables.min.js') !!}"></script>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"> --}}
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js">
+                --
+                }
+                }
             </script>
 </body>
 

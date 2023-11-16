@@ -3,6 +3,8 @@
 
 <script type="text/javascript">
     APP_URL = "{{ getenv('APP_URL') }}/";
+    FILE_URL = "{{ getenv('FILE_URL') }}/";
+
     var formSuspend = 'formSuspend';
     $(() => {
         init()
@@ -403,7 +405,7 @@
                 id: id
             },
             success: (response) => {
-                console.log(response);
+                console.log(response.data.resume.resume_official_photo);
                 const data = response.data;
                 //proses format men format data ya ges ya
                 const numericId = data.id;
@@ -425,11 +427,9 @@
                 $('#skills').text(data.users_skills);
                 $('#negara').text("KAMU NANYA HAH?");
                 $('#link_resume').text(data.users_resume_link);
-                const profileImageSrc = data.photo_profile ? data.photo_profile :
-                    'assets/media/avatars/blank.png';
-                const googlePhotoSrc = data.google_photo_profile ? data.google_photo_profile :
-                    profileImageSrc;
-                $('#profile_image').attr('src', googlePhotoSrc);
+                // const profileImageSrc = data.resume.resume_official_photo ? data.photo_profile :
+                //     'assets/media/avatars/blank.png';
+                $('#profile_image').attr('src', FILE_URL + 'user_photo/' + data.resume.resume_official_photo);
 
                 const completenessPercentage = calculateCompleteness(data);
 
