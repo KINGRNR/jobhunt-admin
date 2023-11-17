@@ -36,27 +36,32 @@
                 </div>
             </div>
             <div class="card-toolbar">
-                    <div class="d-flex">
-                        <input class="form-control form-control-solid input-required" placeholder="Pick date rage"  name="daterangepicker" id="daterangepicker_filter" fdprocessedid="dc1v83">
-                        <select name="role_filter" id="role_filter" class="form-select form-select-sm form-select-solid ms-2"
-                            style="display: flex;
+                <button type="button" class="btn btn-danger me-2 reset-filter" onclick="resetFilter()" style="display: none;">Reset Filter</button>
+                <div class="d-flex">
+                    <input class="form-control form-control-solid input-required" placeholder="Pick date rage"
+                        name="daterangepicker" id="daterangepicker_filter" fdprocessedid="dc1v83">
+                    <select name="role_filter" id="role_filter"
+                        class="form-select form-select-sm form-select-solid ms-2"
+                        style="display: flex;
                             width: 141px;
                             height: 48px;
                             padding: 10px 16px;
                             align-items: center;
                             gap: 16px;">
-                            <option value="">All Role</option>
-                            <option value="BfiwyVUDrXOpmStr">User/Jobseeker</option>
-                            <option value="FOV4Qtgi5lcQ9kZ">Company</option>
-                            <option value="FOV4Qtgi5lcQ9kCY">Admin</option>
-                        </select>
-                    </div>
+                        <option value="">All Role</option>
+                        <option value="BfiwyVUDrXOpmStr">User/Jobseeker</option>
+                        <option value="FOV4Qtgi5lcQ9kZ">Company</option>
+                        <option value="FOV4Qtgi5lcQ9kCY">Admin</option>
+                    </select>
+                </div>
 
-                    <div class="fw-bolder me-3 ms-2 deleted-selected" style="display: none;">
-                        <span class="me-2" id="selected_total">10</span>Selected
-                    </div>
-                    <button type="button" class="btn btn-sm btn-danger deleted-selected" data-kt-customer-table-select="delete_selected" style="display: none;"
-                        onclick="deleteSelected()">Delete Selected</button>
+                <div class="fw-bolder me-3 ms-2 deleted-selected" style="display: none;">
+                    <span class="me-2" id="selected_total">10</span>Selected
+                </div>
+                <button type="button" class="btn btn-sm btn-danger deleted-selected"
+                    data-kt-customer-table-select="delete_selected" style="display: none;"
+                    onclick="deleteSelected()">Delete Selected</button>
+
             </div>
         </div>
 
@@ -123,7 +128,8 @@
                         </div>
                         <div class="mb-3">
                             <label for="endDate" class="form-label">Range Tanggal:</label>
-                            <input class="form-control form-control-solid" placeholder="Pick date rage" id="kt_daterangepicker_1"/>
+                            <input class="form-control form-control-solid" placeholder="Pick date rage"
+                                id="kt_daterangepicker_1" />
                         </div>
                 </div>
             </div>
