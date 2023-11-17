@@ -7,6 +7,28 @@
 
     var formSuspend = 'formSuspend';
     $(() => {
+        var start = moment().subtract(29, "days");
+        var end = moment();
+
+        function cb(start, end) {
+            $("#daterangepicker_filter").html(start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY"));
+        }
+
+        $("#daterangepicker_filter").daterangepicker({
+            startDate: start,
+            endDate: end,
+            ranges: {
+                "Today": [moment(), moment()],
+                "Yesterday": [moment().subtract(1, "days"), moment().subtract(1, "days")],
+                "Last 7 Days": [moment().subtract(6, "days"), moment()],
+                "Last 30 Days": [moment().subtract(29, "days"), moment()],
+                "This Month": [moment().startOf("month"), moment().endOf("month")],
+                "Last Month": [moment().subtract(1, "month").startOf("month"), moment().subtract(1,
+                    "month").endOf("month")]
+            }
+        }, cb);
+
+        cb(start, end);
         init()
 
     })
@@ -18,24 +40,63 @@
         $(`input, select`).removeAttr('disabled');
     });
 
+
+
+
     function countSelectedRows() {
         const selectedRowCount = $('.row-checkbox:checked').not('#checkAll').length;
         $('#selected_total').text(selectedRowCount);
     }
 
-    function initializeDataTables() {
-        let table = $('#table-user').DataTable({
+    //filter
+    var filterDatatable = [];
+    var userTable = null;
+
+    $('[name="daterangepicker"]').on('apply.daterangepicker', (event) => {
+        var selectedValue = $(event.target).val();
+
+        if (selectedValue !== '0') {
+            filterDatatable.date = selectedValue;
+        } else {
+            delete filterDatatable.date;
+        }
+        if (userTable) {
+            userTable.destroy();
+        }
+        // console.log(selectedValue)
+        initializeDataTables(filterDatatable);
+    });
+
+    $('[name="role_filter"]').on('change', (event) => {
+        var selectedValue = $(event.target).val();
+
+
+
+        if (selectedValue !== '0') {
+            filterDatatable.role = selectedValue;
+        } else {
+            delete filterDatatable.role;
+        }
+        if (userTable) {
+            userTable.destroy();
+        }
+        initializeDataTables(filterDatatable);
+    });
+
+    function initializeDataTables(filterDatatable) {
+        userTable = $('#table-user').DataTable({
+            ajax: {
+                url: APP_URL + 'listuser/index',
+                type: "POST",
+                dataType: "json",
+                data: filterDatatable,
+            },
             processing: true,
             serverSide: true,
             clickable: true,
             searchAble: true,
             searching: true,
             destroyAble: true,
-            ajax: {
-                url: "{{ route('listuser.index') }}",
-                type: "GET",
-                dataType: "json",
-            },
             order: [
                 [2, 'asc']
             ],
@@ -65,10 +126,11 @@
                     name: 'user_data',
                     render: function(data, type, row) {
                         var emails = data && data.email ? data.email : '-';
-                        var photo = data && data.resume_official_photo ? data.resume_official_photo : '';
+                        var photo = data && data.resume_official_photo ? data.resume_official_photo :
+                            '';
 
                         if (photo) {
-                            return '<div class=""><img src="'+ FILE_URL + 'user_photo/'+ photo +
+                            return '<div class=""><img src="' + FILE_URL + 'user_photo/' + photo +
                                 '" alt="User Photo" class="rounded-circle" style="width: 30px; height: 30px; margin-right: 5px;">' +
                                 ' <span>' + emails + '</span></div>';
                         } else {
@@ -82,7 +144,7 @@
                     data: 'created_at',
                     name: 'created_at',
                     render: function(data, type, row) {
-                    
+
                         var formattedDate = quick.convertDate(data);
 
 
@@ -101,7 +163,7 @@
                             badgeText = 'Admin';
                             badgeColor = 'badge-success';
                         } else if (data == 'BfiwyVUDrXOpmStr') {
-                            badgeText = 'User/Pelamar';
+                            badgeText = 'User/Jobseeker';
                             badgeColor = 'badge-warning';
                         } else {
                             badgeText = 'Company';
@@ -117,29 +179,52 @@
                     render: function(data, type, row) {
                         var id = row.id; // Ambil ID dari data atau sumber lain sesuai kebutuhan
                         var btnHTML = `
-        <div class="me-0">
-            <button class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary" type="button" 
-                id="toggleDropdownTable" onclick="toggleMenu(${id})">
-                <i class="bi bi-three-dots fs-3"></i>
-            </button>
-        </div>
-    `;
+                        <div class="me-0">
+                     <button class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary" type="button" 
+                          id="toggleDropdownTable" onclick="toggleMenu(${id})">
+                          <i class="bi bi-three-dots fs-3"></i>
+                     </button>
+                     </div>
+                          `;
                         return btnHTML;
                     },
                 },
             ],
-            // fnInitComplete: function(oSettings, data) {
-            //         resolve(true)
-            //     },
+            initComplete: function() {
+                // Add a filter for the "users_role_id" column
+                this.api().columns('users_role_id:name').every(function() {
+                    var column = this;
+
+                    var select = $(
+                            '<select class="form-control"><option value="">Filter Role</option></select>'
+                        )
+                        .appendTo(
+                            '#filter_role'
+                        ) // Make sure you have a <div id="filter_role"></div> in your HTML
+                        .on('change', function() {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+
+                            column
+                                .search(val ? '^' + val + '$' : '', true, false)
+                                .draw();
+                        });
+
+                    column.data().unique().sort().each(function(d, j) {
+                        select.append('<option value="' + d + '">' + d + '</option>');
+                    });
+                });
+            },
         });
-        table.on('draw', function() {
+        userTable.on('draw', function() {
             $('.row-checkbox').prop('checked', false);
             $('.deleted-selected').fadeOut(300)
             countSelectedRows();
         });
         $('#search_user').on('input', function() {
             var searchValue = $(this).val();
-            table.search(searchValue).draw();
+            userTable.search(searchValue).draw();
         });
 
     }
@@ -423,7 +508,8 @@
                 $('#link_resume').text(data.users_resume_link);
                 // const profileImageSrc = data.resume.resume_official_photo ? data.photo_profile :
                 //     'assets/media/avatars/blank.png';
-                $('#profile_image').attr('src', FILE_URL + 'user_photo/' + data.resume.resume_official_photo);
+                $('#profile_image').attr('src', FILE_URL + 'user_photo/' + data.resume
+                    .resume_official_photo);
 
                 const completenessPercentage = calculateCompleteness(data);
 
