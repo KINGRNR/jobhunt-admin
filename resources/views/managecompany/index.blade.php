@@ -33,16 +33,12 @@
                 </div>
             </div>
             <div class="card-toolbar">
+                <button type="button" class="btn btn-danger me-2 reset-filter" onclick="resetFilter()" style="display: none;">Reset Filter</button>
                 <div class="d-flex">
-                    <input type="date" name="filter_date" id="filter_date" class="form-control form-control-sm me-2"
-                        style="display: flex;
-                            width: 141px;
-                            height: 48px;
-                            padding: 10px 16px;
-                            align-items: center;
-                            gap: 16px;"
-                        onchange="onFilter()">
-                    <select name="status" id="status" class="form-select form-select-sm form-select-solid ms-2"
+                    <input class="form-control form-control-solid input-required" placeholder="Pick date rage"
+                        name="daterangepicker" id="daterangepicker_filter" fdprocessedid="dc1v83">
+                    <select name="status_filter" id="status_filter"
+                        class="form-select form-select-sm form-select-solid ms-2"
                         style="display: flex;
                             width: 141px;
                             height: 48px;
@@ -50,11 +46,13 @@
                             align-items: center;
                             gap: 16px;">
                         <option value="">Status</option>
-                        <option value="approve">Approved</option>
-                        <option value="reject">Rejected</option>
-                        <option value="processing">Processing</option>
+                        <option value="1">Approved</option>
+                        <option value="0">Processing</option>
+                        <option value="2">Rejected</option>
                     </select>
                 </div>
+
+                <div class="
 
                 <div class="fw-bolder me-3 ms-2 deleted-selected" style="display: none;">
                     <span class="me-2" id="selected_total">10</span>Selected
