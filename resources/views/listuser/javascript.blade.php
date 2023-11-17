@@ -63,7 +63,6 @@
         if (userTable) {
             userTable.destroy();
         }
-        // console.log(selectedValue)
         initializeDataTables(filterDatatable);
     });
 
@@ -392,7 +391,6 @@
             contentType: false,
             data: formData,
             success: function(response) {
-                console.log(response)
                 if (response.status === 'success') {
                     Swal.fire({
                         title: "User Telah Dinonaktifkan",
@@ -484,7 +482,6 @@
                 id: id
             },
             success: (response) => {
-                console.log(response.data.resume.resume_official_photo);
                 const data = response.data;
                 //proses format men format data ya ges ya
                 const numericId = data.id;
@@ -554,7 +551,6 @@
         if (data.photo_profile) completeness += 10;
 
         completeness = Math.min(completeness, 100);
-        console.log(completeness)
         return completeness;
     }
 
@@ -617,8 +613,6 @@
                 id: id
             },
             success: (response) => {
-                // const data = response.data;
-                console.log(response);
                 $("#card_table").addClass('d-none'); // Initialize DataTable
                 $("#card_table").removeClass('d-none');
 
