@@ -16,9 +16,30 @@ class ListuserController extends Controller
 
     public function index(Request $request)
     {
+        $filter = $request->post();
+        if (isset($filter['date']) && isset($filter['role'])) {
+            $dateRange = explode(' - ', $filter['date']);
+            $startDate = \Carbon\Carbon::createFromFormat('m/d/Y', $dateRange[0])->startOfDay();
+            $endDate = \Carbon\Carbon::createFromFormat('m/d/Y', $dateRange[1])->endOfDay();
 
+            $data = ManageUser::leftJoin('resume', 'users.id', '=', 'resume.resume_user_id')
+                ->whereBetween('users.created_at', [$startDate, $endDate])->where('users_role_id', $filter['role'])
+                ->get(['users.*', 'resume.*']);
+        } else if (isset($filter['role'])) {
+            $data = ManageUser::leftJoin('resume', 'users.id', '=', 'resume.resume_user_id')->where('users_role_id', $filter['role'])->get(['users.*', 'resume.*']);
+        } else if (isset($filter['date'])) {
+            $dateRange = explode(' - ', $filter['date']);
+            $startDate = \Carbon\Carbon::createFromFormat('m/d/Y', $dateRange[0])->startOfDay();
+            $endDate = \Carbon\Carbon::createFromFormat('m/d/Y', $dateRange[1])->endOfDay();
+
+            $data = ManageUser::leftJoin('resume', 'users.id', '=', 'resume.resume_user_id')
+                ->whereBetween('users.created_at', [$startDate, $endDate])
+                ->get(['users.*', 'resume.*']);
+        } else {
+            $data = ManageUser::leftJoin('resume', 'users.id', '=', 'resume.resume_user_id')->get(['users.*', 'resume.*']);
+        }
+        // print_r($filter);
         // $data = ManageUser::leftJoin('detail_users', 'users.id', '=', 'detail_users.user_id')->get(['users.*', 'detail_users.*']);
-        $data = ManageUser::leftJoin('resume', 'users.id', '=', 'resume.resume_user_id')->get(['users.*', 'resume.*']);
 
         return DataTables::of($data)->toJson();
     }
@@ -38,7 +59,7 @@ class ListuserController extends Controller
         $userData = ManageUser::leftJoin('detail_users', 'users.id', '=', 'detail_users.user_id')
             ->where('users.id', $user_id)
             ->first();
-        
+
         $userData['resume'] = DB::table('resume')->where('resume_user_id', $user_id)->first();
         if ($userData) {
             return response()->json([

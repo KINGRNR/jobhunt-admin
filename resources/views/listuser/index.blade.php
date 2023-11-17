@@ -1,6 +1,7 @@
 <div class="table-user-ini">
     {{-- <div class="row mb-5 w-75 mx-auto">
     </div> --}}
+    <div id="filter_role"></div>
 
     <div class="card">
         <!--begin::Card header-->
@@ -36,24 +37,18 @@
             </div>
             <div class="card-toolbar">
                     <div class="d-flex">
-                        <input type="date" name="filter_date" id="filter_date" class="form-control form-control-sm me-2"
-                            style="display: flex;
-                            width: 141px;
-                            height: 48px;
-                            padding: 10px 16px;
-                            align-items: center;
-                            gap: 16px;" onchange="onFilter()">
-                        <select name="status" id="status" class="form-select form-select-sm form-select-solid ms-2"
+                        <input class="form-control form-control-solid input-required" placeholder="Pick date rage"  name="daterangepicker" id="daterangepicker_filter" fdprocessedid="dc1v83">
+                        <select name="role_filter" id="role_filter" class="form-select form-select-sm form-select-solid ms-2"
                             style="display: flex;
                             width: 141px;
                             height: 48px;
                             padding: 10px 16px;
                             align-items: center;
                             gap: 16px;">
-                            <option value="">Status</option>
-                            <option value="approve">Approved</option>
-                            <option value="reject">Rejected</option>
-                            <option value="processing">Processing</option>
+                            <option value="">All Role</option>
+                            <option value="BfiwyVUDrXOpmStr">User/Jobseeker</option>
+                            <option value="FOV4Qtgi5lcQ9kZ">Company</option>
+                            <option value="FOV4Qtgi5lcQ9kCY">Admin</option>
                         </select>
                     </div>
 
@@ -128,8 +123,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="endDate" class="form-label">Range Tanggal:</label>
-                            <input class="form-control form-control-solid input-required" placeholder="Pick date rage"
-                                id="kt_daterangepicker_1" />
+                            <input class="form-control form-control-solid" placeholder="Pick date rage" id="kt_daterangepicker_1"/>
                         </div>
                 </div>
             </div>
