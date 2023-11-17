@@ -14,6 +14,29 @@
 <script type="text/javascript">
     var form = 'formExample';
     $(() => {
+        var start = moment().subtract(29, "days");
+        var end = moment();
+
+        function cb(start, end) {
+            $("#daterangepicker_filter").html(start.format("MMMM D, YYYY") + " - " + end.format(
+            "MMMM D, YYYY"));
+        }
+
+        $("#daterangepicker_filter").daterangepicker({
+            startDate: start,
+            endDate: end,
+            ranges: {
+                "Today": [moment(), moment()],
+                "Yesterday": [moment().subtract(1, "days"), moment().subtract(1, "days")],
+                "Last 7 Days": [moment().subtract(6, "days"), moment()],
+                "Last 30 Days": [moment().subtract(29, "days"), moment()],
+                "This Month": [moment().startOf("month"), moment().endOf("month")],
+                "Last Month": [moment().subtract(1, "month").startOf("month"), moment().subtract(1,
+                    "month").endOf("month")]
+            }
+        }, cb);
+
+        cb(start, end);
         init()
     })
     init = async () => {
@@ -23,9 +46,49 @@
     $('#modal_form').on('hidden.bs.modal', function() {
         $(`input, select`).removeAttr('disabled');
     });
+    //filter
+    var filterDatatable = [];
+    var userTable = null;
 
-    function initializeDataTables() {
-        let table = $('#table-company').DataTable({
+    $('[name="daterangepicker"]').on('apply.daterangepicker', (event) => {
+        var selectedValue = $(event.target).val();
+
+        if (selectedValue !== '0') {
+            filterDatatable.date = selectedValue;
+        } else {
+            delete filterDatatable.date;
+        }
+        if (userTable) {
+            userTable.destroy();
+        }
+        $('.reset-filter').fadeIn();
+        initializeDataTables(filterDatatable);
+    });
+
+    $('[name="status_filter"]').on('change', (event) => {
+        var selectedValue = $(event.target).val();
+
+        filterDatatable.status = selectedValue;
+
+        if (userTable) {
+            userTable.destroy();
+        }
+        $('.reset-filter').fadeIn();
+
+        initializeDataTables(filterDatatable);
+    });
+    resetFilter = () => {
+        if (userTable) {
+            userTable.destroy();
+        }
+        $('[name="role_filter"]').val('');
+        $('.reset-filter').fadeOut();
+
+        initializeDataTables();
+    }
+
+    function initializeDataTables(filterDatatable) {
+        userTable = $('#table-company').DataTable({
             processing: true,
             serverSide: true,
             clickable: true,
@@ -33,9 +96,10 @@
             searching: true,
             destroyAble: true,
             ajax: {
-                url: "{{ route('managecompany.index') }}",
-                type: "GET",
+                url: APP_URL + 'managecompany/index',
+                type: "POST",
                 dataType: "json",
+                data: filterDatatable,
             },
             columns: [{
                     "targets": 0,
@@ -126,11 +190,11 @@
         });
         $('#search_company').on('input', function() {
             var searchValue = $(this).val();
-            table.search(searchValue).draw();
+            userTable.search(searchValue).draw();
         });
 
         $('#table-user tbody').on('click', 'tr', function() {
-            let rowData = table.row(this).data();
+            let rowData = userTable.row(this).data();
             if (rowData) {
                 let id = rowData.id;
                 onDetail(id);
@@ -196,13 +260,13 @@
                 },
                 success: (response) => {
                     // $('#body_detail_comp').empty()
-                   
 
-                    var data = response.data 
+
+                    var data = response.data
                     if (data.company_isverif == '0') {
-                    $('.card-acc-reject').removeClass('d-none')
-                    $('.detail-job').empty()
-                }
+                        $('.card-acc-reject').removeClass('d-none')
+                        $('.detail-job').empty()
+                    }
                     $('#id').val(data.company_id)
                     $('#user_id').val(data.company_user_id)
                     $('.btn-rejacc').attr('data-id', data.company_id)
@@ -512,57 +576,57 @@
 
         // var data = $('[name="' + form + '"]')[0];
         // var formData = new FormData(data);
-            Swal.fire({
-                title: 'Konfirmasi',
-                text: 'Apakah kamu ingin melanjutkan?',
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonText: 'Ya',
-                cancelButtonText: 'Tidak',
-                customClass: {
-                    confirmButton: 'btn btn-primary',
-                    cancelButton: 'btn btn-secondary'
-                },
-                buttonsStyling: false
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: '/managecompany/rejacc',
-                        type: 'POST',
-                        // processData: false,
-                        // contentType: false,
-                        data: {
-                            _token: '{{ csrf_token() }}',
-                            id: id,
-                            cond: cond,
-                            user_id: user_id,
-                            msg: msg,
-                        },
-                        dataType: 'json',
-                        success: function(response) {
-                            if (response.success) {
-                                Swal.fire({
-                                    title: response.title,
-                                    text: response.message,
-                                    icon: (response.success) ? 'success' : "error",
-                                    buttonsStyling: false,
-                                    confirmButtonText: "Oke!",
-                                    customClass: {
-                                        confirmButton: "btn btn-primary"
-                                    },
-                                }).then(() => {
-                                    location.reload();
-                                });
-                            }
-                        },
-                        error: function(error) {
-                            console.log(error);
+        Swal.fire({
+            title: 'Konfirmasi',
+            text: 'Apakah kamu ingin melanjutkan?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Tidak',
+            customClass: {
+                confirmButton: 'btn btn-primary',
+                cancelButton: 'btn btn-secondary'
+            },
+            buttonsStyling: false
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/managecompany/rejacc',
+                    type: 'POST',
+                    // processData: false,
+                    // contentType: false,
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        id: id,
+                        cond: cond,
+                        user_id: user_id,
+                        msg: msg,
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.success) {
+                            Swal.fire({
+                                title: response.title,
+                                text: response.message,
+                                icon: (response.success) ? 'success' : "error",
+                                buttonsStyling: false,
+                                confirmButtonText: "Oke!",
+                                customClass: {
+                                    confirmButton: "btn btn-primary"
+                                },
+                            }).then(() => {
+                                location.reload();
+                            });
                         }
-                    });
-                }
-            });
-        }
-    
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            }
+        });
+    }
+
     var form = 'formReject';
     rejectCompany = () => {
         var validasi = 'true';

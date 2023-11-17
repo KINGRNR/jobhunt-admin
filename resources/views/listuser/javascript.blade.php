@@ -63,13 +63,12 @@
         if (userTable) {
             userTable.destroy();
         }
+        $('.reset-filter').fadeIn();
         initializeDataTables(filterDatatable);
     });
 
     $('[name="role_filter"]').on('change', (event) => {
         var selectedValue = $(event.target).val();
-
-
 
         if (selectedValue !== '0') {
             filterDatatable.role = selectedValue;
@@ -79,9 +78,20 @@
         if (userTable) {
             userTable.destroy();
         }
+        $('.reset-filter').fadeIn();
+
         initializeDataTables(filterDatatable);
     });
+    resetFilter = () =>
+    {
+        if (userTable) {
+            userTable.destroy();
+        }
+        $('[name="role_filter"]').val('');
+        $('.reset-filter').fadeOut();
 
+        initializeDataTables();
+    }
     function initializeDataTables(filterDatatable) {
         userTable = $('#table-user').DataTable({
             ajax: {

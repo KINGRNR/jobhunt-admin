@@ -18,20 +18,32 @@ class ManageCompanyController extends BaseResponse
 
     public function index(Request $request)
     {
+        $filter = $request->post();
         
-        // $data = ManageUser::select('*');
-        // return DataTables::of(Example::all())->toJson();
-        // $data = DB::table('users')
-        //     ->join('roles', 'users.role_id', '=', 'role.id')
-        //     ->select('users.*', 'role.name AS role_name')
-        //     ->get();
-        $data = DB::table('company')->get();
-        // dd($data);
+        if (isset($filter['date']) && isset($filter['status'])) {
+            $dateRange = explode(' - ', $filter['date']);
+            $startDate = \Carbon\Carbon::createFromFormat('m/d/Y', $dateRange[0])->startOfDay();
+            $endDate = \Carbon\Carbon::createFromFormat('m/d/Y', $dateRange[1])->endOfDay();
+
+            $data = DB::table('v_detail_company')
+                ->whereBetween('created_at', [$startDate, $endDate])->where('company_isverif', $filter['role'])
+                ->get();
+        } else if (isset($filter['status'])) {
+            $data = DB::table('v_detail_company')->where('company_isverif', $filter['status'])->get();
+        } else if (isset($filter['date'])) {
+            $dateRange = explode(' - ', $filter['date']);
+            $startDate = \Carbon\Carbon::createFromFormat('m/d/Y', $dateRange[0])->startOfDay();
+            $endDate = \Carbon\Carbon::createFromFormat('m/d/Y', $dateRange[1])->endOfDay();
+
+            $data = DB::table('v_detail_company')
+                ->whereBetween('created_at', [$startDate, $endDate])
+                ->get();
+        } else {
+            $data = DB::table('v_detail_company')->get();
+        }
         return Datatables::of($data)->toJson();
-        // $data = ManageCompany::join('roles', 'users.users_role_id', '=', 'roles.role_id')->get(['users.*', 'roles.*']);
-        // return DataTables::of($data)->toJson();
     }
-    public function jobIndex(Request $request) 
+    public function jobIndex(Request $request)
     {
         $id = $request->post();
         $company_id = $id['id'];
@@ -44,9 +56,9 @@ class ManageCompanyController extends BaseResponse
     public function show(Request $request)
     {
         $data = $request->post();
-      
+
         $company_id = $data['id'];
-        
+
         $companyData = DB::table('v_company')->where('company_id', $company_id)->first();
         // $userData = ManageUser::join('detail_users', 'users.id', '=', 'detail_users.user_id')
         //     ->where('users.id', $user_id)
@@ -68,7 +80,7 @@ class ManageCompanyController extends BaseResponse
     {
         try {
             $data = $request->post();
-            if(!isset($data['alasan'])) {
+            if (!isset($data['alasan'])) {
                 $data['alasan'] = '-';
             }
             $read =  ManageCompany::where('company_id', $data['id'])->update([

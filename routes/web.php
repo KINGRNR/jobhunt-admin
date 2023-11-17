@@ -50,9 +50,7 @@ Route::middleware([loginCheck::class])->group(function () {
 
     Route::post('/main/getPage', [MainController::class, 'getPage']);
     Route::get('examples', [ExampleController::class, 'index'])->name('example.index');
-    Route::get('users', [ListUserController::class, 'index'])->name('listuser.index');
     Route::get('showallusers', [ListUserController::class, 'showall'])->name('listuser.showall');
-    Route::get('company', [ManageCompanyController::class, 'index'])->name('managecompany.index');
     // Route::get('companyjob', [ManageCompanyController::class, 'jobIndex'])->name('managecompany.jobIndex');
     Route::get('job', [ManageJobController::class, 'index'])->name('managejob.index');
     Route::get('log', [LogController::class, 'showLog'])->name('log.showLog');
@@ -74,7 +72,7 @@ Route::middleware([loginCheck::class])->group(function () {
         }
     });
     Route::controller(ManageCompanyController::class)->group(function () {
-        foreach (['show', 'create', 'update', 'delete', 'getData', 'detailJob', 'jobIndex' ,'savesuspend', 'deleteUser','rejacc'] as $key => $value) {
+        foreach (['index', 'show', 'create', 'update', 'delete', 'getData', 'detailJob', 'jobIndex' ,'savesuspend', 'deleteUser','rejacc'] as $key => $value) {
             Route::post('/managecompany/' . $value, $value);
         }
     });
