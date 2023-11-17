@@ -38,9 +38,6 @@ class ListuserController extends Controller
         } else {
             $data = ManageUser::leftJoin('resume', 'users.id', '=', 'resume.resume_user_id')->get(['users.*', 'resume.*']);
         }
-        // print_r($filter);
-        // $data = ManageUser::leftJoin('detail_users', 'users.id', '=', 'detail_users.user_id')->get(['users.*', 'detail_users.*']);
-
         return DataTables::of($data)->toJson();
     }
 
