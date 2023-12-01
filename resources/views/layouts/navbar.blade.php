@@ -46,7 +46,7 @@
                 data-kt-search-layout="menu" data-kt-menu-trigger="auto" data-kt-menu-permanent="true"
                 data-kt-menu-placement="bottom-end">
                 <!--begin::Form-->
-                <form data-kt-search-element="form" class="w-100 position-relative" autocomplete="off">
+                {{-- <form data-kt-search-element="form" class="w-100 position-relative" autocomplete="off">
                     <!--begin::Hidden input(Added to disable form autocomplete)-->
                     <input type="hidden" />
                     <!--end::Hidden input-->
@@ -93,7 +93,7 @@
                         <!--end::Svg Icon-->
                     </span>
                     <!--end::Reset-->
-                </form>
+                </form> --}}
                 <!--end::Form-->
                 <!--begin::Menu-->
                 <div data-kt-search-element="content"
@@ -101,7 +101,7 @@
                     <!--begin::Wrapper-->
                     <div data-kt-search-element="wrapper">
                         <!--begin::Recently viewed-->
-                        <div data-kt-search-element="results" class="d-none">
+                        {{-- <div data-kt-search-element="results" class="d-none">
                             <!--begin::Items-->
                             <div class="scroll-y mh-200px mh-lg-350px">
                                 <!--begin::Category title-->
@@ -401,12 +401,12 @@
                                 <!--end::Item-->
                             </div>
                             <!--end::Items-->
-                        </div>
+                        </div> --}}
                         <!--end::Recently viewed-->
                         <!--begin::Recently viewed-->
                         <div data-kt-search-element="main">
                             <!--begin::Heading-->
-                            <div class="d-flex flex-stack fw-bold mb-5">
+                            {{-- <div class="d-flex flex-stack fw-bold mb-5">
                                 <!--begin::Label-->
                                 <span class="text-muted fs-6 me-2">Recently Searched</span>
                                 <!--end::Label-->
@@ -449,7 +449,7 @@
                                     <!--end::Advanced search toggle-->
                                 </div>
                                 <!--end::Toolbar-->
-                            </div>
+                            </div> --}}
                             <!--end::Heading-->
                             <!--begin::Items-->
                             <div class="scroll-y mh-200px mh-lg-325px">
