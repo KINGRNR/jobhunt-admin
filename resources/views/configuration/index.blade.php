@@ -80,16 +80,16 @@
                         class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bolder flex-nowrap">
                         <li class="nav-item">
                             <a class="nav-link text-active-primary me-6 active" data-group="detail"
-                                onclick="toggleDetailUser(this)">General</a>
+                                onclick="toggleAdmin(this)">Pengaturan Webisite Admin</a>
                         </li>
 
                         <li class="nav-item">
                             <a class="nav-link text-active-primary me-6" data-group="job"
-                                onclick="toggleJob(this)">Email</a>
+                                onclick="toggleUser(this)">Pengaturan Website User</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-active-primary me-6" data-group="job"
-                                onclick="toggleJob(this)">Firebase & GCaptcha</a>
+                                onclick="toggleCompany(this)">Pengaturan Website Company</a>
                         </li>
                     </ul>
                 </div>
