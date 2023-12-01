@@ -36,7 +36,7 @@
                 </div>
             </div>
             <div class="card-toolbar">
-                <button type="button" class="btn btn-danger me-2 reset-filter" onclick="resetFilter()" style="display: none;">Reset Filter</button>
+                <button type="button" class="btn btn-primary me-2 reset-filter" onclick="resetFilter()" style="display: none;">Reset Filter</button>
                 <div class="d-flex">
                     <input class="form-control form-control-solid input-required" placeholder="Pick date rage"
                         name="daterangepicker" id="daterangepicker_filter" fdprocessedid="dc1v83">
