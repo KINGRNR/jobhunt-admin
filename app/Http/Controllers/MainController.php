@@ -43,7 +43,7 @@ class MainController extends Controller
                 'menu_id' => $role_menu->menu_id,
                 'menu_code' => strtolower($menu_code),
             ];
-            $temp = Configuration::where('config_group', 'app')->orderBy('config_order', 'ASC')->get();
+            $temp = Configuration::where('config_tipe', 'app')->orderBy('config_order', 'ASC')->get();
             if ($temp != []) {
                 foreach ($temp as $k => $v) {
                     session([$v->config_code => $v->config_value]);

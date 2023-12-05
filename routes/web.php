@@ -52,7 +52,7 @@ Route::middleware([loginCheck::class])->group(function () {
     Route::get('examples', [ExampleController::class, 'index'])->name('example.index');
     Route::get('showallusers', [ListUserController::class, 'showall'])->name('listuser.showall');
     // Route::get('companyjob', [ManageCompanyController::class, 'jobIndex'])->name('managecompany.jobIndex');
-    Route::get('job', [ManageJobController::class, 'index'])->name('managejob.index');
+    // Route::get('job', [::class, 'index'])->name('managejob.index');
     Route::get('log', [LogController::class, 'showLog'])->name('log.showLog');
     Route::get('notification', [NotificationController::class, 'index'])->name('notification.index');
 
@@ -64,6 +64,11 @@ Route::middleware([loginCheck::class])->group(function () {
     Route::controller(ExampleController::class)->group(function () {
         foreach (['show', 'create', 'update', 'delete', 'getData'] as $key => $value) {
             Route::post('/example/' . $value, $value);
+        }
+    });
+    Route::controller(ManageJobController::class)->group(function () {
+        foreach (['index', 'show', 'create', 'update', 'delete', 'getData', 'detailJob', 'savesuspend', 'deleteUser'] as $key => $value) {
+            Route::post('/managejob/' . $value, $value);
         }
     });
     Route::controller(ListuserController::class)->group(function () {
