@@ -34,17 +34,13 @@ class ManageJobController extends BaseResponse
     {
         $data = $request->post();
       
-        $company_id = $data['id'];
+        $id = $data['id'];
         
-        $companyData = DB::table('v_company')->where('company_id', $company_id)->first();
-        // $userData = ManageUser::join('detail_users', 'users.id', '=', 'detail_users.user_id')
-        //     ->where('users.id', $user_id)
-        //     ->first();
-        // If the user with the provided ID exists
-        if ($companyData) {
+        $jobs = DB::table('v_job')->where('job_id', $id)->get();
+        if ($jobs) {
             return response()->json([
                 'status' => 'success',
-                'data' => $companyData,
+                'data' => $jobs,
             ]);
         } else {
             return response()->json([

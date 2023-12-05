@@ -1,4 +1,4 @@
-<div class="table-user-ini">
+<div class="table-job">
 
     <div class="card">
         <!--begin::Card header-->
