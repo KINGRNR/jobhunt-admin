@@ -5,7 +5,8 @@
                 <div class="d-flex flex-wrap flex-sm-nowrap mt-3 justify-content-start align-items-center">
                     <div class="me-7 mb-4">
                         <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
-                            <img src="storage/profile/dummy.jpg" alt="image" class="img-fluid" style="object-fit: contain;" />
+                            <img src="storage/profile/dummy.jpg" alt="image" class="img-fluid"
+                                style="object-fit: contain;" />
                         </div>
 
                     </div>
@@ -79,17 +80,17 @@
                     <ul
                         class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bolder flex-nowrap">
                         <li class="nav-item">
-                            <a class="nav-link text-active-primary me-6 active" data-group="detail"
-                                onclick="toggleAdmin(this)">Pengaturan Webisite Admin</a>
+                            <a class="nav-link text-active-primary me-6 active togladmin" onclick="toggleAdmin(this)"
+                                style="cursor: pointer;">Pengaturan Website Admin</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link text-active-primary me-6" data-group="job"
-                                onclick="toggleUser(this)">Pengaturan Website User</a>
+                            <a class="nav-link text-active-primary me-6 togluser" onclick="toggleUser(this)"
+                                style="cursor: pointer;">Pengaturan Website User</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-active-primary me-6" data-group="job"
-                                onclick="toggleCompany(this)">Pengaturan Website Company</a>
+                            <a class="nav-link text-active-primary me-6 toglcompany" onclick="toggleCompany(this)"
+                                style="cursor: pointer;">Pengaturan Website Company</a>
                         </li>
                     </ul>
                 </div>
@@ -100,9 +101,50 @@
         <div class="card mb-5 mb-xl-10">
             <div id="kt_account_profile_details" class="collapse show">
                 <form action="javascript:save()" method="post" id="configForm" name="form_config" autocomplete="off"
-                enctype="multipart/form-data">
+                    enctype="multipart/form-data">
                     <div class="card-body border-top p-9">
-                        <div class="" id="contentConfig"></div>
+                        <div class="" id="configAdmin">
+                            <div class="row">
+                                <label class="col-lg-4 col-form-label required fw-bold fs-6">Title Website</label>
+                                <input type="text" name="titleAdmin" id="titleAdmin"
+                                    class="form-control input-required" placeholder="Website Title" value="">
+                                <div class="fv-plugins-message-container invalid-feedback"></div>
+                            </div>
+                            <div class="row">
+                                <label class="col-lg-4 col-form-label required fw-bold fs-6">Logo</label>
+                                <input type="file" name="logoAdmin" id="logoAdmin"
+                                    class="form-control input-required" placeholder="Website Logo" value="">
+                                <div class="fv-plugins-message-container invalid-feedback"></div>
+                            </div>
+                        </div>
+                        <div class="" id="configUser" style="display: none;">
+                            <div class="row">
+                                <label class="col-lg-4 col-form-label required fw-bold fs-6">Title Website</label>
+                                <input type="text" name="titleUser" id="titleUser"
+                                    class="form-control input-required" placeholder="Website Title" value="">
+                                <div class="fv-plugins-message-container invalid-feedback"></div>
+                            </div>
+                            <div class="row">
+                                <label class="col-lg-4 col-form-label required fw-bold fs-6">Logo</label>
+                                <input type="file" name="logoUser" id="logoUser"
+                                    class="form-control input-required" placeholder="Website Logo" value="">
+                                <div class="fv-plugins-message-container invalid-feedback"></div>
+                            </div>
+                        </div>
+                        <div class="" id="configCompany" style="display: none;">
+                            <div class="row">
+                                <label class="col-lg-4 col-form-label required fw-bold fs-6">Title Website</label>
+                                <input type="text" name="titleAdmin" id="titleAdmin"
+                                    class="form-control input-required" placeholder="Website Title" value="">
+                                <div class="fv-plugins-message-container invalid-feedback"></div>
+                            </div>
+                            <div class="row">
+                                <label class="col-lg-4 col-form-label required fw-bold fs-6">Logo</label>
+                                <input type="file" name="logoAdmin" id="logoAdmin"
+                                    class="form-control input-required" placeholder="Website Logo" value="">
+                                <div class="fv-plugins-message-container invalid-feedback"></div>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-footer d-flex justify-content-end py-6 px-9">
                         <button type="reset" class="btn btn-light btn-active-light-primary me-2">Discard</button>

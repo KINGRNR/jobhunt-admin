@@ -46,7 +46,6 @@
                     var html = [];
                     $.each(response.config, (i, v) => {
 
-                        html.push(createTemplates(v));
                     });
                     $('#contentConfig').html('').html(html.join(''));
 
@@ -58,82 +57,62 @@
         });
     }
 
-    createTemplates = (value) => {
-        switch (value.config_type) {
-            case 'text':
-                return createTypeText(value);
-                break;
-            case 'file':
-                return createTypeFile(value);
-                break;
-            case 'textarea':
-                return createTypeTextarea(value);
-                break;
-            case 'password':
-                return createTypePassword(value);
-                break;
-            default:
-                return '';
-                break;
-        }
-    }
-
     createTypeText = (value) => {
         return `
         <div class="row">
                      <label class="col-lg-4 col-form-label required fw-bold fs-6">${value.config_title}</label>
-                     <input type="text" name="${value.config_id}" id="${value.config_id}" class="form-control input-required" placeholder="${value.config_title}" value="${value.config_value}">
+                     <input type="${value.config_type}" name="${value.config_id}" id="${value.config_id}" class="form-control input-required" placeholder="${value.config_title}" value="${value.config_value}">
                       <div class="fv-plugins-message-container invalid-feedback"></div></div>
 		`;
     }
-    createTypeTextarea = (value, withysiwyg = false) => {
-        if (!withysiwyg) {
-            return `
-            <div class="row">
-                     <label class="col-lg-4 col-form-label required fw-bold fs-6">${value.config_title}</label>
-                     <input type="text" name="${value.config_id}" id="${value.config_id}" class="form-control input-required" placeholder="${value.config_title}" value="${value.config_value}">
-                      <div class="fv-plugins-message-container invalid-feedback"></div></div>
-			`;
-        }
-    }
-    createTypeFile = (value, isImage = true) => {
-        if (isImage) {
-            let img = 'storage/profile/' + value.config_value;
-            let html = `
-				<div class="row mb-6">
-					<label class="col-lg-3 col-form-label fw-bold fs-6">${value.config_title}</label>
-					<div class="col-lg-9">
+    // createTypeTextarea = (value, withysiwyg = false) => {
+    //     if (!withysiwyg) {
+    //         return `
+    //         <div class="row">
+    //                  <label class="col-lg-4 col-form-label required fw-bold fs-6">${value.config_title}</label>
+    //                  <input type="text" name="${value.config_id}" id="${value.config_id}" class="form-control input-required" placeholder="${value.config_title}" value="${value.config_value}">
+    //                   <div class="fv-plugins-message-container invalid-feedback"></div></div>
+	// 		`;
+    //     }
+    // }
+    // createTypeFile = (value, isImage = true) => {
+    //     if (isImage) {
+    //         let img = 'storage/profile/' + value.config_value;
+    //         let html = `
+	// 			<div class="row mb-6">
+	// 				<label class="col-lg-3 col-form-label fw-bold fs-6">${value.config_title}</label>
+	// 				<div class="col-lg-9">
 
-						<div class="image-input image-input-circle dataFile${value.config_id}" id="${value.config_id}" data-kt-image-input="true" style="background-image: url(${img})">
-					    <div class="image-input-wrapper w-125px h-125px dataFile${value.config_id}" style="background-image: url(${img})"></div>
+	// 					<div class="image-input image-input-circle dataFile${value.config_id}" id="${value.config_id}" data-kt-image-input="true" style="background-image: url(${img})">
+	// 				    <div class="image-input-wrapper w-125px h-125px dataFile${value.config_id}" style="background-image: url(${img})"></div>
 
-					    <label class="btn btn-icon btn-circle btn-color-muted btn-active-color-primary w-25px h-25px bg-body shadow"
-					        data-kt-image-input-action="change"
-					        data-bs-toggle="tooltip"
-					        data-bs-dismiss="click"
-					        title="Change File">
-					         <i class="bi bi-pencil-fill fs-7"></i>
+	// 				    <label class="btn btn-icon btn-circle btn-color-muted btn-active-color-primary w-25px h-25px bg-body shadow"
+	// 				        data-kt-image-input-action="change"
+	// 				        data-bs-toggle="tooltip"
+	// 				        data-bs-dismiss="click"
+	// 				        title="Change File">
+	// 				         <i class="bi bi-pencil-fill fs-7"></i>
 
-					         <input type="file" name="${value.config_id}" accept=".png, .jpg, .jpeg, .svg" />
-					         <input type="hidden" name="hide_${value.config_id}" />
-					    </label>
+	// 				         <input type="file" name="${value.config_id}" accept=".png, .jpg, .jpeg, .svg" />
+	// 				         <input type="hidden" name="hide_${value.config_id}" />
+	// 				    </label>
 
-					    <span class="btn btn-icon btn-circle btn-color-muted btn-active-color-primary w-25px h-25px bg-body shadow d-none"
-					    	data-action-remove="${value.config_id}"
-					        data-kt-image-input-action="remove"
-					        data-bs-toggle="tooltip"
-					        data-bs-dismiss="click"
-					        title="Remove File">
-					         <i class="bi bi-x fs-2 text-danger"></i>
-					    </span>
-					</div>
-					</div>
-				</div>
-			`;
-            return html;
-        }
+	// 				    <span class="btn btn-icon btn-circle btn-color-muted btn-active-color-primary w-25px h-25px bg-body shadow d-none"
+	// 				    	data-action-remove="${value.config_id}"
+	// 				        data-kt-image-input-action="remove"
+	// 				        data-bs-toggle="tooltip"
+	// 				        data-bs-dismiss="click"
+	// 				        title="Remove File">
+	// 				         <i class="bi bi-x fs-2 text-danger"></i>
+	// 				    </span>
+	// 				</div>
+	// 				</div>
+	// 			</div>
+	// 		`;
+    //         return html;
+    //     }
 
-    }
+    // }
 
 
 
@@ -215,5 +194,31 @@
                 confirmButtonClass: 'swal2-confirm btn btn-primary',
             });
         }
+    }
+    toggleAdmin = () => {
+        $('#configAdmin').fadeIn();
+        $('#configUser').fadeOut();
+        $('#configCompany').fadeOut();
+        $('.toglcompany').removeClass('active');
+        $('.togluser').removeClass('active');
+        $('.togladmin').addClass('active');
+    }
+    toggleUser = () => {
+        $('#configAdmin').fadeOut();
+        $('#configCompany').fadeOut();
+        $('.toglcompany').removeClass('active');
+        $('.togluser').addClass('active');
+        $('.togladmin').removeClass('active');
+        $('#configUser').fadeIn();
+    }
+    toggleCompany = () => {
+        $('#configAdmin').fadeOut();
+        $('#configUser').fadeOut();
+        $('#configCompany').fadeIn();
+        $('.toglcompany').addClass('active');
+        $('.togluser').removeClass('active');
+        $('.togladmin').removeClass('active');
+
+
     }
 </script>
