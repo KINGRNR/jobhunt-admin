@@ -8,7 +8,9 @@ use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\DetailUser;
+use App\Models\Job;
 use App\Models\ManageCompany;
+use App\Models\Notification;
 use App\Models\Role;
 
 class ManageJobController extends BaseResponse
@@ -49,7 +51,33 @@ class ManageJobController extends BaseResponse
             ], 404);
         }
     }
-
+    public function rejacc(Request $request)
+    {
+        try {
+            $data = $request->post();
+            // print_r($data); exit;
+            if (!isset($data['alasan'])) {
+                $data['alasan'] = '-';
+            }
+            $read = Job::where('job_id', $data['id'])->update([
+                'job_status' => $data['cond'],
+                'job_reject_reason' => $data['alasan'],
+            ]);
+            $notification = Notification::create([
+                'notification_title' => 'Request Job',
+                'notification_message' => $data['msg'],
+                'notification_reason' => $data['alasan'],
+                'notification_by' => 'Admin',
+                'notification_jenis' => 3,
+                'notification_to' => $data['user_id'],
+                'notification_read' => 0,
+            ]);
+            
+            return $this->successResponse($read, [], 201);
+        } catch (\Throwable $th) {
+            return $this->errorResponse();
+        }
+    }
     // public function create(Request $request)
     // {
     //     try {

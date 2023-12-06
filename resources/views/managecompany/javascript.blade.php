@@ -287,21 +287,21 @@
                     // const gender = data.gender === 1 ? 'Woman' : 'Man';
                     var headerDetail = `<div class="card-title m-0 d-flex">
 
-        <div class="d-flex flex-column mt-2">
-    <div class="d-flex align-items-center">
-        <span class="text-gray-900 text-hover-primary fs-2 fw-bolder me-1">${data.company_name}</span>
-        <span class="badge badge-light-${badgeColor} fw-bolder ms-2 fs-8 py-1 px-3">${badgeText}</span>
-    </div>
-    <div class="d-flex flex-wrap fw-bold fs-6 pe-2">
-        <span
-            class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">${data.company_position}</span>
-    </div>
-</div>
-</div>
-<div class="card-toolbar m-0">
-<h4 class="fw-bolder m-0 text-gray-500">Company ID</h4>
-<h4 class="ms-3 mt-2" id="id_company">${formattedId}</h4>
-</div>`
+                        <div class="d-flex flex-column mt-2">
+                    <div class="d-flex align-items-center">
+                        <span class="text-gray-900 text-hover-primary fs-2 fw-bolder me-1">${data.company_name}</span>
+                        <span class="badge badge-light-${badgeColor} fw-bolder ms-2 fs-8 py-1 px-3">${badgeText}</span>
+                    </div>
+                    <div class="d-flex flex-wrap fw-bold fs-6 pe-2">
+                        <span
+                            class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">${data.company_position}</span>
+                    </div>
+                </div>
+                </div>
+                <div class="card-toolbar m-0">
+                <h4 class="fw-bolder m-0 text-gray-500">Company ID</h4>
+                <h4 class="ms-3 mt-2" id="id_company">${formattedId}</h4>
+                </div>`
                     var bodyDetail = `
               <div class="d-flex flex-wrap flex-sm-nowrap">
                     <div class="me-7">
