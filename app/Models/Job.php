@@ -23,8 +23,8 @@ class Job extends Model
 
     // protected $fillable = ['id','name', 'email', 'role_id'];
 
-    // const CREATED_AT = 'example_created_at';
-    // const UPDATED_AT = 'example_updated_at';
+    const CREATED_AT = 'job_requested_at';
+    const UPDATED_AT = 'job_updated_at';
 
     // public static function generateExampleid(int $length = 16): string
     // {
