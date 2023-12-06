@@ -283,16 +283,16 @@
                 break;
         }
         var button = [];
-        switch (job.job_status) {
-            case 1:
-            button = `wjjw`;
-                break;
-            case 2:
-            button = `<button class="btn btn-danger btn-rejacc" data-bs-toggle="modal" data-bs-target="#modal_reject" data-id="8" data-user-id="30" fdprocessedid="hwqssm">Reject</button>
-                    <button class="btn btn-success btn-rejacc" condition?="1" msg="Halo! Company request anda sudah kami terima, Selamat memakai full fitur yang kami sediakan!" onclick="accCompany(this)" data-id="8" data-user-id="30" fdprocessedid="9wmunn">Approve</button>`;
-                break; 
-            default:
-                break;
+        $('#id').val(job.job_id)
+        $('#user_id').val(job.company_user_id)
+        if (job.job_status == 3) {
+            button =
+                `<button class="btn btn-danger btn-rejacc" data-bs-toggle="modal" data-bs-target="#modal_reject" data-id="${job.job_id}" data-user-id="${job.company_user_id}" fdprocessedid="hwqssm">Reject</button>
+                    <button class="btn btn-success btn-rejacc" condition?="1" msg="Halo! Request Job anda sudah kami terima!" onclick="accJob(this)" data-id="${job.job_id}" data-user-id="${job.company_user_id}" fdprocessedid="9wmunn">Approve</button>`;
+        } else if (job.job_status == 1) {
+            button = `<button class="btn btn-primary btn-rejacc" condition?="1" msg="Mohon maaf untuk pekerjaan yang anda iklankan kami takedown untuk waktu yang tidak bisa ditentukan, oleh karena itu jika anda butuh untuk segera di iklankan lagi silahkan lakukan proses verifikasi ulang atau mungkin revisi beberapa hal yang ada di tawaran anda!" onclick="accJob(this)" data-id="${job.job_id}" data-user-id="${job.company_user_id}" fdprocessedid="9wmunn">Archive</button>`;
+        } else if (job.job_status == 2) {
+            button = `<button class="btn btn-primary btn-rejacc" condition?="1" msg="Kabar baik untuk anda, kami telah mengkaji ulang dan menyetujui permintaan pengiklanan tawaran pekerjaan anda!" onclick="accJob(this)" data-id="${job.job_id}" data-user-id="${job.company_user_id}" fdprocessedid="9wmunn">Review Again</button>`;
         }
         var header = `<div class="d-flex flex-column mt-2">
                         <div class="d-flex align-items-center">
@@ -415,9 +415,9 @@
             <div class="card mb-5 mb-xl-10" id="job_history" style="display: none;">
                 @include('listuser.table')
             </div>
-        </div>
-        </div>
-        `;
+            </div>
+            </div>
+         `;
 
         $('.detail').append(template);
         $('.verif').html(`<div class="card mb-5 mb-xl-10 card-acc-reject">
@@ -434,8 +434,149 @@
         </div>`)
         initMap(job.job_map_latitude, job.job_map_longitude);
     }
+
     initMap = (lat, long) => {
         quick.leafletMapShowStatic('map-job', lat, long);
+    }
+
+    accJob = (data) => {
+
+        var cond = $(data).attr('condition?');
+        var id = $(data).attr('data-id');
+        var user_id = $(data).attr('data-user-id');
+        var msg = $(data).attr('msg');
+
+        // var data = $('[name="' + form + '"]')[0];
+        // var formData = new FormData(data);
+        Swal.fire({
+            title: 'Konfirmasi',
+            text: 'Apakah kamu ingin melanjutkan?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Tidak',
+            customClass: {
+                confirmButton: 'btn btn-primary',
+                cancelButton: 'btn btn-secondary'
+            },
+            buttonsStyling: false
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/managejob/rejacc',
+                    type: 'POST',
+                    // processData: false,
+                    // contentType: false,
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        id: id,
+                        cond: cond,
+                        user_id: user_id,
+                        msg: msg,
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.success) {
+                            Swal.fire({
+                                title: response.title,
+                                text: response.message,
+                                icon: (response.success) ? 'success' : "error",
+                                buttonsStyling: false,
+                                confirmButtonText: "Oke!",
+                                customClass: {
+                                    confirmButton: "btn btn-primary"
+                                },
+                            }).then(() => {
+                                location.reload();
+                            });
+                        }
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            }
+        });
+    }
+    var form = 'formReject';
+    rejectJob = () => {
+        var validasi = 'true';
+        $(".input-required").each(function(i, obj) {
+            let inputValue = $(this).val().trim();
+
+            if (inputValue === "") {
+                $(this).removeClass("is-valid").addClass("is-invalid");
+                validasi = 'false-invalid';
+            } else {
+                $(this).removeClass("is-invalid");
+                $(this).parent().find(".error_code").removeClass("invalid-feedback").text("").show();
+            }
+        });
+        var data = $('[name="' + form + '"]')[0];
+        var formData = new FormData(data);
+        if (validasi === 'true') {
+            Swal.fire({
+                title: 'Konfirmasi',
+                text: 'Apakah kamu ingin melanjutkan?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Ya',
+                cancelButtonText: 'Tidak',
+                customClass: {
+                    confirmButton: 'btn btn-primary',
+                    cancelButton: 'btn btn-secondary'
+                },
+                buttonsStyling: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '/managejob/rejacc',
+                        type: 'POST',
+                        processData: false,
+                        contentType: false,
+                        data: formData,
+                        success: function(response) {
+                            if (response.success) {
+                                Swal.fire({
+                                    title: response.title,
+                                    text: response.message,
+                                    icon: (response.success) ? 'success' : "error",
+                                    buttonsStyling: false,
+                                    confirmButtonText: "Oke!",
+                                    customClass: {
+                                        confirmButton: "btn btn-primary"
+                                    },
+                                }).then(() => {
+                                    location.reload();
+                                });
+                            }
+                        },
+                        error: function(response) {
+                            let err_msg = response.responseJSON
+                            Swal.fire({
+                                title: err_msg.title,
+                                text: err_msg.message,
+                                icon: (err_msg.success) ? 'success' : "error",
+                                buttonsStyling: false,
+                                confirmButtonText: "Oke!",
+                                customClass: {
+                                    confirmButton: "btn btn-primary"
+                                },
+                            }).then(() => {
+                                location.reload();
+                            });
+                        }
+                    });
+                }
+            });
+        } else if (validasi === 'false-invalid') {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Lengkapi Form Terlebih Dahulu!',
+                confirmButtonClass: 'swal2-confirm btn btn-primary',
+            });
+        }
     }
     // onDisplayEdit = () => {
     //     $('#formExample').find('input, select').removeAttr('disabled');

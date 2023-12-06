@@ -67,7 +67,7 @@ Route::middleware([loginCheck::class])->group(function () {
         }
     });
     Route::controller(ManageJobController::class)->group(function () {
-        foreach (['index', 'show', 'create', 'update', 'delete', 'getData', 'detailJob', 'savesuspend', 'deleteUser'] as $key => $value) {
+        foreach (['index', 'show', 'create', 'rejacc', 'update', 'delete', 'getData', 'detailJob', 'savesuspend', 'deleteUser'] as $key => $value) {
             Route::post('/managejob/' . $value, $value);
         }
     });

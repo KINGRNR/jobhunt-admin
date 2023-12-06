@@ -93,7 +93,7 @@ class ManageCompanyController extends BaseResponse
                 'notification_reason' => $data['alasan'],
                 'notification_by' => 'Admin',
                 'notification_jenis' => 3,
-                'notificaton_to' => $data['user_id'],
+                'notification_to' => $data['user_id'],
                 'notification_read' => 0,
             ]);
             return $this->successResponse($read, [], 201);
