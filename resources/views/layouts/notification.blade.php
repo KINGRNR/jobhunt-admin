@@ -71,7 +71,7 @@
 <script>
     $(() => {
         showNotif()
-        initFirebaseMessagingRegistration();
+        // initFirebaseMessagingRegistration();
     })
 
     // showNotif = () => {
