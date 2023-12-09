@@ -158,13 +158,13 @@
                     </div>
                 </div>
                 <div class="card-toolbar">
-                    <div class="d-flex gap-4">
-                        <button class="btn btn-danger btn-rejacc" data-bs-toggle="modal"
+                    <div class="d-flex gap-4 btn-acc">
+                        {{-- <button class="btn btn-danger btn-rejacc" data-bs-toggle="modal"
                             data-bs-target="#modal_reject">Reject</button>
                         <button class="btn btn-success btn-rejacc" condition?="1"
                             msg="Halo! Company request anda sudah kami terima, Selamat memakai full fitur yang kami sediakan!"
                             onclick="accCompany(this)">Approve</button>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
