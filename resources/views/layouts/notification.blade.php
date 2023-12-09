@@ -27,7 +27,8 @@
         <!--begin::Tab panel-->
         <div class="tab-pane fade show active" id="kt_topbar_notifications_1" role="tabpanel">
             <div class="scroll-y mh-325px px-8">
-                <a href="javascript:void(0);" onclick="onRead(null, 'FOV4Qtgi5lcQ9kCY')" class="btn btn-outline btn-outline-default mt-5 mb-2 w-100">Tandai
+                <a href="javascript:void(0);" onclick="onRead(null, 'FOV4Qtgi5lcQ9kCY')"
+                    class="btn btn-outline btn-outline-default mt-5 mb-2 w-100">Tandai
                     semua telah dibaca</a>
             </div>
             <!--begin::Items-->
@@ -70,8 +71,9 @@
 <script>
     $(() => {
         showNotif()
-
+        initFirebaseMessagingRegistration();
     })
+
     // showNotif = () => {
     //     $.ajax({
     //         url: "{{ route('notification.index') }}",
@@ -277,32 +279,95 @@
                     if (matchingDataUnread.notification_title) {
                         $('#nama_pengirim_notif').text('Dari: ' + matchingDataUnread.notification_by +
                             ' • ' +
-                            moment(matchingDataUnread.notification_created_at).format("DD MMM YYYY HH:mm")
+                            moment(matchingDataUnread.notification_created_at).format(
+                                "DD MMM YYYY HH:mm")
                         );
                     } else {
-                        $('#nama_pengirim_notif').text(moment(matchingDataUnread.notification_created_at).format(
-                            "DD MMM YYYY HH:mm"));
+                        $('#nama_pengirim_notif').text(moment(matchingDataUnread.notification_created_at)
+                            .format(
+                                "DD MMM YYYY HH:mm"));
                     }
 
                     $('#tanggal_notif').text('Tanggal: ' + matchingDataUnread.notification_created_at);
                     $('#deskripsi_notif').text(matchingDataUnread.notification_message);
                     onRead(matchingDataUnread.notification_id);
-                } else { $('.modal-title').text(matchingDataRead.notification_title);
+                } else {
+                    $('.modal-title').text(matchingDataRead.notification_title);
                     if (matchingDataRead.notification_title) {
                         $('#nama_pengirim_notif').text('Dari: ' + matchingDataRead.notification_by +
                             ' • ' +
                             moment(matchingDataRead.notification_created_at).format("DD MMM YYYY HH:mm")
                         );
                     } else {
-                        $('#nama_pengirim_notif').text(moment(matchingDataRead.notification_created_at).format(
-                            "DD MMM YYYY HH:mm"));
+                        $('#nama_pengirim_notif').text(moment(matchingDataRead.notification_created_at)
+                            .format(
+                                "DD MMM YYYY HH:mm"));
                     }
                     $('#tanggal_notif').text('Tanggal: ' + matchingDataRead.notification_created_at);
                     $('#deskripsi_notif').text(matchingDataRead.notification_message);
                     $('.read-btn').remove();
-                   
+
                 }
             }
         });
     }
+
+    var firebaseConfig = {
+        apiKey: "AIzaSyDjvY68HJ_BjHDhOrq9UywsD5ANlvZhYkQ",
+        authDomain: "job-hunt-391903.firebaseapp.com",
+        projectId: "job-hunt-391903",
+        storageBucket: "job-hunt-391903.appspot.com",
+        messagingSenderId: "383683688519",
+        appId: "1:383683688519:web:5170d7590c74f231865962",
+        measurementId: "G-ML8YNH37W5"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const messaging = firebase.messaging();
+
+    function initFirebaseMessagingRegistration() {
+        messaging
+            .requestPermission()
+            .then(function() {
+                return messaging.getToken()
+            })
+            .then(function(token) {
+                console.log(token);
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.ajax({
+                    url: '{{ route('save-token') }}',
+                    type: 'POST',
+                    data: {
+                        token: token
+                    },
+                    dataType: 'JSON',
+                    success: function(response) {
+                        alert('Token saved successfully.');
+                    },
+                    error: function(err) {
+                        console.log('User Chat Token Error' + err);
+                        console.log(token);
+
+                    },
+                });
+
+            }).catch(function(err) {
+                console.log('User Chat Tokeno Error' + err);
+            });
+    }
+
+    messaging.onMessage(function(payload) {
+        const noteTitle = payload.notification.title;
+        const noteOptions = {
+            body: payload.notification.body,
+            icon: payload.notification.icon,
+        };
+        new Notification(noteTitle, noteOptions);
+    });
 </script>

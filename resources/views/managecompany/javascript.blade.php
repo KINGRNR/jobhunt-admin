@@ -19,7 +19,7 @@
 
         function cb(start, end) {
             $("#daterangepicker_filter").html(start.format("MMMM D, YYYY") + " - " + end.format(
-            "MMMM D, YYYY"));
+                "MMMM D, YYYY"));
         }
 
         $("#daterangepicker_filter").daterangepicker({
@@ -269,8 +269,7 @@
                     }
                     $('#id').val(data.company_id)
                     $('#user_id').val(data.company_user_id)
-                    $('.btn-rejacc').attr('data-id', data.company_id)
-                    $('.btn-rejacc').attr('data-user-id', data.company_user_id)
+
 
                     let badgeText, badgeColor;
                     if (data.company_isverif == 1) {
@@ -442,12 +441,32 @@
             </table>
         </div>
     </div>`
+
                         $('.detail-job').empty().append(detailJobDatatable);
 
                     }
                     $('#body_detail_comp').empty().append(bodyDetail);
 
                     $('#header_detail_comp').empty().append(headerDetail);
+                    var button = [];
+                    if (data.company_isverif == 0) {
+                        button =
+                            `<button class="btn btn-danger btn-rejacc" data-bs-toggle="modal"
+                            data-bs-target="#modal_reject">Reject</button>
+                        <button class="btn btn-success btn-rejacc" condition?="1" data-id="${data.company_id}" data-user-id="${data.company_user_id}"
+                            msg="Halo! Company request anda sudah kami terima, Selamat memakai full fitur yang kami sediakan!"
+                            onclick="accCompany(this)">Approve</button>`;
+                    } else if (data.company_isverif == 2){
+                       button = `<button class="btn btn-primary btn-rejacc" condition?="1" data-id="${data.company_id}" data-user-id="${data.company_user_id}"
+                            msg="Halo! Company mohon maaf atas ketidak nyamanannya, kami telah mengkaji ulang dan mengambil keputusan untuk Acc permintaan pembuatan akun company anda!"
+                            onclick="accCompany(this)">Review Again & Approve</button>` 
+                     }
+                    // else if (data.company_isverif == 1){
+                    //     button = `<button class="btn btn-primary btn-rejacc" condition?="2" data-id="${data.company_id}" data-user-id="${data.company_user_id}"
+                    //         msg="Halo! Company mohon maaf atas ketidak nyamanannya, kami telah mengkaji ulang dan mengambil keputusan untuk menghapus akses akun company anda di website kami karena beberapa hal!"
+                    //         onclick="accCompany(this)">Review Again & Approve</button>` 
+                    // }
+                    $(".btn-acc").empty().append(button);
                     // console.log(detailJobDatatable);
                 },
                 complete: (response) => {
