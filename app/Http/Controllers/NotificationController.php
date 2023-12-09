@@ -91,7 +91,7 @@ class NotificationController extends BaseResponse
 
         $response = curl_exec($ch);
 
-        dd($response);
+        // dd($response);
         // print_r($response);
     }
 }
