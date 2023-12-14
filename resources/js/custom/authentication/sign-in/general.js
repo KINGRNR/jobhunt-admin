@@ -75,9 +75,9 @@ var KTSigninGeneral = function() {
                             }
                         }).then(function (result) {
                             if (result.isConfirmed) { 
-                                form.querySelector('[name="email"]').value= "";
-                                form.querySelector('[name="password"]').value= "";                                
-                                //form.submit(); // submit form
+                                // form.querySelector('[name="email"]').value= "";
+                                // form.querySelector('[name="password"]').value= "";                                
+                                form.submit(); // submit form
                             }
                         });
                     }, 2000);   						

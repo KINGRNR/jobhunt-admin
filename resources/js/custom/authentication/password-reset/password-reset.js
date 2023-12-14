@@ -67,7 +67,7 @@ var KTPasswordResetGeneral = function() {
                         }).then(function (result) {
                             if (result.isConfirmed) { 
                                 form.querySelector('[name="email"]').value= "";                          
-                                //form.submit();
+                                form.submit();
                             }
                         });
                     }, 1500);   						

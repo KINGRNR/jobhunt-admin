@@ -57,11 +57,18 @@
 
         <div class="text-center">
 
-            <button type="submit" class="btn btn-lg w-100 mb-4" style="background-color: #1B61AD">
+            <button type="submit" id="kt_sign_in_submit" class="btn btn-lg w-100 mb-4" style="background-color: #1B61AD">
                 <span class="indicator-label text-white">Sign In</span>
-                <span class="indicator-progress">Please wait...
+                <span class="indicator-progress text-white">Please wait...
                     <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
             </button>
+            {{-- <div class="d-grid">
+                <button type="submit" id="kt_sign_in_submit" class="btn btn-primary">
+                    <span class="indicator-label">Masuk</span>
+                    <span class="indicator-progress">Tunggu Sebentar...
+                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                </button>
+            </div> --}}
             <a href="{{ url('authorized/google') }}" class="btn btn-flex flex-center btn-light btn-lg w-100 mb-5">
                 <img alt="Logo" src="assets/media/svg/brand-logos/google-icon.svg" class="h-20px me-3">Continue with
                 Google</a>
