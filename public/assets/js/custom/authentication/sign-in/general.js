@@ -68,7 +68,7 @@ var KTSigninGeneral = function() {
 
                             //     // redirect to main
                             //     //window.location.href = APP_URL + response.redirectTo;
-                                window.location.href = '/dashboard';
+                            location.reload();
                             // }else{
                             //     Swal.fire({
                             //         text: response.message,
