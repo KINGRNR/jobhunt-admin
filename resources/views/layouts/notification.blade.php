@@ -32,7 +32,7 @@
                     semua telah dibaca</a>
             </div>
             <!--begin::Items-->
-            <div class="scroll-y mh-325px my-5 px-8 unread">
+            <div class="scroll-y mh-325px my-5 px-8 unread overflow-auto">
             </div>
             <!--end::Items-->
             <!--begin::View more-->
@@ -59,7 +59,7 @@
         </div>
         <div class="tab-pane fade " id="kt_topbar_notifications_2" role="tabpanel">
             <!--begin::Wrapper-->
-            <div class="d-flex flex-column px-9 readed">
+            <div class="d-flex flex-column px-9 readed overflow-auto">
                 <!--end::Illustration-->
             </div>
             <!--end::Wrapper-->
