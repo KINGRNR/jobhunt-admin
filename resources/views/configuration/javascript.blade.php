@@ -198,7 +198,7 @@
     toggleAdmin = () => {
         $('#configAdmin').fadeIn();
         $('#configUser').fadeOut();
-        $('#configCompany').fadeOut();
+        $('#configCompany').fadeOut();          
         $('.toglcompany').removeClass('active');
         $('.togluser').removeClass('active');
         $('.togladmin').addClass('active');
