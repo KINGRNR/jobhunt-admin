@@ -13,7 +13,7 @@
 <script type="text/javascript">
     var form = 'formExample';
     $(() => {
-        blockPage(100);
+        quick.blockPage();
         init()
     })
     init = async () => {
