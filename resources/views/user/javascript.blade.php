@@ -4,7 +4,7 @@
           
        })
        init = async () => {
-           unblockPage();
+        quick.unblockPage();
        }
        
 </script>   

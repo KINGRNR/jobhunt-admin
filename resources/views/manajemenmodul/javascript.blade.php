@@ -13,12 +13,12 @@
 <script type="text/javascript">
     var form = 'formExample';
     $(() => {
-        blockPage(100);
+        quick.blockPage();
         init()
     })
     init = async () => {
         await initializeDataTables();
-        await unblockPage();
+        quick.unblockPage();
     }
     $('#modal_form').on('hidden.bs.modal', function() {
         $(`input, select`).removeAttr('disabled');
@@ -107,7 +107,7 @@
     }
 
     onEdit = (id) => {
-        blockPage();
+        quick.blockPage();
         $.ajax({
             url: API_URL + 'getexample/' + id,
             method: 'GET',
@@ -146,7 +146,7 @@
                 }
             },
             complete: (response) => {
-                unblockPage(500);
+                quick.unblockPage();
             }
         });
     }

@@ -9,7 +9,7 @@ import ApexCharts from 'apexcharts'
     init = async () => {
         await loadchartatas();
         await loadchartbawah();
-        unblockPage();
+        quick.unblockPage();
     }
 
     $(document).ready(function() {

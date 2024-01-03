@@ -4,7 +4,7 @@
 
         })
         init = () => {
-            unblockPage();
+            quick.unblockPage();
         }
         $(document).ready(function() {
             var logList = $('#log-list');
