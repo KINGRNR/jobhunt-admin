@@ -64,7 +64,20 @@ var quick = {
         }
 
         addMarkerAtCoordinates(lt, ln);
+    },
+
+    blockPage: function () {
+        const loadingDiv = $(
+            '<div class="loading loading-spinner-overlay" id="loading-spinner"><div class="loading-spinner"></div><p class="loading-text">Loading </p></div>'
+        );
+        loadingDiv.hide().appendTo("#pagecontainer").fadeIn();
+    },
+
+    unblockPage: function (data) {
+        $("#pagecontainer").find(".loading").fadeOut();
+        removeSkeleton();
     }
+
 };
 
 

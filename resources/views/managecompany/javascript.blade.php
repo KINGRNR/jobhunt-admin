@@ -41,7 +41,7 @@
     })
     init = async () => {
         await initializeDataTables();
-        await unblockPage();
+        quick.unblockPage()
     }
     $('#modal_form').on('hidden.bs.modal', function() {
         $(`input, select`).removeAttr('disabled');
@@ -250,7 +250,7 @@
     }
     onDetail = (id, callback) => {
         return new Promise((resolve, reject) => {
-            blockPage();
+            quick.blockPage();
             $.ajax({
                 url: APP_URL + 'managecompany/show',
                 method: 'POST',
@@ -471,7 +471,7 @@
                 },
                 complete: (response) => {
                     toggleDetail();
-                    unblockPage(500);
+                    quick.unblockPage(500);
                     resolve();
                 }
             });
