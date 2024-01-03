@@ -22,7 +22,7 @@
         }
     }
     show = () => {
-        blockPage();
+        quick.blockPage();
         $.ajax({
             url: APP_URL + 'profile/show',
                 method: 'POST',
@@ -39,7 +39,7 @@
                 $('#email').val(data.email);
             },
             complete: (response) => {
-                unblockPage();
+                quick.unblockPage();
             }
         });
     }

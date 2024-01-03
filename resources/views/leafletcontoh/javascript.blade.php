@@ -10,7 +10,7 @@
     })
     init = async () => {
         await mapInit();
-        await unblockPage(500);
+        quick.unblockPage(500);
     }
     // mapInit = () => {
     // var map = L.map('map').setView([0, 0], 2); // Atur tampilan awal ke peta kosong dengan zoom 2.

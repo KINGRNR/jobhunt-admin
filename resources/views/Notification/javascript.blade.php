@@ -5,6 +5,6 @@
     })
     init = async () => {
         
-        await unblockPage(500);
+        quick.unblockPage(500);
     }
 </script>
