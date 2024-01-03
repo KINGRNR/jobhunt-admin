@@ -5,7 +5,7 @@
     })
     init = () => {
          show();
-         unblockPage();
+         quick.unblockPage()
     }
     changeMenu = (type, el) => {
         $('.profileMenu').removeClass('btn-primary')

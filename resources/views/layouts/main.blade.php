@@ -878,6 +878,7 @@
                 });
             </script>
             <script src="{!! asset('assets/js/custom/js.cookie.js') !!}"></script>
+            <script src="assets/js/quickact.js"></script>
 
             <script type="text/javascript">
                 APP_URL = "{{ getenv('APP_URL') }}/";
@@ -952,8 +953,7 @@
 
                 //API
                 function loadPage(element) {
-                    blockPage()
-
+                    // blockPage()
                     // $("#pagecontainer").empty();
                     let menuId = $(element).data('con');
                     let CSRF_NAME = 'csrf_cookie_name';
@@ -975,7 +975,7 @@
                             window.history.pushState(stateData, "", pages.url_path);
                             $("#pagecontainer").html(atob(pages.view));
                             localStorage.setItem('menuId', menuId);
-                            // blockPage();
+                            quick.blockPage()
                         },
                     });
 
@@ -986,22 +986,18 @@
                     $('.menu-real').fadeIn();
                 }
 
-                function blockPage() {
-                    const loadingDiv = $(
-                        '<div class="loading loading-spinner-overlay" id="loading-spinner"><div class="loading-spinner"></div><p class="loading-text">Loading Data</p></div>'
-                    );
-                    // const loadingDiv = $(
-                    //     '<div class="loading loading-spinner-overlay" id="loading-spinner"></div>'
-                    // );
-                    // $('.card-blocking').removeClass('d-none');
-                    loadingDiv.hide().appendTo("#pagecontainer").fadeIn();
-                }
+                // function blockPage() {
+                //     const loadingDiv = $(
+                //         '<div class="loading loading-spinner-overlay" id="loading-spinner"><div class="loading-spinner"></div><p class="loading-text">Loading Data</p></div>'
+                //     );
+                //     loadingDiv.hide().appendTo("#pagecontainer").fadeIn();
+                // }
 
 
-                function unblockPage() {
-                    $("#pagecontainer").find(".loading").fadeOut();
-                    removeSkeleton();
-                }
+                // function unblockPage() {
+                //     $("#pagecontainer").find(".loading").fadeOut();
+                //     removeSkeleton();
+                // }
             </script>
             <script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
             <script src="{!! asset('assets/plugins/custom/datatables/datatables.bundle.js') !!}"></script>

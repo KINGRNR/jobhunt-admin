@@ -19,7 +19,7 @@
     })
     init = async () => {
         await showConfig('app', true);
-        await unblockPage(500);
+        quick.unblockPage()
     }
     showConfig = (group = '', init = false) => {
         var group = (init) ? group : $(group).data('group');
@@ -28,7 +28,7 @@
         $(`[data-group="${group}"]`).addClass('active');
 
         return new Promise((resolve) => {
-            blockPage();
+            quick.blockPage();
             var csrf = $('meta[name="csrf-token"]').attr('content');
 
             $.ajax({
@@ -51,7 +51,7 @@
 
                 },
                 complete: (response) => {
-                    unblockPage(500);
+                    quick.unblockPage();
                 }
             });
         });
@@ -121,17 +121,17 @@
         $(".input-required").each(function(i, obj) {
             let inputValue = $(this).val().trim();
 
-            if (inputValue === "") {
-                $(this).removeClass("is-valid").addClass("is-invalid");
-                validasi = 'false-invalid';
-            } else {
-                $(this).removeClass("is-invalid");
-                $(this).parent().find(".error_code").removeClass("invalid-feedback").text("").show();
-            }
+            // if (inputValue === "") {
+            //     $(this).removeClass("is-valid").addClass("is-invalid");
+            //     validasi = 'false-invalid';
+            // } else {
+            //     $(this).removeClass("is-invalid");
+            //     $(this).parent().find(".error_code").removeClass("invalid-feedback").text("").show();
+            // }
         });
         var data = $('[name="' + form + '"]')[0];
         var formData = new FormData(data);
-        if (validasi === 'true') {
+        // if (validasi === 'true') {
             Swal.fire({
                 title: 'Konfirmasi',
                 text: 'Apakah kamu ingin melanjutkan?',
@@ -186,14 +186,14 @@
                     });
                 }
             });
-        } else if (validasi === 'false-invalid') {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Lengkapi Form Terlebih Dahulu!',
-                confirmButtonClass: 'swal2-confirm btn btn-primary',
-            });
-        }
+        // } else if (validasi === 'false-invalid') {
+        //     Swal.fire({
+        //         icon: 'error',
+        //         title: 'Oops...',
+        //         text: 'Lengkapi Form Terlebih Dahulu!',
+        //         confirmButtonClass: 'swal2-confirm btn btn-primary',
+        //     });
+        // }
     }
     toggleAdmin = () => {
         $('#configAdmin').fadeIn();
