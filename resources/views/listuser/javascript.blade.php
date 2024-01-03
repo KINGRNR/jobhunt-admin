@@ -34,7 +34,7 @@
     })
     init = async () => {
         await initializeDataTables();
-        await unblockPage();
+        quick.unblockPage()
     }
     $('#modal_form').on('hidden.bs.modal', function() {
         $(`input, select`).removeAttr('disabled');
@@ -369,7 +369,7 @@
                 });
             },
             complete: (response) => {
-                unblockPage(500);
+                quick.unblockPage(500);
             }
         });
     }
@@ -483,7 +483,7 @@
         });
     }
     onDetail = (id) => {
-        blockPage();
+        quick.blockPage();
         $.ajax({
             url: APP_URL + 'listuser/show',
             method: 'POST',
@@ -538,7 +538,7 @@
                 });
             },
             complete: (response) => {
-                unblockPage(500);
+                quick.unblockPage(500);
             }
         });
     }
@@ -614,7 +614,7 @@
     //     });
     // }
     onDetailJob = (id) => {
-        blockPage();
+        quick.blockPage();
         $.ajax({
             url: APP_URL + 'listuser/detailJob',
             method: 'POST',
@@ -667,7 +667,7 @@
                     ]
                 });
                 // Unblock the page
-                unblockPage();
+                quick.unblockPage();
             }
         });
     }

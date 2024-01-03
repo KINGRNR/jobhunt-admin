@@ -11,8 +11,8 @@
     })
     init = async () => {
         await initializeDataTables();
-        await unblockPage(500);
-    }
+        quick.unblockPage()
+        }
     $('#modal_form').on('hidden.bs.modal', function() {
         $(`input, select`).removeAttr('disabled');
     });
@@ -176,7 +176,7 @@
 
     onDetail = (a) => {
         $('.detail').empty();
-        blockPage();
+        quick.blockPage();
         var id = $(a).attr('data-id')
         $.ajax({
             url: APP_URL + 'managejob/show',
@@ -202,7 +202,7 @@
                 });
             },
             complete: (response) => {
-                unblockPage(500);
+                quick.unblockPage(500);
             }
         });
     }
